@@ -112,9 +112,14 @@ HELPERS = [
     hl_measure("HL Interest vs Cricket", "Interest vs Cricket", ["dim_state[state]"], "Bar colour: red scale, darkest for the largest bar (Interest vs Cricket)."),
     hl_measure("HL Small Channels", "Small Channels in Top Results", ["dim_channel[channel_age_bucket]", "dim_channel[upload_pace_bucket]"],
                "Bar colour: red scale, darkest for the largest bar (Small Channels in Top Results)."),
-    ("Map Color", "VAR v = [State Index]\n\t\t\tVAR r = DIVIDE(v, MAXX(ALLSELECTED(dim_state[state]), [State Index]))\n"
+    # The map groups by dim_state[state_map_name], so the "top state in view" must be found over that column
+    # with the map's own filter removed. (Iterating dim_state[state] kept the map's state_map_name filter,
+    # so every state was compared only with itself and the whole map came out one colour.)
+    ("Map Color", "VAR v = [State Index]\n"
+                  "\t\t\tVAR mx = MAXX(CALCULATETABLE(VALUES(dim_state[state_map_name]), ALLSELECTED(dim_state), dim_state[is_small_region] = FALSE()), [State Index])\n"
+                  "\t\t\tVAR r = DIVIDE(v, mx)\n"
                   f'\t\t\tRETURN IF(ISBLANK(v), "{CARD}", {ramp_switch("r")})',
-     "Filled-map colour: 7-step red scale of State Index relative to the top state in view.", "Colors"),
+     "Filled-map colour: 7-step red scale of State Index relative to the top state in view (small regions excluded).", "Colors"),
     ("Heat Color State", "VAR v = [State Index]\n\t\t\tVAR r = DIVIDE(v, MAXX(CROSSJOIN(ALLSELECTED(dim_state[state]), ALLSELECTED(dim_keyword[topic_group])), [State Index]))\n"
                          f'\t\t\tRETURN IF(ISBLANK(v), BLANK(), {ramp_switch("r")})', "Heatmap cell colour for State Index (state x topic).", "Colors"),
     ("Heat Font State", "VAR r = DIVIDE([State Index], MAXX(CROSSJOIN(ALLSELECTED(dim_state[state]), ALLSELECTED(dim_keyword[topic_group])), [State Index]))\n"
@@ -896,8 +901,8 @@ def build_pages():
     p.add("filledMap", M, KPI_Y, map_w, BODY_END - KPI_Y,
           query={"Category": {"projections": [proj(col("dim_state", "state_map_name"), "State")]},
                  "Tooltips": {"projections": [proj(mea("State Index"), "Search score"), proj(mea("Top Keyword in State"))]}},
-          # built-in gradient rule (screenshot review 1: the rule-based colour measure left the map one flat colour)
-          objects={"dataPoint": [{"properties": {"fill": gradient_fill("State Index")}, "selector": ALL_POINTS}],
+          # colour from the Map Color measure (a gradient FillRule made the filled map fail to render)
+          objects={"dataPoint": [{"properties": {"fill": measure_colour("Map Color")}, "selector": ALL_POINTS}],
                    "mapControls": [{"properties": {"autoZoom": b(True)}}]},
           vco={**title_vco("Where people search for it on YouTube",
                            "Darker = more popular there. States with almost none are left blank. Right-click a state > Drill through > State detail.")},

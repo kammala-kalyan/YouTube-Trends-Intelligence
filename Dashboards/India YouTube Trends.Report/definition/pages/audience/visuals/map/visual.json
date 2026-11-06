@@ -76,48 +76,13 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "FillRule": {
-                      "Input": {
-                        "Measure": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Entity": "_Measures"
-                            }
-                          },
-                          "Property": "State Index"
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
                         }
                       },
-                      "FillRule": {
-                        "linearGradient2": {
-                          "min": {
-                            "color": {
-                              "expr": {
-                                "Literal": {
-                                  "Value": "'#ffe5ea'"
-                                }
-                              }
-                            }
-                          },
-                          "max": {
-                            "color": {
-                              "expr": {
-                                "Literal": {
-                                  "Value": "'#c4002b'"
-                                }
-                              }
-                            }
-                          },
-                          "nullColoringStrategy": {
-                            "strategy": {
-                              "expr": {
-                                "Literal": {
-                                  "Value": "'asZero'"
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
+                      "Property": "Map Color"
                     }
                   }
                 }

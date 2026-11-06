@@ -513,10 +513,11 @@ table _Measures
 		displayFolder: Colors
 		lineageTag: 11a7f8fc-c36f-499c-a87c-a61bee262086
 
-	/// Filled-map colour: 7-step red scale of State Index relative to the top state in view.
+	/// Filled-map colour: 7-step red scale of State Index relative to the top state in view (small regions excluded).
 	measure 'Map Color' =
 			VAR v = [State Index]
-			VAR r = DIVIDE(v, MAXX(ALLSELECTED(dim_state[state]), [State Index]))
+			VAR mx = MAXX(CALCULATETABLE(VALUES(dim_state[state_map_name]), ALLSELECTED(dim_state), dim_state[is_small_region] = FALSE()), [State Index])
+			VAR r = DIVIDE(v, mx)
 			RETURN IF(ISBLANK(v), "#f2f2f2", SWITCH(TRUE(), r >= 0.86, "#c4002b", r >= 0.71, "#d2434b", r >= 0.57, "#de686a", r >= 0.43, "#e98889", r >= 0.29, "#f2a8a9", r >= 0.14, "#f9c6c9", "#ffe5ea"))
 		displayFolder: Colors
 		lineageTag: 2cc8ce9a-445f-46a2-b22a-a417465c930a

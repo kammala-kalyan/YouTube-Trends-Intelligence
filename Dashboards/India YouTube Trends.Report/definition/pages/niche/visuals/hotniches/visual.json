@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "hotniches",
   "position": {
-    "x": 646.0,
-    "y": 270,
-    "z": 21000,
-    "height": 250,
-    "width": 610.0,
-    "tabOrder": 21000
+    "x": 24,
+    "y": 528,
+    "z": 22000,
+    "height": 160,
+    "width": 1232,
+    "tabOrder": 22000
   },
   "visual": {
     "visualType": "tableEx",
@@ -183,7 +183,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "170D"
+                  "Value": "300D"
                 }
               }
             }
@@ -197,7 +197,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "160D"
+                  "Value": "300D"
                 }
               }
             }
@@ -211,7 +211,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "70D"
+                  "Value": "180D"
                 }
               }
             }
@@ -225,7 +225,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "85D"
+                  "Value": "180D"
                 }
               }
             }
@@ -239,7 +239,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "100D"
+                  "Value": "200D"
                 }
               }
             }
@@ -393,7 +393,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "fisanchor7",
+        "name": "fisanchor8",
         "field": {
           "Column": {
             "Expression": {

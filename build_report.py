@@ -827,24 +827,27 @@ def build_pages():
     kpi_row(p, KPI_Y, [("Keywords Tracked", "Keywords tracked", "keywords"), ("Hot Niches", "Hot niches (high demand, growing)", "opportunity"),
                        ("Demand Index", "Demand (search score, 12 weeks)", "interest"), ("Growth 12w %", "Growth (12 weeks)", "growth"),
                        ("Small Channel Share", "Top videos from small channels", "smallch")])
-    rh = 250
+    # layout (screenshot review 1): map + language grid side by side on top (the grid needs height for its
+    # 26 topic rows); the Hot niches table runs full width along the bottom
+    bh = 160
+    rh = BODY_END - BODY_Y - G - bh
     scatter(p, M, BODY_Y, half, rh, ("dim_keyword", "keyword", "Keyword"), "Demand Index", "Growth 12w %", "Small Channel Share",
             "Opportunity map", "Right = more demand than average · up = growing · dark red = Hot · bubble = small-channel share",
             filters=[f_exclude_anchor()], tooltip_page=TIP, name="oppscatter", colour_measure="Quadrant Color", labels=False, log_x=True)
     # Trend column removed (screenshot review 1): "last month" vs Growth's 12 weeks looked contradictory
-    table(p, M + half + G, BODY_Y, half, rh,
+    matrix(p, M + half + G, BODY_Y, half, rh, ("dim_keyword", "topic_group", "Topic"), ("dim_keyword", "keyword_language", "Language"),
+           "Demand Within Language", "Heat Color Demand", "Heat Font Demand", "Which topics lead within each language?",
+           "100 = the top topic in that language; read down a column. Empty = no keyword tracked.",
+           filters=[f_exclude_anchor()], font_size=8, name="langmatrix")
+    my = BODY_Y + rh + G
+    table(p, M, my, full, BODY_END - my,
           [proj(col("dim_keyword", "keyword"), "Keyword"), proj(col("dim_keyword", "topic_group"), "Topic"),
            proj(mea("Demand Index"), "Demand"), proj(mea("Growth 12w %"), "Growth (12 wk)"), proj(mea("Small Channel Share"), "Small channels")],
           "Hot niches, most open first", "High demand and growing; sorted by share of top videos from small channels",
           filters=[f_exclude_anchor(), f_measure("Hot Niche Flag", "eq", 1)], sort=(mea("Small Channel Share"), "Descending"),
           tooltip_page=TIP,
-          widths={"dim_keyword.keyword": 170, "dim_keyword.topic_group": 160, "_Measures.Demand Index": 70, "_Measures.Growth 12w %": 85,
-                  "_Measures.Small Channel Share": 100}, name="hotniches")
-    my = BODY_Y + rh + G
-    matrix(p, M, my, full, BODY_END - my, ("dim_keyword", "topic_group", "Topic"), ("dim_keyword", "keyword_language", "Language"), "Demand Within Language",
-           "Heat Color Demand", "Heat Font Demand", "Which topics lead within each language?",
-           "100 = the top topic in that language; read down a column. Empty = no keyword tracked for that pair.",
-           filters=[f_exclude_anchor()], font_size=8, name="langmatrix")
+          widths={"dim_keyword.keyword": 300, "dim_keyword.topic_group": 300, "_Measures.Demand Index": 180, "_Measures.Growth 12w %": 180,
+                  "_Measures.Small Channel Share": 200}, name="hotniches")
     footnote(p, "Hot = demand above the average of the keywords in view, and growing over the last 12 weeks. Small channels = under 100K subscribers: "
                 "the API can't count competitors, so this measures whether small channels still reach the top results.")
     pages.append(p)

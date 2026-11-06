@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "langmatrix",
   "position": {
-    "x": 24,
-    "y": 532,
-    "z": 22000,
-    "height": 156,
-    "width": 1232,
-    "tabOrder": 22000
+    "x": 646.0,
+    "y": 270,
+    "z": 21000,
+    "height": 246,
+    "width": 610.0,
+    "tabOrder": 21000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -269,7 +269,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'100 = the top topic in that language; read down a column. Empty = no keyword tracked for that pair.'"
+                  "Value": "'100 = the top topic in that language; read down a column. Empty = no keyword tracked.'"
                 }
               }
             },
@@ -333,7 +333,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "fisanchor8",
+        "name": "fisanchor7",
         "field": {
           "Column": {
             "Expression": {

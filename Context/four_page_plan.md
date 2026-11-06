@@ -1,3 +1,5 @@
+> **STATUS (6 Nov 2026): project closed and signed off by the user (Q38).** The 4 pages are final. **Do not run `build_report.py` on the report pages again**; any further polish is done by hand in Power BI. The daily GitHub Actions pipeline keeps collecting data. Interview material: [interview_prep.md](interview_prep.md).
+
 # 4-page dashboard plan (for review, nothing built yet)
 
 **Goal:** cut 8 pages down to 4. Each page answers one question a new YouTuber asks, in the order they'd ask it. Each page has a **question as its title** and a **live headline that gives the answer**, so the viewer gets the conclusion before reading any chart.

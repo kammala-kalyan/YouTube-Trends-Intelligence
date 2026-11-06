@@ -7,6 +7,7 @@ as,Assamese,True
 be,BE,False
 bgc,BGC,False
 bh,Bhojpuri,True
+bm,BM,False
 bn,Bengali,True
 br,BR,False
 de,DE,False
@@ -19,9 +20,11 @@ gu,Gujarati,True
 hi,Hindi,True
 id,ID,False
 it,IT,False
+iw,IW,False
 ja,JA,False
 kn,Kannada,True
 ko,KO,False
+mai,MAI,False
 ml,Malayalam,True
 mr,Marathi,True
 ms,MS,False
@@ -36,6 +39,7 @@ ta,Tamil,True
 te,Telugu,True
 th,TH,False
 tr,TR,False
+ug,UG,False
 uk,UK,False
 ur,Urdu,True
 uz,UZ,False

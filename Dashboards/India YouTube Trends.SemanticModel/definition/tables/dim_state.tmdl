@@ -1,0 +1,32 @@
+/// Indian states and union territories with a map-friendly name and zone.
+table dim_state
+	lineageTag: dd557a91-2120-40ce-a1a5-b92686e18b3b
+
+	column state
+		dataType: string
+		isKey
+		lineageTag: 289fa5b1-9068-4bd3-bfc5-bb12813a7394
+		dataCategory: StateOrProvince
+		sourceColumn: state
+
+	column state_map_name
+		dataType: string
+		lineageTag: 3ca386e6-77b1-483d-9b63-e3fadba0301d
+		dataCategory: Place
+		sourceColumn: state_map_name
+
+	column zone
+		dataType: string
+		lineageTag: efeca47b-595b-4fbe-b35d-5327e56c971c
+		sourceColumn: zone
+
+	partition dim_state = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "dim_state.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"state", type text}, {"state_map_name", type text}, {"zone", type text}}, "en-US")
+				in
+				    Typed
+

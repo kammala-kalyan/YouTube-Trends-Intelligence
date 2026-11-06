@@ -1,0 +1,391 @@
+Project: India YouTube Trends & Content Intelligence Dashboard (Power BI)
+Build an interactive Power BI dashboard using publicly available YouTube data and Google Trends data, without requiring ownership of a YouTube channel.
+Main objective: Understand what people in India are interested in, what content they consume or search for, identify trending topics, and discover opportunities for YouTube creators, businesses and advertisers.
+Key features:
+
+India-wide analysis: State-wise and city-wise trends wherever data is available.
+Content analysis: Popular categories such as technology, education, entertainment, finance, gaming, food and travel.
+Trending topics: Emerging keywords, growing interests, declining trends and historical comparisons.
+Video performance: Public views, likes, comments, engagement and channel statistics.
+Creator opportunities: Identify growing topics, content gaps and regional language opportunities.
+Business intelligence: Understand regional interests and potential marketing opportunities.
+i want to build this project
+
+Build plan: India YouTube Trends & Content Intelligence Dashboard
+1. Know the data limits first
+State and city data comes only from Google Trends. The YouTube Data API doesn’t expose viewer geography for public videos. Use Trends with gprop=youtube (YouTube Search) for regional interest by state, and by city for some queries.
+Trends is relative, not absolute. It returns an index from 0 to 100 per query batch, so you can compare topics only within the same request (max 5 terms). Use a shared anchor keyword across batches to normalize.
+Google Trends has no stable public API. pytrends is unofficial and rate-limits quickly, so add sleeps and retries and cache everything. Check whether Google’s newer official Trends API access is available to you.
+YouTube API quota is 10,000 units/day. videos.list costs 1 unit, search.list costs 100. Prefer videos.list with chart=mostPopular&regionCode=IN&videoCategoryId=..., and use search.list sparingly.
+Regional language opportunities come from the video’s defaultAudioLanguage/snippet.defaultLanguage (often missing) and from running Trends queries in Hindi, Tamil, Telugu, Kannada, etc. Add a title-script detection step (Devanagari, Tamil script, and so on) to fill the gaps.
+2. Architecture
+YouTube Data API v3 ─┐
+                     ├─> Python ingestion (daily) ─> raw CSV/Parquet ─> cleaning/enrichment
+Google Trends ───────┘                                                  (pandas) ─> star schema
+                                                                                   ─> Power BI
+Start simple: a Python script scheduled with GitHub Actions or Task Scheduler that appends daily snapshots to CSV/Parquet in a folder or SharePoint/OneDrive. You can move to Azure SQL or Fabric later. History is the real asset, since the YouTube API only gives you “now,” so start collecting early.
+
+3. Data model (star schema)
+Table	Key columns
+fact_video_snapshot	video_id, snapshot_date, views, likes, comments, rank_in_trending
+dim_video	video_id, title, channel_id, category_id, published_at, duration, language, tags
+dim_channel	channel_id, name, subscribers, total_views, video_count, country
+dim_category	category_id, category_name (tech, gaming, and so on)
+fact_trends_keyword	keyword, date, interest, topic_group
+fact_trends_region	keyword, state/city, interest, snapshot_date
+dim_date, dim_topic, dim_language	Supporting dimensions
+Keep snapshot_date on everything. Growth and decline analysis depends on it.
+
+4. Ingestion starter (YouTube trending, India)
+python
+import requests, pandas as pd, datetime as dt
+
+API_KEY = "YOUR_KEY"
+def trending(category_id=None, max_pages=4):
+    rows, token = [], None
+    for _ in range(max_pages):
+        params = dict(part="snippet,statistics,contentDetails", chart="mostPopular",
+                      regionCode="IN", maxResults=50, key=API_KEY)
+        if category_id: params["videoCategoryId"] = category_id
+        if token: params["pageToken"] = token
+        r = requests.get("https://www.googleapis.com/youtube/v3/videos", params=params).json()
+        for v in r.get("items", []):
+            s, st = v["snippet"], v.get("statistics", {})
+            rows.append(dict(video_id=v["id"], title=s["title"], channel_id=s["channelId"],
+                category_id=s["categoryId"], published_at=s["publishedAt"],
+                lang=s.get("defaultAudioLanguage"), views=int(st.get("viewCount", 0)),
+                likes=int(st.get("likeCount", 0)), comments=int(st.get("commentCount", 0)),
+                snapshot_date=dt.date.today().isoformat()))
+        token = r.get("nextPageToken")
+        if not token: break
+    return pd.DataFrame(rows)
+For Trends (state-level YouTube interest):
+
+python
+from pytrends.request import TrendReq
+pt = TrendReq(hl="en-IN", tz=330)
+pt.build_payload(["IPL", "UPSC", "Bitcoin"], geo="IN", timeframe="today 12-m", gprop="youtube")
+by_state = pt.interest_by_region(resolution="REGION", inc_low_vol=True)
+over_time = pt.interest_over_time()
+5. Dashboard pages
+Overview: KPI cards (videos tracked, total views, avg engagement rate, top category), category share, trend line.
+India map: filled map by state with a keyword/topic slicer and a state drill-through page with its top topics.
+Content categories: views, engagement and upload volume per category, plus a bubble chart (views vs. engagement vs. video count).
+Trending topics: rising, stable and declining keywords, YoY and MoM comparisons, and a keyword table with sparklines.
+Video and channel performance: top videos, engagement rate, views per day since publish, channel leaderboard, duration vs. performance.
+Creator opportunities: topics with rising search interest but low supply of videos (content gap score), and a language opportunity matrix.
+Business and marketing: state × category heatmap and a regional interest index, plus “best regions to target for X.”
+6. Key DAX measures
+DAX
+Engagement Rate = DIVIDE(SUM(fact[likes]) + SUM(fact[comments]), SUM(fact[views]))
+
+Views per Day =
+DIVIDE(MAX(fact[views]), DATEDIFF(MAX(dim_video[published_at]), MAX(fact[snapshot_date]), DAY) + 1)
+
+Interest MoM % =
+VAR cur = CALCULATE(AVERAGE(trends[interest]), DATESINPERIOD(dim_date[Date], MAX(dim_date[Date]), -1, MONTH))
+VAR prev = CALCULATE(AVERAGE(trends[interest]), DATEADD(DATESINPERIOD(dim_date[Date], MAX(dim_date[Date]), -1, MONTH), -1, MONTH))
+RETURN DIVIDE(cur - prev, prev)
+
+Trend Status = SWITCH(TRUE(), [Interest MoM %] > 0.15, "Rising", [Interest MoM %] < -0.15, "Declining", "Stable")
+Content gap score idea: search interest (normalized) ÷ number of recent videos on that topic. High means demand exceeds supply. Compute the video count by sampling search.list for a small, curated keyword list to protect quota.
+
+7. Suggested timeline
+Phase	Work
+Week 1	Set up API key, ingestion scripts, curate a list of 50–100 keywords across your 6 categories, start daily snapshots
+Week 2	Cleaning and enrichment (language detection, topic tagging), build the star schema
+Week 3	Power BI model, DAX, pages 1–4
+Week 4	Pages 5–7, polish (bookmarks, drill-through, tooltips), documentation and README
+8. Pitfalls to plan for
+Trends numbers are sampled and can vary slightly between runs, so snapshot and cache.
+The “mostPopular” chart is a trending list, not all videos, which means survivorship bias. State this in your dashboard notes.
+Like counts can be hidden by creators, so handle nulls.
+Respect API Terms of Service: store only what you need and refresh data as the policy requires.
+Use Power Query parameters for file paths so the report is portable.
+If you tell me whether you want to start with the ingestion pipeline (full Python project with keyword config and scheduling) or the Power BI model and DAX, I can build that part out in detail first.
+
+can i built it with ur help?
+
+Yes, we can build it together. I’ll write the code, DAX, and data model, and you run things, connect your accounts, and tell me what breaks. Power BI itself I can’t operate for you, so I’ll give you exact steps for the visuals.
+
+Suggested order (each step ends with something you can see working):
+
+Get your API key (about 10 minutes): create a project in Google Cloud Console, enable YouTube Data API v3, and create an API key.
+Ingestion pipeline: I write the full Python project (config file with your keyword list, YouTube pull, Trends pull, caching, retries). You run it once and confirm CSVs appear.
+Cleaning and star schema: I write the pandas scripts to produce the dimension and fact tables.
+Power BI model and DAX: you import the tables, I give you the relationships and measures.
+Pages one at a time: I tell you which visuals, fields, and formatting to use, and you share screenshots so I can review.
+Automation and README: daily scheduling via GitHub Actions, then documentation for your portfolio.
+What I need from you to start step 2:
+
+Do you have a Google account you can use for the API key, and Python installed (version 3.9+)?
+Do you have Power BI Desktop (Windows)? If you’re on Mac, we’d need a workaround such as a Windows VM or Power BI Service in the browser, which has limits.
+Which of your six categories matter most to you? I’d start with 3 to 4 and about 10 to 15 keywords each, so we can get a working version quickly and expand later.
+If you answer those three, I’ll write the complete ingestion project in my next message. Since history is the main asset here, the sooner your daily snapshots start running, the better the dashboard will look.
+
+Your key works, so setup is done. Let’s collect the first dataset now, since it needs no keyword list and starts building your history today.
+
+Script 1: trending videos for India, by category
+Create fetch_trending.py in the project root:
+
+python
+import os, datetime as dt
+import requests, pandas as pd
+from config import API_KEY, REGION_CODE, DATA_DIR
+
+BASE = "https://www.googleapis.com/youtube/v3"
+TODAY = dt.date.today().isoformat()
+os.makedirs(DATA_DIR, exist_ok=True)
+
+def get_categories():
+    r = requests.get(f"{BASE}/videoCategories",
+                     params={"part": "snippet", "regionCode": REGION_CODE, "key": API_KEY}).json()
+    rows = [dict(category_id=i["id"], category_name=i["snippet"]["title"],
+                 assignable=i["snippet"].get("assignable", False))
+            for i in r.get("items", [])]
+    return pd.DataFrame(rows)
+
+def get_trending(category_id=None, max_pages=4):
+    rows, token, rank = [], None, 0
+    for _ in range(max_pages):
+        params = dict(part="snippet,statistics,contentDetails", chart="mostPopular",
+                      regionCode=REGION_CODE, maxResults=50, key=API_KEY)
+        if category_id:
+            params["videoCategoryId"] = category_id
+        if token:
+            params["pageToken"] = token
+        r = requests.get(f"{BASE}/videos", params=params)
+        if not r.ok:   # some categories have no trending chart
+            print(f"  skipped category {category_id}: {r.status_code}")
+            return rows
+        data = r.json()
+        for v in data.get("items", []):
+            rank += 1
+            s, st, cd = v["snippet"], v.get("statistics", {}), v["contentDetails"]
+            rows.append(dict(
+                snapshot_date=TODAY, category_chart=category_id or "overall", rank=rank,
+                video_id=v["id"], title=s["title"], channel_id=s["channelId"],
+                channel_title=s["channelTitle"], category_id=s["categoryId"],
+                published_at=s["publishedAt"], duration=cd["duration"],
+                audio_lang=s.get("defaultAudioLanguage"), default_lang=s.get("defaultLanguage"),
+                tags="|".join(s.get("tags", [])),
+                views=int(st["viewCount"]) if "viewCount" in st else None,
+                likes=int(st["likeCount"]) if "likeCount" in st else None,
+                comments=int(st["commentCount"]) if "commentCount" in st else None))
+        token = data.get("nextPageToken")
+        if not token:
+            break
+    return rows
+
+if __name__ == "__main__":
+    cats = get_categories()
+    cats.to_csv(f"{DATA_DIR}/dim_category.csv", index=False)
+    print(f"Saved {len(cats)} categories")
+
+    all_rows = get_trending()                      # overall India chart
+    for cid in cats[cats.assignable]["category_id"]:
+        print(f"Category {cid}")
+        all_rows += get_trending(cid)
+
+    df = pd.DataFrame(all_rows)
+    df.to_csv(f"{DATA_DIR}/trending_videos_{TODAY}.csv", index=False)
+    print(f"Saved {len(df)} rows, {df.video_id.nunique()} unique videos, "
+          f"{df.channel_id.nunique()} unique channels")
+Run it:
+
+python fetch_trending.py
+This costs roughly 50 to 60 quota units out of your 10,000. Some categories print “skipped”, which is normal because YouTube doesn’t support a trending chart for every category.
+
+What to send me back
+The final printed line (rows, unique videos, unique channels).
+The first 5 rows of data/trending_videos_<today>.csv, so I can check the structure.
+Next: your keywords
+For the topic and Trends datasets, either reply “you choose” and I’ll propose a starter list, or send yours. A default I’d start with, so you can edit it:
+
+Category	Keywords
+Tech	iPhone, AI tools, Android, laptop, ChatGPT
+Finance	SIP, share market, UPI, credit card, mutual funds
+Education	UPSC, JEE, NEET, coding, Excel
+Gaming	BGMI, Free Fire, Minecraft, GTA
+Food	street food, recipe, biryani
+Travel	Goa, Manali, travel vlog
+Plus a few regional-language terms (Hindi, Tamil, Telugu) per category. Tell me whether to use this list as is or change it, and I’ll write scripts 2 to 5 (topic videos, channel stats, Trends over time, Trends by state).
+
+Your channel pull worked: 1,637 channels saved, country filled for 1,290 (79%). The other 347 have no country set, so we’ll label them “Unknown” and not drop them. Some channels in India’s trending list are based outside India, so I’ll add a “channel country vs India” view later.
+
+I haven’t heard your keyword choice, so I’ve used the starter list below. It’s one file, so you can edit it at any time and rerun.
+
+Script 3: keyword list
+Create keywords.py:
+
+python
+ANCHOR = "songs"   # appears in every Trends batch so batches can be normalized
+
+KEYWORDS = {
+    "Tech":      [("iPhone", "en"), ("AI tools", "en"), ("Android", "en"), ("laptop", "en"),
+                  ("ChatGPT", "en"), ("मोबाइल रिव्यू", "hi")],
+    "Finance":   [("SIP", "en"), ("share market", "en"), ("UPI", "en"), ("credit card", "en"),
+                  ("mutual funds", "en"), ("शेयर बाजार", "hi")],
+    "Education": [("UPSC", "en"), ("JEE", "en"), ("NEET", "en"), ("coding", "en"),
+                  ("Excel", "en"), ("பொது அறிவு", "ta")],
+    "Gaming":    [("BGMI", "en"), ("Free Fire", "en"), ("Minecraft", "en"), ("GTA", "en"),
+                  ("గేమింగ్", "te")],
+    "Food":      [("street food", "en"), ("recipe", "en"), ("biryani", "en"), ("रेसिपी", "hi")],
+    "Travel":    [("Goa", "en"), ("Manali", "en"), ("travel vlog", "en"), ("ट्रैवल वlog", "hi")],
+}
+Script 4: Google Trends (over time and by state)
+This uses no YouTube quota. Create fetch_trends.py:
+
+python
+import time, datetime as dt
+import pandas as pd
+from pytrends.request import TrendReq
+from config import DATA_DIR
+from keywords import KEYWORDS, ANCHOR
+
+TODAY = dt.date.today().isoformat()
+pt = TrendReq(hl="en-IN", tz=330, retries=3, backoff_factor=1.5)
+
+rows = [(cat, kw) for cat, items in KEYWORDS.items() for kw, _ in items if kw != ANCHOR]
+cat_of = {kw: cat for cat, kw in rows}
+kws = list(cat_of)
+batches = [kws[i:i + 4] for i in range(0, len(kws), 4)]
+
+def with_retry(fn, tries=4):
+    for n in range(tries):
+        try:
+            return fn()
+        except Exception as e:
+            wait = 30 * (n + 1)
+            print(f"  retry in {wait}s ({e})")
+            time.sleep(wait)
+    return None
+
+over_time, by_state = [], []
+for b_id, batch in enumerate(batches):
+    terms = batch + [ANCHOR]
+    print(f"Batch {b_id + 1}/{len(batches)}: {terms}")
+    pt.build_payload(terms, geo="IN", timeframe="today 5-y", gprop="youtube")
+
+    ot = with_retry(pt.interest_over_time)
+    if ot is not None and not ot.empty:
+        ot = ot.drop(columns=["isPartial"], errors="ignore").reset_index()
+        ot = ot.melt(id_vars="date", var_name="keyword", value_name="interest")
+        ot["batch_id"] = b_id
+        over_time.append(ot)
+    time.sleep(8)
+
+    bs = with_retry(lambda: pt.interest_by_region(resolution="REGION", inc_low_vol=True))
+    if bs is not None and not bs.empty:
+        bs = bs.reset_index().melt(id_vars="geoName", var_name="keyword", value_name="interest")
+        bs = bs.rename(columns={"geoName": "state"})
+        bs["batch_id"] = b_id
+        by_state.append(bs)
+    time.sleep(8)
+
+ot = pd.concat(over_time)
+ot["category"] = ot["keyword"].map(cat_of)
+ot["snapshot_date"] = TODAY
+ot.to_csv(f"{DATA_DIR}/trends_over_time_{TODAY}.csv", index=False)
+
+bs = pd.concat(by_state)
+bs["category"] = bs["keyword"].map(cat_of)
+bs["snapshot_date"] = TODAY
+bs.to_csv(f"{DATA_DIR}/trends_by_state_{TODAY}.csv", index=False)
+print(f"Saved {len(ot)} time rows and {len(bs)} state rows")
+Run it with python fetch_trends.py. It takes about 5 to 10 minutes because of the deliberate pauses. If Google blocks you (429 errors), the script waits and retries. If it still fails, wait an hour and rerun. pytrends is unofficial, so if it throws an error you can’t fix, paste it to me.
+
+Script 5: topic videos and content-gap supply
+This uses the YouTube quota: one search call per keyword at 100 units each, so about 3,000 units for this list, which stays under your 9,000 guard. Create fetch_topics.py:
+
+python
+import datetime as dt
+import requests, pandas as pd
+from config import API_KEY, REGION_CODE, DATA_DIR, DAILY_QUOTA_LIMIT
+from keywords import KEYWORDS
+
+BASE = "https://www.googleapis.com/youtube/v3"
+TODAY = dt.date.today().isoformat()
+since = (dt.datetime.utcnow() - dt.timedelta(days=30)).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+units, hits, supply = 0, [], []
+for cat, items in KEYWORDS.items():
+    for kw, lang in items:
+        if units + 100 > DAILY_QUOTA_LIMIT:
+            print("Quota guard reached, stopping"); break
+        r = requests.get(f"{BASE}/search", params=dict(
+            part="snippet", q=kw, type="video", regionCode=REGION_CODE,
+            relevanceLanguage=lang, order="viewCount", publishedAfter=since,
+            maxResults=50, key=API_KEY))
+        units += 100
+        if not r.ok:
+            print(f"  {kw}: error {r.status_code}"); continue
+        d = r.json()
+        supply.append(dict(snapshot_date=TODAY, category=cat, keyword=kw, lang=lang,
+                           videos_last_30d_est=d["pageInfo"]["totalResults"]))
+        hits += [dict(keyword=kw, category=cat, lang=lang, video_id=i["id"]["videoId"])
+                 for i in d.get("items", [])]
+        print(f"{cat} / {kw}: {len(d.get('items', []))} videos")
+
+pd.DataFrame(supply).to_csv(f"{DATA_DIR}/keyword_supply_{TODAY}.csv", index=False)
+
+# fetch full stats for the videos found (1 unit per 50 videos)
+hit_df = pd.DataFrame(hits).drop_duplicates(["keyword", "video_id"])
+ids = hit_df["video_id"].unique().tolist()
+rows = []
+for i in range(0, len(ids), 50):
+    r = requests.get(f"{BASE}/videos", params=dict(
+        part="snippet,statistics,contentDetails", id=",".join(ids[i:i + 50]), key=API_KEY))
+    units += 1
+    for v in r.json().get("items", []):
+        s, st, cd = v["snippet"], v.get("statistics", {}), v["contentDetails"]
+        rows.append(dict(
+            video_id=v["id"], title=s["title"], channel_id=s["channelId"],
+            channel_title=s["channelTitle"], category_id=s["categoryId"],
+            published_at=s["publishedAt"], duration=cd["duration"],
+            audio_lang=s.get("defaultAudioLanguage"), default_lang=s.get("defaultLanguage"),
+            tags="|".join(s.get("tags", [])),
+            views=int(st["viewCount"]) if "viewCount" in st else None,
+            likes=int(st["likeCount"]) if "likeCount" in st else None,
+            comments=int(st["commentCount"]) if "commentCount" in st else None))
+
+stats = pd.DataFrame(rows)
+out = hit_df.merge(stats, on="video_id", how="left")
+out["snapshot_date"] = TODAY
+out.to_csv(f"{DATA_DIR}/topic_videos_{TODAY}.csv", index=False)
+print(f"Saved {len(out)} rows, {out.video_id.nunique()} unique videos. Quota used: ~{units}")
+Run it with python fetch_topics.py.
+
+One caution on the content gap score: videos_last_30d_est comes from the search API’s totalResults, which is an approximation and is capped, so treat it as a relative supply signal and not an exact count. I’ll note that on the dashboard.
+
+What to send me
+The last printed line from fetch_trends.py and from fetch_topics.py.
+The first 5 rows of trends_over_time_...csv, trends_by_state_...csv, keyword_supply_...csv and topic_videos_...csv.
+With those I can write the cleaning script that builds the star schema (including deduplication and anchor-based normalization), and then we move to Power BI and the MCP connection.
+
+Keep running fetch_trending.py and fetch_channels.py daily so your history builds.
+
+do u think these keywords are enough?
+
+Not for the final dashboard, but they’re enough for a first working version. I’d run this list once to test the whole pipeline, then expand.
+
+Why the current list is thin
+
+About 30 keywords means thin charts. Rising and declining analysis needs enough topics per category for the rankings to mean something. Aim for 60 to 100 keywords, with about 10 to 15 per category.
+Regional languages are underrepresented. I put only one term each in Hindi, Tamil and Telugu, and none in Kannada, Malayalam, Bengali, Marathi or Punjabi. That’s too few for a “regional language opportunities” page. Aim for 3 to 5 terms per language.
+Some categories are missing. Music, Movies, Cricket and sports, News, Health and fitness, Business and startups, and Beauty and lifestyle are major YouTube categories in India.
+My guesses are biased. A better source is your own data: the most frequent tags and title words in your trending CSV show what Indian viewers actually watch.
+Two mistakes in what I gave you
+
+Typo in keywords.py: "ट्रैवल वlog" mixes Devanagari and English letters. Change it to "ट्रैवल व्लॉग".
+“songs” is a poor anchor. It’s so large on YouTube that smaller keywords can be squashed to 0 or 1 on the index, which makes the normalization useless. Use a mid-sized, stable term instead, such as "recipe" or "cricket". Test a few in Google Trends (YouTube Search, India) and pick one that scores near 20 to 50 next to your typical keywords.
+How to expand without hitting limits
+
+Quota: each search costs 100 units, so the 9,000 guard allows about 85 searches a day. With 100 keywords, rotate: run 30 to 40 keywords per day on a schedule, and each keyword gets refreshed every 2 to 3 days.
+Trends has no quota, but more batches mean a higher chance of being blocked. Keep the pauses, and run it once a week, not daily.
+Suggested next step
+
+Run scripts 4 and 5 as they are now, so you can confirm the pipeline works and see real files.
+Send me the first rows as planned. I’ll also pull the top tags and title words from your trending CSV and propose a data-driven list of 60 to 100 keywords across more categories and languages.
+If you’d rather expand now, tell me which extra categories you care about and which regional languages matter most to you, and I’ll rewrite keywords.py before you run anything.
+

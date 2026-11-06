@@ -1,0 +1,4 @@
+/// Folder holding the star-schema CSVs from build_model.py (ends with a backslash).
+expression DataFolder = "D:\E\Placement\All projects\YouTube Trends Intelligence\data\model\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 6b5b01af-f178-4403-9e74-889265d79464
+

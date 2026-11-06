@@ -1,0 +1,80 @@
+/// One row per channel. About 22% have no country set (labelled Unknown).
+table dim_channel
+	lineageTag: dadc1ad6-f9d4-4dd2-b7f7-c87a9ad57bef
+
+	column channel_id
+		dataType: string
+		isKey
+		lineageTag: 549a909e-edbf-4955-b1a3-2c4f67d0bfd2
+		sourceColumn: channel_id
+
+	column channel_name
+		dataType: string
+		lineageTag: ecc010ff-bb23-4007-94ad-ff804347b2c3
+		sourceColumn: channel_name
+
+	column country
+		dataType: string
+		lineageTag: a44b4832-fab2-4a98-8cad-ba5ec612c8a3
+		sourceColumn: country
+
+	column channel_origin
+		dataType: string
+		lineageTag: d6f8a708-c308-4e4c-a7a0-9382f868bf78
+		sourceColumn: channel_origin
+
+	column created_at
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 30d016ae-afe9-4091-8947-5a5c55703464
+		summarizeBy: none
+		sourceColumn: created_at
+
+	column channel_age_years
+		dataType: double
+		formatString: 0.0
+		lineageTag: e0631ab8-0e8a-4c9b-bfc5-926e7062c4cc
+		summarizeBy: none
+		sourceColumn: channel_age_years
+
+	column subscribers
+		dataType: int64
+		formatString: #,0
+		lineageTag: ce6da242-acde-430e-9d95-825521c72cd4
+		summarizeBy: none
+		sourceColumn: subscribers
+
+	column subscribers_hidden
+		dataType: boolean
+		lineageTag: 07c88d8b-26db-4c58-89bd-2f6450f56824
+		sourceColumn: subscribers_hidden
+
+	column subscriber_tier
+		dataType: string
+		lineageTag: 389d91ea-12ff-408b-818b-ef1a061b8c1c
+		sourceColumn: subscriber_tier
+
+	column total_views
+		dataType: int64
+		formatString: #,0
+		lineageTag: 9be182bc-57e3-4959-b62b-794bb964855f
+		summarizeBy: none
+		sourceColumn: total_views
+
+	column video_count
+		dataType: int64
+		formatString: #,0
+		lineageTag: 58f077bd-ae1e-4526-b5fe-44ed460fc8bd
+		summarizeBy: none
+		sourceColumn: video_count
+
+	partition dim_channel = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "dim_channel.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"channel_id", type text}, {"channel_name", type text}, {"country", type text}, {"channel_origin", type text}, {"created_at", type datetime}, {"channel_age_years", type number}, {"subscribers", Int64.Type}, {"subscribers_hidden", type logical}, {"subscriber_tier", type text}, {"total_views", Int64.Type}, {"video_count", Int64.Type}}, "en-US")
+				in
+				    Typed
+

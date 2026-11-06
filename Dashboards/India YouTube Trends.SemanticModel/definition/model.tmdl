@@ -1,0 +1,30 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["MCP-PBIModeling","DevMode"]
+
+ref table dim_category
+ref table dim_date
+ref table dim_video
+ref table dim_channel
+ref table dim_language
+ref table dim_keyword
+ref table dim_state
+ref table fact_video_snapshot
+ref table fact_channel_snapshot
+ref table fact_trends_keyword
+ref table fact_trends_region
+ref table fact_keyword_opportunity
+ref table bridge_keyword_video
+ref table _Measures
+
+ref cultureInfo en-US
+

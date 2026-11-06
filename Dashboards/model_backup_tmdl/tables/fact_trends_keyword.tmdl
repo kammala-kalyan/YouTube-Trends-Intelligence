@@ -1,0 +1,50 @@
+/// Google Trends (YouTube Search, India) weekly interest per keyword. interest_norm is made comparable across batches via the 'cricket' anchor.
+table fact_trends_keyword
+	lineageTag: dfa6bcf8-0c18-4601-ae90-2e306a7bd2ca
+
+	column date
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 10ed5b01-4af9-4134-8f20-edf4c83c96b8
+		summarizeBy: none
+		sourceColumn: date
+
+	column keyword
+		dataType: string
+		isHidden
+		lineageTag: ba187708-10c9-4fc9-938a-f5c6a584b728
+		sourceColumn: keyword
+
+	column interest_raw
+		dataType: double
+		formatString: 0.0
+		lineageTag: 50a50bfa-c64f-4a48-93c9-7773d8992f1d
+		summarizeBy: none
+		sourceColumn: interest_raw
+
+	column interest_norm
+		dataType: double
+		formatString: 0.0
+		lineageTag: 03361de2-771c-45c4-897d-e99b98a1c451
+		summarizeBy: none
+		sourceColumn: interest_norm
+
+	column snapshot_date
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: c4272320-4465-4949-8e0b-e54b0d332d1b
+		summarizeBy: none
+		sourceColumn: snapshot_date
+
+	partition fact_trends_keyword = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "fact_trends_keyword.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"date", type date}, {"keyword", type text}, {"interest_raw", type number}, {"interest_norm", type number}, {"snapshot_date", type date}}, "en-US")
+				in
+				    Typed
+

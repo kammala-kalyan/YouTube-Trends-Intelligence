@@ -1,0 +1,93 @@
+/// One row per keyword: demand, growth, supply and content gap score (0-100 = 40% demand + 30% growth + 30% small-channel share, as percentiles).
+table fact_keyword_opportunity
+	lineageTag: af98b222-0f12-468e-b053-ea5de976f3ce
+
+	column keyword
+		dataType: string
+		isHidden
+		lineageTag: cdac4d90-af48-43ff-9069-8ce180359c18
+		sourceColumn: keyword
+
+	column demand_index
+		dataType: double
+		formatString: 0.0
+		lineageTag: 0df80342-5ee3-4292-924b-54b575258675
+		summarizeBy: none
+		sourceColumn: demand_index
+
+	column growth_12w
+		dataType: double
+		formatString: 0.0%
+		lineageTag: ea05645a-c732-46b6-8a5c-7abcea1d7e19
+		summarizeBy: none
+		sourceColumn: growth_12w
+
+	column growth_yoy
+		dataType: double
+		formatString: 0.0%
+		lineageTag: e831e13d-41a0-4368-95c3-73ab6b99293a
+		summarizeBy: none
+		sourceColumn: growth_yoy
+
+	column trend_status
+		dataType: string
+		lineageTag: 4c6bcfd5-6c60-4443-8351-df7731a0183a
+		sourceColumn: trend_status
+
+	column videos_last_30d_est
+		dataType: int64
+		formatString: #,0
+		lineageTag: 461d2d96-2915-4c9d-ab82-c6d192b7d659
+		summarizeBy: none
+		sourceColumn: videos_last_30d_est
+
+	column supply_snapshot_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: d44b193d-593d-4071-a120-df9ccda2d37b
+		summarizeBy: none
+		sourceColumn: supply_snapshot_date
+
+	column top_videos_median_views
+		dataType: double
+		formatString: #,0
+		lineageTag: 5b81d58d-4c19-4b60-bfe8-10a3bd92acd2
+		summarizeBy: none
+		sourceColumn: top_videos_median_views
+
+	column top_videos_avg_views
+		dataType: double
+		formatString: #,0
+		lineageTag: 40ba3205-d5ca-4261-9fb6-a427eb5f0e96
+		summarizeBy: none
+		sourceColumn: top_videos_avg_views
+
+	column small_channel_share
+		dataType: double
+		formatString: 0.0%
+		lineageTag: cbda7eed-4efa-4243-8af2-9cf35cf8d099
+		summarizeBy: none
+		sourceColumn: small_channel_share
+
+	column supply_capped
+		dataType: boolean
+		lineageTag: cef16703-f1ce-47ef-bcb8-4b573611545a
+		sourceColumn: supply_capped
+
+	column content_gap_score
+		dataType: double
+		formatString: 0.0
+		lineageTag: 8f70cdb6-f2ca-44b2-897d-3d47d00bff6b
+		summarizeBy: none
+		sourceColumn: content_gap_score
+
+	partition fact_keyword_opportunity = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "fact_keyword_opportunity.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"keyword", type text}, {"demand_index", type number}, {"growth_12w", type number}, {"growth_yoy", type number}, {"trend_status", type text}, {"videos_last_30d_est", Int64.Type}, {"supply_snapshot_date", type date}, {"top_videos_median_views", type number}, {"top_videos_avg_views", type number}, {"small_channel_share", type number}, {"supply_capped", type logical}, {"content_gap_score", type number}}, "en-US")
+				in
+				    Typed
+

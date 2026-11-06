@@ -1,0 +1,62 @@
+relationship fact_video_snapshot_video_id_dim_video_video_id
+	fromColumn: fact_video_snapshot.video_id
+	toColumn: dim_video.video_id
+
+relationship fact_video_snapshot_snapshot_date_dim_date_date
+	fromColumn: fact_video_snapshot.snapshot_date
+	toColumn: dim_date.date
+
+relationship dim_video_channel_id_dim_channel_channel_id
+	fromColumn: dim_video.channel_id
+	toColumn: dim_channel.channel_id
+
+relationship dim_video_category_id_dim_category_category_id
+	fromColumn: dim_video.category_id
+	toColumn: dim_category.category_id
+
+relationship dim_video_language_dim_language_language
+	fromColumn: dim_video.language
+	toColumn: dim_language.language
+
+relationship fact_channel_snapshot_channel_id_dim_channel_channel_id
+	fromColumn: fact_channel_snapshot.channel_id
+	toColumn: dim_channel.channel_id
+
+relationship fact_channel_snapshot_snapshot_date_dim_date_date
+	fromColumn: fact_channel_snapshot.snapshot_date
+	toColumn: dim_date.date
+
+relationship fact_trends_keyword_keyword_dim_keyword_keyword
+	fromColumn: fact_trends_keyword.keyword
+	toColumn: dim_keyword.keyword
+
+relationship fact_trends_keyword_date_dim_date_date
+	fromColumn: fact_trends_keyword.date
+	toColumn: dim_date.date
+
+relationship fact_trends_region_keyword_dim_keyword_keyword
+	fromColumn: fact_trends_region.keyword
+	toColumn: dim_keyword.keyword
+
+relationship fact_trends_region_state_dim_state_state
+	fromColumn: fact_trends_region.state
+	toColumn: dim_state.state
+
+relationship fact_keyword_opportunity_keyword_dim_keyword_keyword
+	fromColumn: fact_keyword_opportunity.keyword
+	toColumn: dim_keyword.keyword
+
+relationship bridge_keyword_video_keyword_dim_keyword_keyword
+	fromColumn: bridge_keyword_video.keyword
+	toColumn: dim_keyword.keyword
+
+relationship bridge_keyword_video_video_id_dim_video_video_id
+	crossFilteringBehavior: bothDirections
+	fromColumn: bridge_keyword_video.video_id
+	toColumn: dim_video.video_id
+
+relationship dim_video_published_date_dim_date_date
+	isActive: false
+	fromColumn: dim_video.published_date
+	toColumn: dim_date.date
+

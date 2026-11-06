@@ -1,0 +1,188 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "Fluent2-CY26SU10",
+      "reportVersionAtImport": {
+        "visual": "2.14.0",
+        "report": "3.4.0",
+        "page": "2.3.1"
+      },
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "youtube_light_theme.json",
+      "reportVersionAtImport": {
+        "visual": "2.14.0",
+        "report": "3.4.0",
+        "page": "2.3.1"
+      },
+      "type": "RegisteredResources"
+    }
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "Fluent2-CY26SU10",
+          "path": "BaseThemes/Fluent2-CY26SU10.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "accent_bar.svg",
+          "path": "accent_bar.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_calendar.svg",
+          "path": "icon_calendar.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_category.svg",
+          "path": "icon_category.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_channels.svg",
+          "path": "icon_channels.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_declining.svg",
+          "path": "icon_declining.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_engagement.svg",
+          "path": "icon_engagement.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_gap.svg",
+          "path": "icon_gap.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_growth.svg",
+          "path": "icon_growth.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_interest.svg",
+          "path": "icon_interest.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_keywords.svg",
+          "path": "icon_keywords.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_language.svg",
+          "path": "icon_language.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_median.svg",
+          "path": "icon_median.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_perday.svg",
+          "path": "icon_perday.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_rising.svg",
+          "path": "icon_rising.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_shorts.svg",
+          "path": "icon_shorts.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_smallch.svg",
+          "path": "icon_smallch.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_state.svg",
+          "path": "icon_state.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_subscribers.svg",
+          "path": "icon_subscribers.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_trending.svg",
+          "path": "icon_trending.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_videos.svg",
+          "path": "icon_videos.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_views.svg",
+          "path": "icon_views.svg",
+          "type": "Image"
+        },
+        {
+          "name": "youtube_light_theme.json",
+          "path": "youtube_light_theme.json",
+          "type": "CustomTheme"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true
+  }
+}

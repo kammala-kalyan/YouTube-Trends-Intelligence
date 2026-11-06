@@ -1,0 +1,69 @@
+/// Google Trends interest by state per keyword. state_index is 0-100 within a keyword; ratio_to_anchor compares with 'cricket'.
+table fact_trends_region
+	lineageTag: 030a556b-8419-49b0-baaa-39a100f7e0be
+
+	column keyword
+		dataType: string
+		isHidden
+		lineageTag: 898c0017-9eb2-4a1f-a429-4f0a5249cbb1
+		sourceColumn: keyword
+
+	column state
+		dataType: string
+		isHidden
+		lineageTag: 1cec1e58-7d92-4aad-be71-e812073563ec
+		dataCategory: StateOrProvince
+		sourceColumn: state
+
+	column state_map_name
+		dataType: string
+		isHidden
+		lineageTag: 870016d0-000c-40b0-93fb-e80f46a1a21f
+		dataCategory: Place
+		sourceColumn: state_map_name
+
+	column zone
+		dataType: string
+		isHidden
+		lineageTag: ef4b70ba-abc1-4819-a377-e577c6d7be3d
+		sourceColumn: zone
+
+	column interest_share
+		dataType: double
+		formatString: 0.0
+		lineageTag: 0e6f9234-dd0f-4be6-b2fb-349651ce4cb4
+		summarizeBy: none
+		sourceColumn: interest_share
+
+	column ratio_to_anchor
+		dataType: double
+		formatString: 0.00
+		lineageTag: 72ea3776-1571-4c0e-92a8-7694f3c457aa
+		summarizeBy: none
+		sourceColumn: ratio_to_anchor
+
+	column state_index
+		dataType: double
+		formatString: 0.0
+		lineageTag: 20c2f88b-639b-4a34-90ae-8309e968d7fc
+		summarizeBy: none
+		sourceColumn: state_index
+
+	column snapshot_date
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 8f9dcfcc-72de-4ad1-ae0f-1f70bd61d294
+		summarizeBy: none
+		sourceColumn: snapshot_date
+
+	partition fact_trends_region = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "fact_trends_region.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"keyword", type text}, {"state", type text}, {"state_map_name", type text}, {"zone", type text}, {"interest_share", type number}, {"ratio_to_anchor", type number}, {"state_index", type number}, {"snapshot_date", type date}}, "en-US")
+				in
+				    Typed
+

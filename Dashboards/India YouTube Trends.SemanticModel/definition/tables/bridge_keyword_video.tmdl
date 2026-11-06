@@ -1,0 +1,32 @@
+/// Which keyword search returned which video. Lets a keyword slicer filter videos.
+table bridge_keyword_video
+	isHidden
+	lineageTag: 83f15b51-a50f-4139-a6ff-cdbfc131b93b
+
+	column snapshot_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: ea6c3313-5f41-4b69-83f4-929d4b25a317
+		summarizeBy: none
+		sourceColumn: snapshot_date
+
+	column keyword
+		dataType: string
+		lineageTag: 2688c110-4e3d-4167-862f-54650822560c
+		sourceColumn: keyword
+
+	column video_id
+		dataType: string
+		lineageTag: 7abfe51a-a0e1-4522-aca9-f8c79cde60a7
+		sourceColumn: video_id
+
+	partition bridge_keyword_video = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "bridge_keyword_video.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"snapshot_date", type date}, {"keyword", type text}, {"video_id", type text}}, "en-US")
+				in
+				    Typed
+

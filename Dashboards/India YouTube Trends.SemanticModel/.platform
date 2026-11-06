@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "India YouTube Trends"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ec7ff9e2-87d1-49b8-96ff-ee6b9cd1d4e5"
+  }
+}

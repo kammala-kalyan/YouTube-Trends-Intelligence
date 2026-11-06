@@ -1,0 +1,110 @@
+/// One row per video seen in trending charts or keyword searches. Language = audio track, else title script, else default language.
+table dim_video
+	lineageTag: 5f70d883-d175-4a47-b4b6-d47a18b3b8ab
+
+	column video_id
+		dataType: string
+		isKey
+		lineageTag: 6dc7f762-a38b-4b5f-b6d2-c933229ee694
+		sourceColumn: video_id
+
+	column title
+		dataType: string
+		lineageTag: 4a5ff0ad-679f-474e-84c8-a5be3f9af73d
+		sourceColumn: title
+
+	column channel_id
+		dataType: string
+		isHidden
+		lineageTag: 22ae33ba-62b7-4f20-905f-3d6434caae35
+		sourceColumn: channel_id
+
+	column category_id
+		dataType: string
+		isHidden
+		lineageTag: 2ac50670-9cf7-4d62-99df-a765b1321a40
+		sourceColumn: category_id
+
+	column published_at
+		dataType: dateTime
+		formatString: yyyy-mm-dd hh:nn
+		lineageTag: 2f85167b-ef56-455b-a2eb-b333ee2424b0
+		summarizeBy: none
+		sourceColumn: published_at
+
+	column published_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 62a94fbe-9499-4e16-9f06-21edb07106e7
+		summarizeBy: none
+		sourceColumn: published_date
+
+	column publish_hour_ist
+		dataType: int64
+		formatString: 0
+		lineageTag: 8a3ff287-a82e-48e2-b54f-382671a72b22
+		summarizeBy: none
+		sourceColumn: publish_hour_ist
+
+	column duration_sec
+		dataType: int64
+		formatString: #,0
+		lineageTag: b9246a5d-0d88-4e35-90cd-b4fad6356975
+		summarizeBy: none
+		sourceColumn: duration_sec
+
+	column duration_bucket
+		dataType: string
+		lineageTag: 222b4d03-4085-4133-8a70-3a74c9495c74
+		sourceColumn: duration_bucket
+
+	column is_short
+		dataType: boolean
+		lineageTag: a8a0cf09-2e89-4207-8c01-66ea81f58d8d
+		sourceColumn: is_short
+
+	column language
+		dataType: string
+		isHidden
+		lineageTag: 02b6c522-4517-4f2d-a077-dff93f163efa
+		sourceColumn: language
+
+	column language_source
+		dataType: string
+		lineageTag: 9b54c93e-ddfb-4568-81c0-60482c5633e1
+		sourceColumn: language_source
+
+	column title_script
+		dataType: string
+		lineageTag: 8e86c9eb-5297-4ce3-90bb-61bec2be2d51
+		sourceColumn: title_script
+
+	column tag_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d0b9ff0-b44a-4c1e-9bf2-c52b328c4e11
+		summarizeBy: none
+		sourceColumn: tag_count
+
+	column title_length
+		dataType: int64
+		formatString: 0
+		lineageTag: c4f91690-0035-4efa-8dcd-40698f51b2d8
+		summarizeBy: none
+		sourceColumn: title_length
+
+	column tags
+		dataType: string
+		lineageTag: a3cb3fa3-0ac4-41df-b153-ebb67d037700
+		sourceColumn: tags
+
+	partition dim_video = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(DataFolder & "dim_video.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"video_id", type text}, {"title", type text}, {"channel_id", type text}, {"category_id", type text}, {"published_at", type datetime}, {"published_date", type date}, {"publish_hour_ist", Int64.Type}, {"duration_sec", Int64.Type}, {"duration_bucket", type text}, {"is_short", type logical}, {"language", type text}, {"language_source", type text}, {"title_script", type text}, {"tag_count", Int64.Type}, {"title_length", Int64.Type}, {"tags", type text}}, "en-US")
+				in
+				    Typed
+

@@ -386,7 +386,7 @@ cultureInfo en-US
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Growth": {
+			          "Growth (12 wk)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -456,6 +456,16 @@ cultureInfo en-US
 			      },
 			      "State": "Generated",
 			      "Terms": [
+			        {
+			          "Search score": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
 			        {
 			          "Average search score": {
 			            "State": "Suggested",

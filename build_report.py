@@ -200,9 +200,9 @@ HELPERS = [
      '\t\t\tVAR p1 = IF(ISBLANK(ratio), BLANK(), IF(ratio >= 1, "Shorts get " & FORMAT(ratio, "0.0") & "x the views", "Long-form gets " & FORMAT(DIVIDE(1, ratio), "0.0") & "x the views") & IF(el > es, ", long-form more engagement", IF(es > el, ", Shorts more engagement", "")))\n'
      "\t\t\tVAR sc = [Small Channels in Top Results]\n"
      '\t\t\tVAR young = DIVIDE(CALCULATE([Small Channels in Top Results], dim_channel[channel_age_bucket] = "1. Under 1 year"), sc)\n'
-     '\t\t\tVAR p2 = IF(ISBLANK(sc), BLANK(), FORMAT(young, "0%") & " of small channels in top results are under 1 year old")\n'
+     '\t\t\tVAR p2 = IF(ISBLANK(sc), BLANK(), FORMAT(young, "0%") & " of top small channels are under 1 year old")\n'
      "\t\t\tVAR up = [Median Uploads per Month (Small)]\n"
-     '\t\t\tVAR p3 = IF(ISBLANK(up), BLANK(), "they post ~" & FORMAT(up, "0") & " videos a month")\n'
+     '\t\t\tVAR p3 = IF(ISBLANK(up), BLANK(), "~" & FORMAT(up, "0") & " uploads a month")\n'
      "\t\t\tVAR parts = FILTER({(1, p1), (2, p2), (3, p3)}, NOT ISBLANK([Value2]))\n"
      '\t\t\tRETURN CONCATENATEX(parts, [Value2], "  ·  ", [Value1], ASC)',
      "One-line summary for the Make it & grow it page.", "Labels"),
@@ -801,7 +801,7 @@ def build_pages():
     h2 = BODY_END - y2
     qw = (full - 3 * G) / 4
     kw_cols = [proj(col("dim_keyword", "keyword"), "Keyword"), proj(mea("Trend Label"), "Trend"), proj(mea("Interest MoM %"), "vs last month")]
-    kw_widths = {"dim_keyword.keyword": 130, "_Measures.Trend Label": 85, "_Measures.Interest MoM %": 70}
+    kw_widths = {"dim_keyword.keyword": 110, "_Measures.Trend Label": 78, "_Measures.Interest MoM %": 76}
     v_up = table(p, M, y2, qw, h2, kw_cols, "Rising fastest", "Biggest increase in searches vs last month",
                  filters=[f_exclude_anchor(), f_measure("Interest MoM %", "gt", 0.0), f_measure("Recent Interest", "ge", 0.5), f_topn("dim_keyword", "keyword", "Interest MoM %", 5)],
                  sort=(mea("Interest MoM %"), "Descending"), status_colour=True, tooltip_page=TIP, widths=kw_widths, name="risingfast")
@@ -837,8 +837,8 @@ def build_pages():
     bh = 160
     rh = BODY_END - BODY_Y - G - bh
     scatter(p, M, BODY_Y, half, rh, ("dim_keyword", "keyword", "Keyword"), "Demand Index", "Growth 12w %", "Small Channel Share",
-            "Opportunity map", "Right = more demand than average · up = growing · dark red = Hot · bubble = small-channel share",
-            filters=[f_exclude_anchor()], tooltip_page=TIP, name="oppscatter", colour_measure="Quadrant Color", labels=False, log_x=True)
+            "Opportunity map", "Right = more demand (log scale) · up = growing · dark red = Hot · bubble = small-channel share",
+            filters=[f_exclude_anchor(), f_measure("Demand Index", "gt", 0.0)], tooltip_page=TIP, name="oppscatter", colour_measure="Quadrant Color", labels=False, log_x=True)
     # Trend column removed (screenshot review 1): "last month" vs Growth's 12 weeks looked contradictory
     matrix(p, M + half + G, BODY_Y, half, rh, ("dim_keyword", "topic_group", "Topic"), ("dim_keyword", "keyword_language", "Language"),
            "Demand Within Language", "Heat Color Demand", "Heat Font Demand", "Which topics lead within each language?",

@@ -1,17 +1,16 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "bar7",
   "position": {
     "x": 438.67,
-    "y": 485.0,
+    "y": 485,
     "z": 23000,
-    "height": 203.0,
+    "height": 203,
     "width": 402.67,
     "tabOrder": 23000
   },
   "visual": {
     "visualType": "clusteredColumnChart",
-    "drillFilterOtherVisuals": true,
     "query": {
       "queryState": {
         "Category": {
@@ -28,7 +27,8 @@
                 }
               },
               "queryRef": "dim_channel.channel_age_bucket",
-              "nativeQueryRef": "channel_age_bucket"
+              "nativeQueryRef": "channel_age_bucket",
+              "active": true
             }
           ]
         },
@@ -67,8 +67,7 @@
             },
             "direction": "Ascending"
           }
-        ],
-        "isDefaultSort": false
+        ]
       }
     },
     "objects": {
@@ -331,7 +330,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   },
   "filterConfig": {
     "filters": [

@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "iconshorts2",
   "position": {
-    "x": 660.0,
-    "y": 199.0,
+    "x": 660,
+    "y": 199,
     "z": 15000,
     "height": 40,
     "width": 40,

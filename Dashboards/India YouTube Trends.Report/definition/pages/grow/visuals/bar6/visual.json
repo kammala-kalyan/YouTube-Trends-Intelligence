@@ -1,17 +1,16 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "bar6",
   "position": {
     "x": 24,
-    "y": 485.0,
+    "y": 485,
     "z": 22000,
-    "height": 203.0,
+    "height": 203,
     "width": 402.67,
     "tabOrder": 22000
   },
   "visual": {
     "visualType": "clusteredColumnChart",
-    "drillFilterOtherVisuals": true,
     "query": {
       "queryState": {
         "Category": {
@@ -28,25 +27,8 @@
                 }
               },
               "queryRef": "dim_channel.subscriber_tier",
-              "nativeQueryRef": "subscriber_tier"
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Median Views"
-                }
-              },
-              "queryRef": "_Measures.Median Views",
-              "nativeQueryRef": "Median Views"
+              "nativeQueryRef": "subscriber_tier",
+              "active": true
             }
           ]
         },
@@ -67,6 +49,24 @@
               "nativeQueryRef": "Videos Tracked"
             }
           ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Median Views"
+                }
+              },
+              "queryRef": "_Measures.Median Views",
+              "nativeQueryRef": "Median Views"
+            }
+          ]
         }
       },
       "sortDefinition": {
@@ -84,8 +84,7 @@
             },
             "direction": "Ascending"
           }
-        ],
-        "isDefaultSort": false
+        ]
       }
     },
     "objects": {
@@ -355,7 +354,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   },
   "filterConfig": {
     "filters": [

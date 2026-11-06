@@ -1,17 +1,16 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "oppscatter",
   "position": {
     "x": 24,
     "y": 270,
     "z": 20000,
     "height": 246,
-    "width": 610.0,
+    "width": 610,
     "tabOrder": 20000
   },
   "visual": {
     "visualType": "scatterChart",
-    "drillFilterOtherVisuals": true,
     "query": {
       "queryState": {
         "Category": {
@@ -29,43 +28,8 @@
               },
               "queryRef": "dim_keyword.keyword",
               "nativeQueryRef": "keyword",
+              "active": true,
               "displayName": "Keyword"
-            }
-          ]
-        },
-        "X": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Demand Index"
-                }
-              },
-              "queryRef": "_Measures.Demand Index",
-              "nativeQueryRef": "Demand Index"
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Growth 12w %"
-                }
-              },
-              "queryRef": "_Measures.Growth 12w %",
-              "nativeQueryRef": "Growth 12w %"
             }
           ]
         },
@@ -84,6 +48,43 @@
               },
               "queryRef": "_Measures.Small Channel Share",
               "nativeQueryRef": "Small Channel Share"
+            }
+          ]
+        },
+        "X": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Demand Index"
+                }
+              },
+              "queryRef": "_Measures.Demand Index",
+              "nativeQueryRef": "Demand Index",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Growth 12w %"
+                }
+              },
+              "queryRef": "_Measures.Growth 12w %",
+              "nativeQueryRef": "Growth 12w %"
             }
           ]
         }
@@ -294,7 +295,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Right = more demand than average · up = growing · dark red = Hot · bubble = small-channel share'"
+                  "Value": "'Right = more demand (log scale) · up = growing · dark red = Hot · bubble = small-channel share'"
                 }
               }
             },
@@ -373,7 +374,8 @@
           }
         }
       ]
-    }
+    },
+    "drillFilterOtherVisuals": true
   },
   "filterConfig": {
     "filters": [
@@ -424,6 +426,55 @@
                       }
                     ]
                   ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      },
+      {
+        "name": "fmdemandpos",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Demand Index"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "_Measures",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 1,
+                  "Left": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "m"
+                        }
+                      },
+                      "Property": "Demand Index"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "0D"
+                    }
+                  }
                 }
               }
             }

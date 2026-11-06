@@ -553,8 +553,7 @@ table _Measures
 		lineageTag: 6ac45418-f526-4370-94e4-41f8490ae3da
 
 	/// Trend Status with an arrow, for tables. Colour it with [Trend Status Color].
-	measure 'Trend Label' =
-			SWITCH([Trend Status],"Rising", "▲ Rising", "Declining", "▼ Declining", "Stable", "● Stable", "Low volume", "○ Low volume")
+	measure 'Trend Label' = SWITCH([Trend Status],"Rising", "▲ Rising", "Declining", "▼ Declining", "Stable", "● Stable", "Low volume", "○ Low volume")
 		displayFolder: Trends
 		lineageTag: b35b4feb-c39e-4e24-b298-2c8598313e8e
 
@@ -658,17 +657,16 @@ table _Measures
 			VAR p1 = IF(ISBLANK(ratio), BLANK(), IF(ratio >= 1, "Shorts get " & FORMAT(ratio, "0.0") & "x the views", "Long-form gets " & FORMAT(DIVIDE(1, ratio), "0.0") & "x the views") & IF(el > es, ", long-form more engagement", IF(es > el, ", Shorts more engagement", "")))
 			VAR sc = [Small Channels in Top Results]
 			VAR young = DIVIDE(CALCULATE([Small Channels in Top Results], dim_channel[channel_age_bucket] = "1. Under 1 year"), sc)
-			VAR p2 = IF(ISBLANK(sc), BLANK(), FORMAT(young, "0%") & " of small channels in top results are under 1 year old")
+			VAR p2 = IF(ISBLANK(sc), BLANK(), FORMAT(young, "0%") & " of top small channels are under 1 year old")
 			VAR up = [Median Uploads per Month (Small)]
-			VAR p3 = IF(ISBLANK(up), BLANK(), "they post ~" & FORMAT(up, "0") & " videos a month")
+			VAR p3 = IF(ISBLANK(up), BLANK(), "~" & FORMAT(up, "0") & " uploads a month")
 			VAR parts = FILTER({(1, p1), (2, p2), (3, p3)}, NOT ISBLANK([Value2]))
 			RETURN CONCATENATEX(parts, [Value2], "  ·  ", [Value1], ASC)
 		displayFolder: Labels
 		lineageTag: 050a0e79-96c4-4335-abe6-02e09fa6ae4a
 
 	/// State Index relative to the strongest state in view (0-1). The map hides states below 0.1 so it zooms to where searches come from.
-	measure 'Map Strength' =
-			DIVIDE([State Index], MAXX(CALCULATETABLE(VALUES(dim_state[state_map_name]), ALLSELECTED(dim_state), dim_state[is_small_region] = FALSE()), [State Index]))
+	measure 'Map Strength' = DIVIDE([State Index], MAXX(CALCULATETABLE(VALUES(dim_state[state_map_name]), ALLSELECTED(dim_state), dim_state[is_small_region] = FALSE()), [State Index]))
 		displayFolder: Regions
 		lineageTag: 31edd2e8-1d65-472c-b9bf-16a7c151469c
 
@@ -688,12 +686,12 @@ table _Measures
 			VAR v = [Demand Index]
 			VAR mx = MAXX(ALLSELECTED(dim_keyword[topic_group]), [Demand Index])
 			RETURN IF(ISBLANK(v), BLANK(), 100 * DIVIDE(v, mx))
+		formatString: 0
 		displayFolder: Opportunities
 		lineageTag: cb35d602-99c6-42fb-b7a2-fd21390ba374
 
 	/// Average search score over the last month (cricket scale). Below 0.5 a keyword counts as Low volume.
-	measure 'Recent Interest' =
-			CALCULATE([Interest], DATESINPERIOD(dim_date[date], MAX(dim_date[date]), -1, MONTH))
+	measure 'Recent Interest' = CALCULATE([Interest], DATESINPERIOD(dim_date[date], MAX(dim_date[date]), -1, MONTH))
 		displayFolder: Trends
 		lineageTag: a49312d8-eaf8-455c-ae84-297c976cf13d
 

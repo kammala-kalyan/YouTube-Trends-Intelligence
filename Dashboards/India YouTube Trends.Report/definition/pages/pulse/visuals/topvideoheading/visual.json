@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "topvideoheading",
   "position": {
-    "x": 969.0,
+    "x": 969,
     "y": 490,
     "z": 25000,
     "height": 38,
-    "width": 275.0,
+    "width": 275,
     "tabOrder": 25000
   },
   "visual": {

@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "iconperday",
   "position": {
-    "x": 971.0,
-    "y": 199.0,
+    "x": 971,
+    "y": 199,
     "z": 17000,
     "height": 40,
     "width": 40,

@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "topvideo",
   "position": {
-    "x": 957.0,
+    "x": 957,
     "y": 528,
     "z": 26000,
     "height": 120,
-    "width": 299.0,
+    "width": 299,
     "tabOrder": 26000
   },
   "visual": {

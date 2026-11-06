@@ -74,20 +74,13 @@ table fact_keyword_opportunity
 		lineageTag: cef16703-f1ce-47ef-bcb8-4b573611545a
 		sourceColumn: supply_capped
 
-	column content_gap_score
-		dataType: double
-		formatString: 0.0
-		lineageTag: 8f70cdb6-f2ca-44b2-897d-3d47d00bff6b
-		summarizeBy: none
-		sourceColumn: content_gap_score
-
 	partition fact_keyword_opportunity = m
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(File.Contents(DataFolder & "fact_keyword_opportunity.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Source = Csv.Document(Web.Contents(DataFolder & "fact_keyword_opportunity.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
-				    Typed = Table.TransformColumnTypes(Promoted, {{"keyword", type text}, {"demand_index", type number}, {"growth_12w", type number}, {"growth_yoy", type number}, {"trend_status", type text}, {"videos_last_30d_est", Int64.Type}, {"supply_snapshot_date", type date}, {"top_videos_median_views", type number}, {"top_videos_avg_views", type number}, {"small_channel_share", type number}, {"supply_capped", type logical}, {"content_gap_score", type number}}, "en-US")
+				    Typed = Table.TransformColumnTypes(Promoted, {{"keyword", type text}, {"demand_index", type number}, {"growth_12w", type number}, {"growth_yoy", type number}, {"trend_status", type text}, {"videos_last_30d_est", Int64.Type}, {"supply_snapshot_date", type date}, {"top_videos_median_views", type number}, {"top_videos_avg_views", type number}, {"small_channel_share", type number}, {"supply_capped", type logical}}, "en-US")
 				in
 				    Typed
 

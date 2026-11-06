@@ -1,0 +1,103 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "pulse",
+  "displayName": "Market pulse",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "visualInteractions": [
+    {
+      "source": "slicer2",
+      "target": "pulseline",
+      "type": "NoFilter"
+    },
+    {
+      "source": "slicer2",
+      "target": "season",
+      "type": "NoFilter"
+    },
+    {
+      "source": "slicer2",
+      "target": "risingfast",
+      "type": "NoFilter"
+    },
+    {
+      "source": "slicer2",
+      "target": "fallingfast",
+      "type": "NoFilter"
+    },
+    {
+      "source": "slicer2",
+      "target": "kpirisingkeywords",
+      "type": "NoFilter"
+    },
+    {
+      "source": "slicer3",
+      "target": "pulseline",
+      "type": "NoFilter"
+    },
+    {
+      "source": "slicer3",
+      "target": "season",
+      "type": "NoFilter"
+    },
+    {
+      "source": "slicer3",
+      "target": "risingfast",
+      "type": "NoFilter"
+    },
+    {
+      "source": "slicer3",
+      "target": "fallingfast",
+      "type": "NoFilter"
+    },
+    {
+      "source": "slicer3",
+      "target": "kpirisingkeywords",
+      "type": "NoFilter"
+    }
+  ],
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#ffffff'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspace": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#ffffff'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

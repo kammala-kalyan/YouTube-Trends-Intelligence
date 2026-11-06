@@ -95,7 +95,7 @@ table fact_video_snapshot
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(File.Contents(DataFolder & "fact_video_snapshot.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Source = Csv.Document(Web.Contents(DataFolder & "fact_video_snapshot.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    Typed = Table.TransformColumnTypes(Promoted, {{"snapshot_date", type date}, {"video_id", type text}, {"views", Int64.Type}, {"likes", Int64.Type}, {"comments", Int64.Type}, {"in_trending", type logical}, {"in_topic_search", type logical}, {"trending_rank_overall", Int64.Type}, {"trending_rank_category", Int64.Type}, {"charts_count", Int64.Type}, {"days_since_publish", type number}, {"views_per_day", type number}, {"likes_hidden", type logical}, {"engagement_rate", type number}}, "en-US")
 				in

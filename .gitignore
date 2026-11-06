@@ -1,5 +1,9 @@
+# secrets and local environment
 .env
-data/
-logs/
-__pycache__/
 venv/
+__pycache__/
+logs/
+
+# Power BI Desktop local files (cache holds data; settings are per machine)
+**/.pbi/localSettings.json
+**/.pbi/cache.abf

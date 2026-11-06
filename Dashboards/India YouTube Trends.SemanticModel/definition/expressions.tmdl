@@ -1,4 +1,4 @@
-/// Folder holding the star-schema CSVs from build_model.py (ends with a backslash).
-expression DataFolder = "D:\E\Placement\All projects\YouTube Trends Intelligence\data\model\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+/// Where the star-schema CSVs are read from: data/model/ in the public GitHub repo (updated daily by GitHub Actions). Ends with a slash. For local testing, point it at a local folder and switch Web.Contents back to File.Contents.
+expression DataFolder = "https://raw.githubusercontent.com/kammala-kalyan/YouTube-Trends-Intelligence/main/data/model/" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
 	lineageTag: 6b5b01af-f178-4403-9e74-889265d79464
 

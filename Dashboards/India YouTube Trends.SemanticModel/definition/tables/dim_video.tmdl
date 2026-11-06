@@ -98,11 +98,44 @@ table dim_video
 		lineageTag: a3cb3fa3-0ac4-41df-b153-ebb67d037700
 		sourceColumn: tags
 
+	/// Shorts or Long-form, as a readable label.
+	column video_format = IF(dim_video[is_short], "Shorts", "Long-form")
+		dataType: string
+		lineageTag: 4d372fc3-c56a-4e5e-8c0b-2ecb4fe89469
+		summarizeBy: none
+
+	/// Upload day number in IST (1 = Monday). Sort column for publish_weekday.
+	column publish_weekday_num = WEEKDAY(dim_video[published_at] + 5.5 / 24, 2)
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d478cc77-50d9-42c3-ae11-082c9ca42327
+		summarizeBy: none
+
+	/// Upload day of week in IST (Mon-Sun).
+	column publish_weekday = FORMAT(dim_video[published_at] + 5.5 / 24, "ddd")
+		dataType: string
+		lineageTag: 0bc755cf-4693-4c03-a188-3a3f4ce914a8
+		summarizeBy: none
+		sortByColumn: publish_weekday_num
+
+	/// Title length in characters, grouped (YouTube allows up to 100).
+	column title_length_bucket = SWITCH(TRUE(), dim_video[title_length] < 40, "1. Under 40", dim_video[title_length] < 60, "2. 40-59", dim_video[title_length] < 80, "3. 60-79", "4. 80-100")
+		dataType: string
+		lineageTag: 208ee424-1d31-44ab-b847-013046f13b1f
+		summarizeBy: none
+
+	/// Number of tags on the video, grouped.
+	column tag_count_bucket = SWITCH(TRUE(), dim_video[tag_count] = 0, "1. No tags", dim_video[tag_count] <= 10, "2. 1-10", dim_video[tag_count] <= 20, "3. 11-20", "4. 21+")
+		dataType: string
+		lineageTag: ee046f2b-492d-467e-90e8-bb0a09512bde
+		summarizeBy: none
+
 	partition dim_video = m
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(File.Contents(DataFolder & "dim_video.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Source = Csv.Document(Web.Contents(DataFolder & "dim_video.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    Typed = Table.TransformColumnTypes(Promoted, {{"video_id", type text}, {"title", type text}, {"channel_id", type text}, {"category_id", type text}, {"published_at", type datetime}, {"published_date", type date}, {"publish_hour_ist", Int64.Type}, {"duration_sec", Int64.Type}, {"duration_bucket", type text}, {"is_short", type logical}, {"language", type text}, {"language_source", type text}, {"title_script", type text}, {"tag_count", Int64.Type}, {"title_length", Int64.Type}, {"tags", type text}}, "en-US")
 				in

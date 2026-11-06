@@ -190,12 +190,6 @@ table _Measures
 		displayFolder: Regions
 		lineageTag: bcb753c2-d572-4b0d-b9ba-3dbc4a3cdda8
 
-	/// 0-100: 40% demand + 30% growth + 30% small-channel share (percentile ranks). High = demand outpaces established supply.
-	measure 'Content Gap Score' = AVERAGE(fact_keyword_opportunity[content_gap_score])
-		formatString: 0.0
-		displayFolder: Opportunities
-		lineageTag: 7d3c2239-b059-4fc7-b5d5-542ae401728a
-
 	/// Average normalised Trends interest over the last 12 weeks.
 	measure 'Demand Index' = AVERAGE(fact_keyword_opportunity[demand_index])
 		formatString: 0.0
@@ -219,12 +213,6 @@ table _Measures
 		formatString: 0.0%
 		displayFolder: Opportunities
 		lineageTag: 00c42758-f1d7-4834-8b9e-519dcca55d8b
-
-	/// Keywords that have a content gap score so far (fills in as the daily search rotation runs).
-	measure 'Keywords Scored' = COUNT(fact_keyword_opportunity[content_gap_score])
-		formatString: #,0
-		displayFolder: Opportunities
-		lineageTag: 9edd2010-f0f9-4daf-b8d2-2dba87b9036c
 
 	/// Keywords (excluding the anchor) whose interest rose more than 15% month on month.
 	measure 'Rising Keywords' = COUNTROWS(FILTER(CALCULATETABLE(VALUES(dim_keyword[keyword]), dim_keyword[is_anchor] = FALSE()), [Trend Status] = "Rising"))
@@ -436,14 +424,6 @@ table _Measures
 		lineageTag: 16c65444-5df9-4455-8292-b770b13def46
 		dataCategory: ImageUrl
 
-	measure 'Icon Gap' =
-			VAR c = "%23e8002d"
-			VAR p = "<circle cx='12' cy='12' r='9'/><circle cx='12' cy='12' r='5'/><circle cx='12' cy='12' r='1' fill='" & c & "'/>"
-			RETURN "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='12' fill='" & c & "' fill-opacity='0.13'/><g transform='translate(8 8)' fill='none' stroke='" & c & "' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>" & p & "</g></svg>"
-		displayFolder: Icons
-		lineageTag: 01bef4f3-f862-4a29-960a-abcdebf8db1b
-		dataCategory: ImageUrl
-
 	measure 'Icon Small Channels' =
 			VAR c = "%231f9142"
 			VAR p = "<path d='M12 21v-8'/><path d='M12 13c0-4 3-6 7-6 0 4-3 6-7 6z'/><path d='M12 15c0-3-2-5-6-5 0 3 2 5 6 5z'/>"
@@ -479,61 +459,59 @@ table _Measures
 		lineageTag: d8aee4a4-2bfd-4e5d-90d6-5db7bb457d1b
 		dataCategory: ImageUrl
 
-	/// Bar colour: red for the largest bar, grey for the rest (Videos Tracked).
+	/// Bar colour: red scale, darkest for the largest bar (Videos Tracked).
 	measure 'HL Videos' =
 			VAR v = [Videos Tracked]
-			VAR mx = SWITCH(TRUE(), ISINSCOPE(dim_category[category_name]), MAXX(ALLSELECTED(dim_category[category_name]), [Videos Tracked]), ISINSCOPE(dim_language[language_name]), MAXX(ALLSELECTED(dim_language[language_name]), [Videos Tracked]), ISINSCOPE(dim_video[duration_bucket]), MAXX(ALLSELECTED(dim_video[duration_bucket]), [Videos Tracked]), ISINSCOPE(dim_video[publish_hour_ist]), MAXX(ALLSELECTED(dim_video[publish_hour_ist]), [Videos Tracked]), v)
-			RETURN IF(ISBLANK(v), BLANK(), IF(v = mx, "#ff0033", "#d9d9d9"))
+			VAR mx = SWITCH(TRUE(), ISINSCOPE(dim_category[category_name]), MAXX(ALLSELECTED(dim_category[category_name]), [Videos Tracked]), ISINSCOPE(dim_language[language_name]), MAXX(ALLSELECTED(dim_language[language_name]), [Videos Tracked]), ISINSCOPE(dim_language[language_label]), MAXX(ALLSELECTED(dim_language[language_label]), [Videos Tracked]), ISINSCOPE(dim_video[duration_bucket]), MAXX(ALLSELECTED(dim_video[duration_bucket]), [Videos Tracked]), ISINSCOPE(dim_video[publish_hour_ist]), MAXX(ALLSELECTED(dim_video[publish_hour_ist]), [Videos Tracked]), ISINSCOPE(dim_channel[subscriber_tier]), MAXX(ALLSELECTED(dim_channel[subscriber_tier]), [Videos Tracked]), v)
+			VAR r = DIVIDE(v, mx)
+			RETURN IF(ISBLANK(v), BLANK(), SWITCH(TRUE(), r >= 0.999, "#c4002b", r >= 0.8, "#d2434b", r >= 0.6, "#de686a", r >= 0.4, "#e98889", r >= 0.2, "#f2a8a9", "#f9c6c9"))
 		displayFolder: Colors
 		lineageTag: 154152bd-ea4c-4921-9f0e-a3137ed478b6
 
-	/// Bar colour: red for the largest bar (Channels).
+	/// Bar colour: red scale, darkest for the largest bar (Channels).
 	measure 'HL Channels' =
 			VAR v = [Channels]
 			VAR mx = SWITCH(TRUE(), ISINSCOPE(dim_channel[channel_origin]), MAXX(ALLSELECTED(dim_channel[channel_origin]), [Channels]), v)
-			RETURN IF(ISBLANK(v), BLANK(), IF(v = mx, "#ff0033", "#d9d9d9"))
+			VAR r = DIVIDE(v, mx)
+			RETURN IF(ISBLANK(v), BLANK(), SWITCH(TRUE(), r >= 0.999, "#c4002b", r >= 0.8, "#d2434b", r >= 0.6, "#de686a", r >= 0.4, "#e98889", r >= 0.2, "#f2a8a9", "#f9c6c9"))
 		displayFolder: Colors
 		lineageTag: fb5e526e-3c99-4fe3-90fd-b5916c809c02
 
-	/// Bar colour: red for the largest bar (Median Views).
+	/// Bar colour: red scale, darkest for the largest bar (Median Views).
 	measure 'HL Median Views' =
 			VAR v = [Median Views]
-			VAR mx = SWITCH(TRUE(), ISINSCOPE(dim_category[category_name]), MAXX(ALLSELECTED(dim_category[category_name]), [Median Views]), ISINSCOPE(dim_video[duration_bucket]), MAXX(ALLSELECTED(dim_video[duration_bucket]), [Median Views]), v)
-			RETURN IF(ISBLANK(v), BLANK(), IF(v = mx, "#ff0033", "#d9d9d9"))
+			VAR mx = SWITCH(TRUE(), ISINSCOPE(dim_category[category_name]), MAXX(ALLSELECTED(dim_category[category_name]), [Median Views]), ISINSCOPE(dim_video[duration_bucket]), MAXX(ALLSELECTED(dim_video[duration_bucket]), [Median Views]), ISINSCOPE(dim_channel[subscriber_tier]), MAXX(ALLSELECTED(dim_channel[subscriber_tier]), [Median Views]), ISINSCOPE(dim_video[publish_hour_ist]), MAXX(ALLSELECTED(dim_video[publish_hour_ist]), [Median Views]), ISINSCOPE(dim_video[publish_weekday]), MAXX(ALLSELECTED(dim_video[publish_weekday]), [Median Views]), ISINSCOPE(dim_video[title_length_bucket]), MAXX(ALLSELECTED(dim_video[title_length_bucket]), [Median Views]), ISINSCOPE(dim_video[tag_count_bucket]), MAXX(ALLSELECTED(dim_video[tag_count_bucket]), [Median Views]), ISINSCOPE(dim_video[video_format]), MAXX(ALLSELECTED(dim_video[video_format]), [Median Views]), v)
+			VAR r = DIVIDE(v, mx)
+			RETURN IF(ISBLANK(v), BLANK(), SWITCH(TRUE(), r >= 0.999, "#c4002b", r >= 0.8, "#d2434b", r >= 0.6, "#de686a", r >= 0.4, "#e98889", r >= 0.2, "#f2a8a9", "#f9c6c9"))
 		displayFolder: Colors
 		lineageTag: 4e7d4603-672a-4299-b352-02197fb3e059
 
-	/// Bar colour: red for the largest bar (Engagement Rate).
+	/// Bar colour: red scale, darkest for the largest bar (Engagement Rate).
 	measure 'HL Engagement' =
 			VAR v = [Engagement Rate]
-			VAR mx = SWITCH(TRUE(), ISINSCOPE(dim_category[category_name]), MAXX(ALLSELECTED(dim_category[category_name]), [Engagement Rate]), ISINSCOPE(dim_video[duration_bucket]), MAXX(ALLSELECTED(dim_video[duration_bucket]), [Engagement Rate]), v)
-			RETURN IF(ISBLANK(v), BLANK(), IF(v = mx, "#ff0033", "#d9d9d9"))
+			VAR mx = SWITCH(TRUE(), ISINSCOPE(dim_category[category_name]), MAXX(ALLSELECTED(dim_category[category_name]), [Engagement Rate]), ISINSCOPE(dim_video[duration_bucket]), MAXX(ALLSELECTED(dim_video[duration_bucket]), [Engagement Rate]), ISINSCOPE(dim_video[video_format]), MAXX(ALLSELECTED(dim_video[video_format]), [Engagement Rate]), v)
+			VAR r = DIVIDE(v, mx)
+			RETURN IF(ISBLANK(v), BLANK(), SWITCH(TRUE(), r >= 0.999, "#c4002b", r >= 0.8, "#d2434b", r >= 0.6, "#de686a", r >= 0.4, "#e98889", r >= 0.2, "#f2a8a9", "#f9c6c9"))
 		displayFolder: Colors
 		lineageTag: 5cf4ed1c-f5a7-4160-9526-6ef11df83dc3
 
-	/// Bar colour: red for the largest bar (State Index).
+	/// Bar colour: red scale, darkest for the largest bar (State Index).
 	measure 'HL State Index' =
 			VAR v = [State Index]
 			VAR mx = SWITCH(TRUE(), ISINSCOPE(dim_state[state]), MAXX(ALLSELECTED(dim_state[state]), [State Index]), ISINSCOPE(dim_keyword[keyword]), MAXX(ALLSELECTED(dim_keyword[keyword]), [State Index]), ISINSCOPE(dim_keyword[topic_group]), MAXX(ALLSELECTED(dim_keyword[topic_group]), [State Index]), ISINSCOPE(dim_keyword[keyword_language]), MAXX(ALLSELECTED(dim_keyword[keyword_language]), [State Index]), v)
-			RETURN IF(ISBLANK(v), BLANK(), IF(v = mx, "#ff0033", "#d9d9d9"))
+			VAR r = DIVIDE(v, mx)
+			RETURN IF(ISBLANK(v), BLANK(), SWITCH(TRUE(), r >= 0.999, "#c4002b", r >= 0.8, "#d2434b", r >= 0.6, "#de686a", r >= 0.4, "#e98889", r >= 0.2, "#f2a8a9", "#f9c6c9"))
 		displayFolder: Colors
 		lineageTag: 052d5936-a4e9-4a75-affc-6979217557e0
 
-	/// Bar colour: red for the largest bar (Interest vs Cricket).
+	/// Bar colour: red scale, darkest for the largest bar (Interest vs Cricket).
 	measure 'HL Interest vs Cricket' =
 			VAR v = [Interest vs Cricket]
 			VAR mx = SWITCH(TRUE(), ISINSCOPE(dim_state[state]), MAXX(ALLSELECTED(dim_state[state]), [Interest vs Cricket]), v)
-			RETURN IF(ISBLANK(v), BLANK(), IF(v = mx, "#ff0033", "#d9d9d9"))
+			VAR r = DIVIDE(v, mx)
+			RETURN IF(ISBLANK(v), BLANK(), SWITCH(TRUE(), r >= 0.999, "#c4002b", r >= 0.8, "#d2434b", r >= 0.6, "#de686a", r >= 0.4, "#e98889", r >= 0.2, "#f2a8a9", "#f9c6c9"))
 		displayFolder: Colors
 		lineageTag: 11a7f8fc-c36f-499c-a87c-a61bee262086
-
-	/// Bar colour: red for the largest bar (Content Gap Score).
-	measure 'HL Gap' =
-			VAR v = [Content Gap Score]
-			VAR mx = SWITCH(TRUE(), ISINSCOPE(dim_keyword[keyword]), MAXX(ALLSELECTED(dim_keyword[keyword]), [Content Gap Score]), v)
-			RETURN IF(ISBLANK(v), BLANK(), IF(v = mx, "#ff0033", "#d9d9d9"))
-		displayFolder: Colors
-		lineageTag: 47487c52-f42f-418d-b615-c3d5113b3973
 
 	/// Filled-map colour: 7-step red scale of State Index relative to the top state in view.
 	measure 'Map Color' =
@@ -577,6 +555,136 @@ table _Measures
 	measure 'Trend Label' = SWITCH([Trend Status], "Rising", "▲ Rising", "Declining", "▼ Declining", "Stable", "● Stable", "Low volume", "○ Low volume")
 		displayFolder: Trends
 		lineageTag: b35b4feb-c39e-4e24-b298-2c8598313e8e
+
+	/// Title of the most-viewed video in the current filter.
+	measure 'Top Video Title' =
+			VAR vid = MAXX(TOPN(1, VALUES(fact_video_snapshot[video_id]), CALCULATE(MAX(fact_video_snapshot[views])), DESC, fact_video_snapshot[video_id], ASC), fact_video_snapshot[video_id])
+			RETURN LOOKUPVALUE(dim_video[title], dim_video[video_id], vid)
+		displayFolder: Labels
+		lineageTag: 8d9c5fde-1ccf-4ec5-90c7-2fa4fef5fb0c
+
+	/// Channel and view count of the most-viewed video in the current filter.
+	measure 'Top Video Detail' =
+			VAR vid = MAXX(TOPN(1, VALUES(fact_video_snapshot[video_id]), CALCULATE(MAX(fact_video_snapshot[views])), DESC, fact_video_snapshot[video_id], ASC), fact_video_snapshot[video_id])
+			VAR ch = LOOKUPVALUE(dim_channel[channel_name], dim_channel[channel_id], LOOKUPVALUE(dim_video[channel_id], dim_video[video_id], vid))
+			VAR v = CALCULATE(MAX(fact_video_snapshot[views]), fact_video_snapshot[video_id] = vid)
+			RETURN IF(ISBLANK(vid), BLANK(), "by " & ch & "  ·  " & FORMAT(v / 1000000, "#,0.0") & "M views")
+		displayFolder: Labels
+		lineageTag: 2dee2b1c-f8e1-437e-afe8-0e047a6121c2
+
+	/// One-line summary for the Overview page: fastest-rising topic, Shorts share and top category.
+	measure 'Overview Headline' =
+			VAR tp = TOPN(1, FILTER(VALUES(dim_keyword[topic_group]), dim_keyword[topic_group] <> "Anchor" && NOT ISBLANK([Interest MoM %])), [Interest MoM %], DESC)
+			VAR topic = MAXX(tp, dim_keyword[topic_group])
+			VAR mom = MAXX(tp, [Interest MoM %])
+			VAR part1 = IF(ISBLANK(topic), BLANK(), IF(mom > 0, "Fastest-rising topic: ", "Best-performing topic: ") & topic & " (" & FORMAT(mom, "+0%;-0%") & " vs last month)")
+			VAR part2 = IF(ISBLANK([Videos Tracked]), "No videos match these filters yet, try another language or topic", "Shorts are " & FORMAT([Shorts Share], "0%") & " of videos")
+			VAR part3 = IF(ISBLANK([Top Category]), BLANK(), "Most videos are in " & [Top Category])
+			VAR parts = FILTER({(1, part1), (2, part2), (3, part3)}, NOT ISBLANK([Value2]))
+			RETURN CONCATENATEX(parts, [Value2], "  ·  ", [Value1], ASC)
+		displayFolder: Labels
+		lineageTag: 2c058199-933e-4b52-9639-290798a5b555
+
+	/// Bar colour: red scale, darkest for the largest bar (Small Channels in Top Results).
+	measure 'HL Small Channels' =
+			VAR v = [Small Channels in Top Results]
+			VAR mx = SWITCH(TRUE(), ISINSCOPE(dim_channel[channel_age_bucket]), MAXX(ALLSELECTED(dim_channel[channel_age_bucket]), [Small Channels in Top Results]), ISINSCOPE(dim_channel[upload_pace_bucket]), MAXX(ALLSELECTED(dim_channel[upload_pace_bucket]), [Small Channels in Top Results]), v)
+			VAR r = DIVIDE(v, mx)
+			RETURN IF(ISBLANK(v), BLANK(), SWITCH(TRUE(), r >= 0.999, "#c4002b", r >= 0.8, "#d2434b", r >= 0.6, "#de686a", r >= 0.4, "#e98889", r >= 0.2, "#f2a8a9", "#f9c6c9"))
+		displayFolder: Colors
+		lineageTag: ab476dd5-d59c-4ba6-a66e-f82b8777eb59
+
+	/// Number of keywords tracked in the current filter (excluding the cricket anchor).
+	measure 'Keywords Tracked' =
+			CALCULATE(DISTINCTCOUNT(dim_keyword[keyword]), dim_keyword[is_anchor] = FALSE())
+		displayFolder: Opportunities
+		lineageTag: f800d716-1233-4087-a9a6-974381a82975
+
+	/// Opportunity-map quadrant: Hot = demand above the average of the keywords in view and growing (12 weeks); Emerging = growing; Big but flat = high demand, not growing; Skip = neither.
+	measure 'Niche Quadrant' =
+			VAR d = [Demand Index]
+			VAR g = [Growth 12w %]
+			VAR avgD = CALCULATE(AVERAGEX(VALUES(dim_keyword[keyword]), [Demand Index]), ALLSELECTED(dim_keyword))
+			RETURN IF(ISBLANK(d) || ISBLANK(g), BLANK(), SWITCH(TRUE(), d > avgD && g > 0, "Hot", g > 0, "Emerging", d > avgD, "Big but flat", "Skip"))
+		displayFolder: Opportunities
+		lineageTag: 74bf4c22-0e49-4c69-b014-d5fd199458a3
+
+	/// Opportunity-map point colour by quadrant (Hot = dark red).
+	measure 'Quadrant Color' =
+			SWITCH([Niche Quadrant], "Hot", "#c4002b", "Emerging", "#f2a8a9", "Big but flat", "#909090", "#d9d9d9")
+		displayFolder: Colors
+		lineageTag: 98732242-dec2-4b6c-ac26-613596512a06
+
+	/// 1 when the keyword is in the Hot quadrant, else 0. Used to filter the Hot niches table.
+	measure 'Hot Niche Flag' =
+			VAR q = [Niche Quadrant]
+			RETURN IF(ISBLANK(q), BLANK(), IF(q = "Hot", 1, 0))
+		displayFolder: Opportunities
+		lineageTag: b432c1a9-2055-40e0-9d88-2a970562cf2f
+
+	/// Number of keywords in the Hot quadrant (high demand and growing).
+	measure 'Hot Niches' =
+			SUMX(CALCULATETABLE(VALUES(dim_keyword[keyword]), dim_keyword[is_anchor] = FALSE()), [Hot Niche Flag])
+		displayFolder: Opportunities
+		lineageTag: 71d1e9e2-5cfa-47c7-83ef-b9975e664400
+
+	/// One-line summary for the Find your niche page.
+	measure 'Niche Headline' =
+			VAR hot = [Hot Niches]
+			VAR best = TOPN(1, FILTER(CALCULATETABLE(VALUES(dim_keyword[keyword]), dim_keyword[is_anchor] = FALSE()), [Hot Niche Flag] = 1 && NOT ISBLANK([Small Channel Share])), [Small Channel Share], DESC, dim_keyword[keyword], ASC)
+			VAR kw = MAXX(best, dim_keyword[keyword])
+			VAR sh = MAXX(best, [Small Channel Share])
+			RETURN IF(ISBLANK(hot) || hot = 0, "No niche is both high-demand and growing in this selection, try another topic or language",
+			    hot & " niches are Hot right now (high demand and growing)" & IF(ISBLANK(kw), "", "  ·  Most open: " & kw & " (" & FORMAT(sh, "0%") & " of top videos are from small channels)"))
+		displayFolder: Labels
+		lineageTag: adbcf418-173f-40e3-b339-305581c3a2df
+
+	/// Channels under 100K subscribers behind videos in the top search results for the tracked keywords.
+	measure 'Small Channels in Top Results' =
+			CALCULATE([Channels], KEEPFILTERS(dim_channel[subscribers] < 100000), dim_channel[subscribers_hidden] = FALSE(), fact_video_snapshot[in_topic_search] = TRUE())
+		displayFolder: Channels
+		lineageTag: 15d7278e-0252-415b-9cbf-bddb41461212
+
+	/// Median uploads per month (lifetime average) of small channels in top search results.
+	measure 'Median Uploads per Month (Small)' =
+			MEDIANX(CALCULATETABLE(SUMMARIZE(fact_video_snapshot, dim_channel[channel_id], dim_channel[uploads_per_month]), KEEPFILTERS(dim_channel[subscribers] < 100000), dim_channel[subscribers_hidden] = FALSE(), fact_video_snapshot[in_topic_search] = TRUE()), dim_channel[uploads_per_month])
+		displayFolder: Channels
+		lineageTag: 837188ae-7d11-429c-814d-e5ecaaacf3b2
+
+	/// One-line summary for the Make it & grow it page.
+	measure 'Grow Headline' =
+			VAR ms = CALCULATE([Median Views], dim_video[video_format] = "Shorts")
+			VAR ml = CALCULATE([Median Views], dim_video[video_format] = "Long-form")
+			VAR ratio = DIVIDE(ms, ml)
+			VAR es = CALCULATE([Engagement Rate], dim_video[video_format] = "Shorts")
+			VAR el = CALCULATE([Engagement Rate], dim_video[video_format] = "Long-form")
+			VAR p1 = IF(ISBLANK(ratio), BLANK(), IF(ratio >= 1, "Shorts get " & FORMAT(ratio, "0.0") & "x the views of long-form", "Long-form gets " & FORMAT(DIVIDE(1, ratio), "0.0") & "x the views of Shorts") & IF(el > es, "; long-form gets more engagement", IF(es > el, "; Shorts get more engagement", "")))
+			VAR sc = [Small Channels in Top Results]
+			VAR young = DIVIDE(CALCULATE([Small Channels in Top Results], dim_channel[channel_age_bucket] = "1. Under 1 year"), sc)
+			VAR p2 = IF(ISBLANK(sc), BLANK(), FORMAT(young, "0%") & " of small channels in top results are under a year old")
+			VAR up = [Median Uploads per Month (Small)]
+			VAR p3 = IF(ISBLANK(up), BLANK(), "they post about " & FORMAT(up, "0") & " videos a month")
+			VAR parts = FILTER({(1, p1), (2, p2), (3, p3)}, NOT ISBLANK([Value2]))
+			RETURN CONCATENATEX(parts, [Value2], "  ·  ", [Value1], ASC)
+		displayFolder: Labels
+		lineageTag: 050a0e79-96c4-4335-abe6-02e09fa6ae4a
+
+	/// State Index relative to the strongest state in view (0-1). The map hides states below 0.1 so it zooms to where searches come from.
+	measure 'Map Strength' =
+			DIVIDE([State Index], MAXX(ALLSELECTED(dim_state[state_map_name]), [State Index]))
+		displayFolder: Regions
+		lineageTag: 31edd2e8-1d65-472c-b9bf-16a7c151469c
+
+	/// One-line summary for the Know your audience page.
+	measure 'Audience Headline' =
+			VAR t = TOPN(3, FILTER(VALUES(dim_state[state]), NOT ISBLANK([State Index])), [State Index], DESC, dim_state[state], ASC)
+			VAR names = CONCATENATEX(t, dim_state[state], ", ", [State Index], DESC)
+			VAR p1 = IF(names = "", BLANK(), "Searches are strongest in " & names)
+			VAR p2 = IF(ISBLANK([Videos Tracked]), BLANK(), FORMAT([Regional Language Share], "0%") & " of matching videos are in Indian languages")
+			VAR parts = FILTER({(1, p1), (2, p2)}, NOT ISBLANK([Value2]))
+			RETURN CONCATENATEX(parts, [Value2], "  ·  ", [Value1], ASC)
+		displayFolder: Labels
+		lineageTag: 23ac8e44-aaca-4c35-b639-36417c12fe82
 
 	column _
 		isHidden

@@ -1,0 +1,75 @@
+# Daily data pipeline: pulls YouTube + Google Trends data and commits ONLY the data/ folder.
+# It never touches Dashboards/ or code. Power BI reads data/model/*.csv from this repo on Refresh.
+#
+# Needs one repository secret: YOUTUBE_API_KEY (Settings > Secrets and variables > Actions).
+# If any step fails (for example Google Trends blocks the GitHub server), the data that did
+# arrive is still committed, old data is kept, and the run is marked failed so GitHub emails you.
+
+name: Daily data pipeline
+
+on:
+  schedule:
+    - cron: "30 3 * * *"        # 03:30 UTC = 9:00 AM IST
+  workflow_dispatch:             # "Run workflow" button for manual runs
+
+permissions:
+  contents: write                # needed to push the data commit
+
+concurrency:
+  group: daily-data
+  cancel-in-progress: false
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+      TZ: Asia/Kolkata           # file dates and "today" follow India time
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: pip
+
+      - name: Install packages
+        run: pip install -r requirements.txt
+
+      - name: Run pipeline
+        id: pipeline
+        continue-on-error: true  # commit whatever arrived, report the failure at the end
+        run: python -X utf8 run_daily.py
+
+      - name: Check file sizes (GitHub rejects files over 100 MB)
+        id: sizes
+        continue-on-error: true
+        run: |
+          big=$(find data -type f -size +90M)
+          if [ -n "$big" ]; then
+            echo "These data files are over 90 MB and will soon be too big for GitHub:"
+            echo "$big"
+            echo "**Data files over 90 MB:** $big" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+
+      - name: Commit data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+            exit 0
+          fi
+          git commit -m "data: $(date +%F)"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Report failures (sends the GitHub failure email)
+        if: steps.pipeline.outcome == 'failure' || steps.sizes.outcome == 'failure'
+        run: |
+          echo "::error::Pipeline step failed. Data that arrived was committed and previous data was kept. See the run summary for which step failed."
+          exit 1

@@ -29,7 +29,7 @@
               },
               "queryRef": "_Measures.State Index",
               "nativeQueryRef": "State Index",
-              "displayName": "Avg State Index"
+              "displayName": "Average search score"
             }
           ]
         }

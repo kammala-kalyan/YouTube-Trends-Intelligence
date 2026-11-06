@@ -65,98 +65,13 @@
       "type": "RegisteredResources",
       "items": [
         {
+          "name": "youtube_light_theme.json",
+          "path": "youtube_light_theme.json",
+          "type": "CustomTheme"
+        },
+        {
           "name": "accent_bar.svg",
           "path": "accent_bar.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_calendar.svg",
-          "path": "icon_calendar.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_category.svg",
-          "path": "icon_category.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_channels.svg",
-          "path": "icon_channels.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_declining.svg",
-          "path": "icon_declining.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_engagement.svg",
-          "path": "icon_engagement.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_gap.svg",
-          "path": "icon_gap.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_growth.svg",
-          "path": "icon_growth.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_interest.svg",
-          "path": "icon_interest.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_keywords.svg",
-          "path": "icon_keywords.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_language.svg",
-          "path": "icon_language.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_median.svg",
-          "path": "icon_median.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_perday.svg",
-          "path": "icon_perday.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_rising.svg",
-          "path": "icon_rising.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_shorts.svg",
-          "path": "icon_shorts.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_smallch.svg",
-          "path": "icon_smallch.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_state.svg",
-          "path": "icon_state.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_subscribers.svg",
-          "path": "icon_subscribers.svg",
-          "type": "Image"
-        },
-        {
-          "name": "icon_trending.svg",
-          "path": "icon_trending.svg",
           "type": "Image"
         },
         {
@@ -170,9 +85,104 @@
           "type": "Image"
         },
         {
-          "name": "youtube_light_theme.json",
-          "path": "youtube_light_theme.json",
-          "type": "CustomTheme"
+          "name": "icon_engagement.svg",
+          "path": "icon_engagement.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_shorts.svg",
+          "path": "icon_shorts.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_language.svg",
+          "path": "icon_language.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_category.svg",
+          "path": "icon_category.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_channels.svg",
+          "path": "icon_channels.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_subscribers.svg",
+          "path": "icon_subscribers.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_trending.svg",
+          "path": "icon_trending.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_rising.svg",
+          "path": "icon_rising.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_declining.svg",
+          "path": "icon_declining.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_interest.svg",
+          "path": "icon_interest.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_state.svg",
+          "path": "icon_state.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_opportunity.svg",
+          "path": "icon_opportunity.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_growth.svg",
+          "path": "icon_growth.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_median.svg",
+          "path": "icon_median.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_perday.svg",
+          "path": "icon_perday.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_supply.svg",
+          "path": "icon_supply.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_gap.svg",
+          "path": "icon_gap.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_smallch.svg",
+          "path": "icon_smallch.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_keywords.svg",
+          "path": "icon_keywords.svg",
+          "type": "Image"
+        },
+        {
+          "name": "icon_calendar.svg",
+          "path": "icon_calendar.svg",
+          "type": "Image"
         }
       ]
     }

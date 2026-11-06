@@ -8,7 +8,7 @@ you start polishing by hand.
 What it does
   1. Small model additions (helper measures, a has_state_data column, filter-proof "Data As Of").
   2. Registers the YouTube Light theme and the icon SVGs as report resources.
-  3. Writes 7 report pages + a State detail drill-through page + a Keyword tooltip page.
+  3. Writes the 4 report pages + a State detail drill-through page + a Keyword tooltip page.
 """
 import json, re, shutil, uuid
 from pathlib import Path
@@ -83,23 +83,35 @@ def ramp_switch(r):
     return "SWITCH(TRUE(), " + ", ".join(f'{r} >= {t}, "{RAMP[i]}"' for t, i in steps) + f', "{RAMP[0]}")'
 
 
+BAR_RAMP = [(0.999, "#c4002b"), (0.8, "#d2434b"), (0.6, "#de686a"), (0.4, "#e98889"), (0.2, "#f2a8a9")]
+BAR_RAMP_MIN = "#f9c6c9"
+
+
 def hl_measure(name, measure, axes, desc):
+    """Bar colour on a light-to-dark red scale: the biggest bar in view is the darkest red."""
     branches = ", ".join(f"ISINSCOPE({a}), MAXX(ALLSELECTED({a}), [{measure}])" for a in axes)
+    steps = ", ".join(f'r >= {t}, "{c}"' for t, c in BAR_RAMP)
     expr = (f"VAR v = [{measure}]\n\t\t\tVAR mx = SWITCH(TRUE(), {branches}, v)\n"
-            f'\t\t\tRETURN IF(ISBLANK(v), BLANK(), IF(v = mx, "{RED}", "{GREY}"))')
+            f"\t\t\tVAR r = DIVIDE(v, mx)\n"
+            f'\t\t\tRETURN IF(ISBLANK(v), BLANK(), SWITCH(TRUE(), {steps}, "{BAR_RAMP_MIN}"))')
     return name, expr, desc, "Colors"
 
 
 HELPERS = [
-    hl_measure("HL Videos", "Videos Tracked", ["dim_category[category_name]", "dim_language[language_name]", "dim_video[duration_bucket]", "dim_video[publish_hour_ist]"],
-               "Bar colour: red for the largest bar, grey for the rest (Videos Tracked)."),
-    hl_measure("HL Channels", "Channels", ["dim_channel[channel_origin]"], "Bar colour: red for the largest bar (Channels)."),
-    hl_measure("HL Median Views", "Median Views", ["dim_category[category_name]", "dim_video[duration_bucket]"], "Bar colour: red for the largest bar (Median Views)."),
-    hl_measure("HL Engagement", "Engagement Rate", ["dim_category[category_name]", "dim_video[duration_bucket]"], "Bar colour: red for the largest bar (Engagement Rate)."),
+    hl_measure("HL Videos", "Videos Tracked", ["dim_category[category_name]", "dim_language[language_name]", "dim_language[language_label]",
+                                               "dim_video[duration_bucket]", "dim_video[publish_hour_ist]", "dim_channel[subscriber_tier]"],
+               "Bar colour: red scale, darkest for the largest bar (Videos Tracked)."),
+    hl_measure("HL Channels", "Channels", ["dim_channel[channel_origin]"], "Bar colour: red scale, darkest for the largest bar (Channels)."),
+    hl_measure("HL Median Views", "Median Views", ["dim_category[category_name]", "dim_video[duration_bucket]", "dim_channel[subscriber_tier]",
+                                                   "dim_video[publish_hour_ist]", "dim_video[publish_weekday]", "dim_video[title_length_bucket]",
+                                                   "dim_video[tag_count_bucket]", "dim_video[video_format]"],
+               "Bar colour: red scale, darkest for the largest bar (Median Views)."),
+    hl_measure("HL Engagement", "Engagement Rate", ["dim_category[category_name]", "dim_video[duration_bucket]", "dim_video[video_format]"],"Bar colour: red scale, darkest for the largest bar (Engagement Rate)."),
     hl_measure("HL State Index", "State Index", ["dim_state[state]", "dim_keyword[keyword]", "dim_keyword[topic_group]", "dim_keyword[keyword_language]"],
-               "Bar colour: red for the largest bar (State Index)."),
-    hl_measure("HL Interest vs Cricket", "Interest vs Cricket", ["dim_state[state]"], "Bar colour: red for the largest bar (Interest vs Cricket)."),
-    hl_measure("HL Gap", "Content Gap Score", ["dim_keyword[keyword]"], "Bar colour: red for the largest bar (Content Gap Score)."),
+               "Bar colour: red scale, darkest for the largest bar (State Index)."),
+    hl_measure("HL Interest vs Cricket", "Interest vs Cricket", ["dim_state[state]"], "Bar colour: red scale, darkest for the largest bar (Interest vs Cricket)."),
+    hl_measure("HL Small Channels", "Small Channels in Top Results", ["dim_channel[channel_age_bucket]", "dim_channel[upload_pace_bucket]"],
+               "Bar colour: red scale, darkest for the largest bar (Small Channels in Top Results)."),
     ("Map Color", "VAR v = [State Index]\n\t\t\tVAR r = DIVIDE(v, MAXX(ALLSELECTED(dim_state[state]), [State Index]))\n"
                   f'\t\t\tRETURN IF(ISBLANK(v), "{CARD}", {ramp_switch("r")})',
      "Filled-map colour: 7-step red scale of State Index relative to the top state in view.", "Colors"),
@@ -111,7 +123,84 @@ HELPERS = [
                           f'\t\t\tRETURN IF(ISBLANK(v), BLANK(), {ramp_switch("r")})', "Heatmap cell colour for Demand Index (language x topic).", "Colors"),
     ("Heat Font Demand", "VAR r = DIVIDE([Demand Index], MAXX(CROSSJOIN(ALLSELECTED(dim_keyword[keyword_language]), ALLSELECTED(dim_keyword[topic_group])), [Demand Index]))\n"
                          f'\t\t\tRETURN IF(r >= 0.57, "#ffffff", "{INK}")', "Heatmap text colour (white on dark cells).", "Colors"),
-    ("Trend Label", 'SWITCH([Trend Status], "Rising", "▲ Rising", "Declining", "▼ Declining", "Stable", "● Stable", "Low volume", "○ Low volume")',
+    ("Top Video Title",
+     "VAR vid = MAXX(TOPN(1, VALUES(fact_video_snapshot[video_id]), CALCULATE(MAX(fact_video_snapshot[views])), DESC, fact_video_snapshot[video_id], ASC), fact_video_snapshot[video_id])\n"
+     "\t\t\tRETURN LOOKUPVALUE(dim_video[title], dim_video[video_id], vid)",
+     "Title of the most-viewed video in the current filter.", "Labels"),
+    ("Top Video Detail",
+     "VAR vid = MAXX(TOPN(1, VALUES(fact_video_snapshot[video_id]), CALCULATE(MAX(fact_video_snapshot[views])), DESC, fact_video_snapshot[video_id], ASC), fact_video_snapshot[video_id])\n"
+     "\t\t\tVAR ch = LOOKUPVALUE(dim_channel[channel_name], dim_channel[channel_id], LOOKUPVALUE(dim_video[channel_id], dim_video[video_id], vid))\n"
+     "\t\t\tVAR v = CALCULATE(MAX(fact_video_snapshot[views]), fact_video_snapshot[video_id] = vid)\n"
+     '\t\t\tRETURN IF(ISBLANK(vid), BLANK(), "by " & ch & "  ·  " & FORMAT(v / 1000000, "#,0.0") & "M views")',
+     "Channel and view count of the most-viewed video in the current filter.", "Labels"),
+    ("Overview Headline",
+     'VAR tp = TOPN(1, FILTER(VALUES(dim_keyword[topic_group]), dim_keyword[topic_group] <> "Anchor" && NOT ISBLANK([Interest MoM %])), [Interest MoM %], DESC)\n'
+     "\t\t\tVAR topic = MAXX(tp, dim_keyword[topic_group])\n"
+     "\t\t\tVAR mom = MAXX(tp, [Interest MoM %])\n"
+     '\t\t\tVAR part1 = IF(ISBLANK(topic), BLANK(), IF(mom > 0, "Fastest-rising topic: ", "Best-performing topic: ") & topic & " (" & FORMAT(mom, "+0%;-0%") & " vs last month)")\n'
+     '\t\t\tVAR part2 = IF(ISBLANK([Videos Tracked]), "No videos match these filters yet, try another language or topic", "Shorts are " & FORMAT([Shorts Share], "0%") & " of videos")\n'
+     '\t\t\tVAR part3 = IF(ISBLANK([Top Category]), BLANK(), "Most videos are in " & [Top Category])\n'
+     "\t\t\tVAR parts = FILTER({(1, part1), (2, part2), (3, part3)}, NOT ISBLANK([Value2]))\n"
+     '\t\t\tRETURN CONCATENATEX(parts, [Value2], "  ·  ", [Value1], ASC)',
+     "One-line summary for the Overview page: fastest-rising topic, Shorts share and top category.", "Labels"),
+    # ---- page 2: niches (quadrants instead of a weighted score, decision Q31)
+    ("Keywords Tracked", "CALCULATE(DISTINCTCOUNT(dim_keyword[keyword]), dim_keyword[is_anchor] = FALSE())",
+     "Number of keywords tracked in the current filter (excluding the cricket anchor).", "Opportunities"),
+    ("Niche Quadrant",
+     "VAR d = [Demand Index]\n"
+     "\t\t\tVAR g = [Growth 12w %]\n"
+     "\t\t\tVAR avgD = CALCULATE(AVERAGEX(VALUES(dim_keyword[keyword]), [Demand Index]), ALLSELECTED(dim_keyword))\n"
+     '\t\t\tRETURN IF(ISBLANK(d) || ISBLANK(g), BLANK(), SWITCH(TRUE(), d > avgD && g > 0, "Hot", g > 0, "Emerging", d > avgD, "Big but flat", "Skip"))',
+     "Opportunity-map quadrant: Hot = demand above the average of the keywords in view and growing (12 weeks); Emerging = growing; Big but flat = high demand, not growing; Skip = neither.", "Opportunities"),
+    ("Quadrant Color",
+     'SWITCH([Niche Quadrant], "Hot", "#c4002b", "Emerging", "#f2a8a9", "Big but flat", "#909090", "#d9d9d9")',
+     "Opportunity-map point colour by quadrant (Hot = dark red).", "Colors"),
+    ("Hot Niche Flag", 'VAR q = [Niche Quadrant]\n\t\t\tRETURN IF(ISBLANK(q), BLANK(), IF(q = "Hot", 1, 0))',
+     "1 when the keyword is in the Hot quadrant, else 0. Used to filter the Hot niches table.", "Opportunities"),
+    ("Hot Niches", "SUMX(CALCULATETABLE(VALUES(dim_keyword[keyword]), dim_keyword[is_anchor] = FALSE()), [Hot Niche Flag])",
+     "Number of keywords in the Hot quadrant (high demand and growing).", "Opportunities"),
+    ("Niche Headline",
+     "VAR hot = [Hot Niches]\n"
+     "\t\t\tVAR best = TOPN(1, FILTER(CALCULATETABLE(VALUES(dim_keyword[keyword]), dim_keyword[is_anchor] = FALSE()), [Hot Niche Flag] = 1 && NOT ISBLANK([Small Channel Share])), [Small Channel Share], DESC, dim_keyword[keyword], ASC)\n"
+     "\t\t\tVAR kw = MAXX(best, dim_keyword[keyword])\n"
+     "\t\t\tVAR sh = MAXX(best, [Small Channel Share])\n"
+     '\t\t\tRETURN IF(ISBLANK(hot) || hot = 0, "No niche is both high-demand and growing in this selection, try another topic or language",\n'
+     '\t\t\t    hot & " niches are Hot right now (high demand and growing)" & IF(ISBLANK(kw), "", "  ·  Most open: " & kw & " (" & FORMAT(sh, "0%") & " of top videos are from small channels)"))',
+     "One-line summary for the Find your niche page.", "Labels"),
+    # ---- page 3: grow it (small channels = under 100K subscribers, in topic search results)
+    ("Small Channels in Top Results",
+     "CALCULATE([Channels], KEEPFILTERS(dim_channel[subscribers] < 100000), dim_channel[subscribers_hidden] = FALSE(), fact_video_snapshot[in_topic_search] = TRUE())",
+     "Channels under 100K subscribers behind videos in the top search results for the tracked keywords.", "Channels"),
+    ("Median Uploads per Month (Small)",
+     "MEDIANX(CALCULATETABLE(SUMMARIZE(fact_video_snapshot, dim_channel[channel_id], dim_channel[uploads_per_month]), KEEPFILTERS(dim_channel[subscribers] < 100000), dim_channel[subscribers_hidden] = FALSE(), fact_video_snapshot[in_topic_search] = TRUE()), dim_channel[uploads_per_month])",
+     "Median uploads per month (lifetime average) of small channels in top search results.", "Channels"),
+    ("Grow Headline",
+     'VAR ms = CALCULATE([Median Views], dim_video[video_format] = "Shorts")\n'
+     '\t\t\tVAR ml = CALCULATE([Median Views], dim_video[video_format] = "Long-form")\n'
+     "\t\t\tVAR ratio = DIVIDE(ms, ml)\n"
+     '\t\t\tVAR es = CALCULATE([Engagement Rate], dim_video[video_format] = "Shorts")\n'
+     '\t\t\tVAR el = CALCULATE([Engagement Rate], dim_video[video_format] = "Long-form")\n'
+     '\t\t\tVAR p1 = IF(ISBLANK(ratio), BLANK(), IF(ratio >= 1, "Shorts get " & FORMAT(ratio, "0.0") & "x the views of long-form", "Long-form gets " & FORMAT(DIVIDE(1, ratio), "0.0") & "x the views of Shorts") & IF(el > es, "; long-form gets more engagement", IF(es > el, "; Shorts get more engagement", "")))\n'
+     "\t\t\tVAR sc = [Small Channels in Top Results]\n"
+     '\t\t\tVAR young = DIVIDE(CALCULATE([Small Channels in Top Results], dim_channel[channel_age_bucket] = "1. Under 1 year"), sc)\n'
+     '\t\t\tVAR p2 = IF(ISBLANK(sc), BLANK(), FORMAT(young, "0%") & " of small channels in top results are under a year old")\n'
+     "\t\t\tVAR up = [Median Uploads per Month (Small)]\n"
+     '\t\t\tVAR p3 = IF(ISBLANK(up), BLANK(), "they post about " & FORMAT(up, "0") & " videos a month")\n'
+     "\t\t\tVAR parts = FILTER({(1, p1), (2, p2), (3, p3)}, NOT ISBLANK([Value2]))\n"
+     '\t\t\tRETURN CONCATENATEX(parts, [Value2], "  ·  ", [Value1], ASC)',
+     "One-line summary for the Make it & grow it page.", "Labels"),
+    # ---- page 4: audience
+    ("Map Strength", "DIVIDE([State Index], MAXX(ALLSELECTED(dim_state[state_map_name]), [State Index]))",
+     "State Index relative to the strongest state in view (0-1). The map hides states below 0.1 so it zooms to where searches come from.", "Regions"),
+    ("Audience Headline",
+     "VAR t = TOPN(3, FILTER(VALUES(dim_state[state]), NOT ISBLANK([State Index])), [State Index], DESC, dim_state[state], ASC)\n"
+     '\t\t\tVAR names = CONCATENATEX(t, dim_state[state], ", ", [State Index], DESC)\n'
+     '\t\t\tVAR p1 = IF(names = "", BLANK(), "Searches are strongest in " & names)\n'
+     '\t\t\tVAR p2 = IF(ISBLANK([Videos Tracked]), BLANK(), FORMAT([Regional Language Share], "0%") & " of matching videos are in Indian languages")\n'
+     "\t\t\tVAR parts = FILTER({(1, p1), (2, p2)}, NOT ISBLANK([Value2]))\n"
+     '\t\t\tRETURN CONCATENATEX(parts, [Value2], "  ·  ", [Value1], ASC)',
+     "One-line summary for the Know your audience page.", "Labels"),
+    ("Trend Label",'SWITCH([Trend Status],"Rising", "▲ Rising", "Declining", "▼ Declining", "Stable", "● Stable", "Low volume", "○ Low volume")',
      "Trend Status with an arrow, for tables. Colour it with [Trend Status Color].", "Trends"),
 ]
 
@@ -123,12 +212,99 @@ HAS_STATE_COLUMN = ("\t/// True when Google Trends returned state-level data for
                     "\t\tdataType: boolean\n\t\tlineageTag: {tag}\n\t\tsummarizeBy: none\n\n")
 
 
+VIDEO_TMDL = TABLES / "dim_video.tmdl"
+
+# Calculated columns on dim_video for the creator questions (format, upload day, packaging).
+# published_at is UTC, so +5.5h gives the India (IST) day.
+VIDEO_COLUMNS = [
+    ("video_format", 'IF(dim_video[is_short], "Shorts", "Long-form")', "string", None, False,
+     "Shorts or Long-form, as a readable label."),
+    ("publish_weekday_num", "WEEKDAY(dim_video[published_at] + 5.5 / 24, 2)", "int64", None, True,
+     "Upload day number in IST (1 = Monday). Sort column for publish_weekday."),
+    ("publish_weekday", 'FORMAT(dim_video[published_at] + 5.5 / 24, "ddd")', "string", "publish_weekday_num", False,
+     "Upload day of week in IST (Mon-Sun)."),
+    ("title_length_bucket", 'SWITCH(TRUE(), dim_video[title_length] < 40, "1. Under 40", dim_video[title_length] < 60, "2. 40-59", '
+                            'dim_video[title_length] < 80, "3. 60-79", "4. 80-100")', "string", None, False,
+     "Title length in characters, grouped (YouTube allows up to 100)."),
+    ("tag_count_bucket", 'SWITCH(TRUE(), dim_video[tag_count] = 0, "1. No tags", dim_video[tag_count] <= 10, "2. 1-10", '
+                         'dim_video[tag_count] <= 20, "3. 11-20", "4. 21+")', "string", None, False,
+     "Number of tags on the video, grouped."),
+]
+
+
+# Slicer helpers: only list categories/languages that have videos (17 of 31 YouTube categories have none,
+# which made pages go blank), and group rare foreign language codes (ES, PT, ZH...) as "Other languages".
+CALC_COLUMNS = {
+    "dim_video": VIDEO_COLUMNS,
+    "dim_category": [
+        ("has_videos", "CALCULATE(COUNTROWS(dim_video)) > 0", "boolean", None, False,
+         "True when at least one tracked video is in this category. Used to hide empty categories in slicers."),
+    ],
+    "dim_language": [
+        ("has_videos", "CALCULATE(COUNTROWS(dim_video)) > 0", "boolean", None, False,
+         "True when at least one tracked video is in this language. Used to hide empty languages in slicers."),
+        ("language_label", 'IF(dim_language[is_indian_regional] || dim_language[language] = "en", dim_language[language_name], "Other languages")',
+         "string", None, False, "English and Indian languages by name; everything else grouped as Other languages."),
+    ],
+    # page 3 "Grow it" row (decisions Q14, Q15)
+    "dim_channel": [
+        ("channel_age_bucket", 'SWITCH(TRUE(), ISBLANK(dim_channel[channel_age_years]) || dim_channel[channel_age_years] <= 0, BLANK(), '
+                               'dim_channel[channel_age_years] < 1, "1. Under 1 year", dim_channel[channel_age_years] < 2, "2. 1-2 years", '
+                               'dim_channel[channel_age_years] < 5, "3. 2-5 years", "4. 5+ years")', "string", None, False,
+         "Channel age, grouped."),
+        ("uploads_per_month", "DIVIDE(dim_channel[video_count], dim_channel[channel_age_years] * 12)", "double", None, False,
+         "Average uploads per month over the channel's life (total videos / age in months). Not its current pace."),
+        ("upload_pace_bucket", 'VAR u = DIVIDE(dim_channel[video_count], dim_channel[channel_age_years] * 12) '
+                               'RETURN SWITCH(TRUE(), ISBLANK(u), BLANK(), u < 4, "1. Under once a week", u < 12, "2. 1-3 a week", '
+                               'u < 30, "3. 3-7 a week", "4. Daily or more")', "string", None, False,
+         "Average upload pace over the channel's life, grouped."),
+    ],
+}
+
+# Removed with the Content Gap Score (decision Q31).
+REMOVED_MEASURES = ["Content Gap Score", "Keywords Scored", "Icon Gap", "HL Gap"]
+
+
+def video_column_tmdl(name, expr, dtype, sort_by, hidden, desc):
+    lines = [f"\t/// {desc}", f"\tcolumn {name} = {expr}", f"\t\tdataType: {dtype}"]
+    if hidden:
+        lines.append("\t\tisHidden")
+    if dtype == "int64":
+        lines.append("\t\tformatString: 0")
+    if dtype == "double":
+        lines.append("\t\tformatString: 0.0")
+    lines += [f"\t\tlineageTag: {uuid.uuid4()}", "\t\tsummarizeBy: none"]
+    if sort_by:
+        lines.append(f"\t\tsortByColumn: {sort_by}")
+    return "\n".join(lines) + "\n\n"
+
+
 def update_model():
     changes = []
     text = MEASURES_TMDL.read_text(encoding="utf-8")
+    # drop removed measures (whole block: description lines + measure + its properties, up to the blank line)
+    for name in REMOVED_MEASURES:
+        pat = re.compile(rf"(?:\t///[^\n]*\n)*\tmeasure '{re.escape(name)}' =.*?\n\n", re.S)
+        text, k = pat.subn("", text)
+        if k:
+            changes.append(f"{name} (removed)")
+    opp_path = TABLES / "fact_keyword_opportunity.tmdl"
+    ot = opp_path.read_text(encoding="utf-8")
+    if "content_gap_score" in ot:
+        ot = re.sub(r"(?:\t///[^\n]*\n)*\tcolumn content_gap_score\n.*?\n\n", "", ot, flags=re.S)
+        ot = ot.replace(', {"content_gap_score", type number}', "")
+        opp_path.write_text(ot, encoding="utf-8")
+        changes.append("fact_keyword_opportunity[content_gap_score] (removed)")
     block = ""
     for name, expr, desc, folder in HELPERS:
         if f"measure '{name}'" in text:
+            # keep existing helper measures (description + expression) in sync with the definition here
+            pat = re.compile(rf"(?:\t/// [^\n]*\n)?\tmeasure '{re.escape(name)}' =\n\t\t\t(.*?)\n\t\tdisplayFolder:", re.S)
+            m = pat.search(text)
+            if m and (m.group(1) != expr or f"/// {desc}\n\tmeasure '{name}'" not in text):
+                new = f"\t/// {desc}\n\tmeasure '{name}' =\n\t\t\t{expr}\n\t\tdisplayFolder:"
+                text = text[:m.start()] + new + text[m.end():]
+                changes.append(f"{name} (updated)")
             continue
         block += f"\t/// {desc}\n\tmeasure '{name}' =\n\t\t\t{expr}\n\t\tdisplayFolder: {folder}\n\t\tlineageTag: {uuid.uuid4()}\n\n"
         changes.append(name)
@@ -147,6 +323,18 @@ def update_model():
         kw = kw[:idx] + HAS_STATE_COLUMN.format(tag=uuid.uuid4()) + kw[idx:]
         KEYWORD_TMDL.write_text(kw, encoding="utf-8")
         changes.append("dim_keyword[has_state_data]")
+
+    for table, specs in CALC_COLUMNS.items():
+        path = TABLES / f"{table}.tmdl"
+        tt = path.read_text(encoding="utf-8")
+        add = ""
+        for spec in specs:
+            if f"\tcolumn {spec[0]} " not in tt:
+                add += video_column_tmdl(*spec)
+                changes.append(f"{table}[{spec[0]}]")
+        if add:
+            idx = tt.index("\tpartition ")
+            path.write_text(tt[:idx] + add + tt[idx:], encoding="utf-8")
     return changes
 
 
@@ -265,14 +453,37 @@ def f_has_state():
     return f_bool("dim_keyword", "has_state_data", True)
 
 
-def f_topn(table, column, measure, top):
+def f_not_blank(table, column):
+    return {"name": uid(f"fnb{column}"), "field": col(table, column), "type": "Categorical",
+            "filter": {"Version": 2, "From": [{"Name": "t", "Entity": table, "Type": 0}],
+                       "Where": [{"Condition": {"Not": {"Expression": {"In": {
+                           "Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "t"}}, "Property": column}}],
+                           "Values": [[{"Literal": {"Value": "null"}}], [{"Literal": {"Value": "''"}}]]}}}}}]},
+            "howCreated": "User"}
+
+
+COMPARE = {"eq": 0, "gt": 1, "ge": 2, "le": 3, "lt": 4}
+
+
+def f_measure(measure, op, value):
+    """Visual-level filter on a measure, e.g. f_measure("Map Strength", "ge", 0.1)."""
+    lit = f"{value}L" if isinstance(value, int) else f"{value}D"
+    return {"name": uid("fm"), "field": mea(measure), "type": "Advanced",
+            "filter": {"Version": 2, "From": [{"Name": "m", "Entity": "_Measures", "Type": 0}],
+                       "Where": [{"Condition": {"Comparison": {"ComparisonKind": COMPARE[op],
+                                                               "Left": {"Measure": {"Expression": {"SourceRef": {"Source": "m"}}, "Property": measure}},
+                                                               "Right": {"Literal": {"Value": lit}}}}}]},
+            "howCreated": "User"}
+
+
+def f_topn(table, column, measure, top, bottom=False):
     return {"name": uid("ftop"), "field": col(table, column), "type": "TopN",
             "filter": {"Version": 2,
                        "From": [{"Name": "subquery", "Expression": {"Subquery": {"Query": {
                            "Version": 2,
                            "From": [{"Name": "d", "Entity": table, "Type": 0}, {"Name": "m", "Entity": "_Measures", "Type": 0}],
                            "Select": [{"Column": {"Expression": {"SourceRef": {"Source": "d"}}, "Property": column}, "Name": "field"}],
-                           "OrderBy": [{"Direction": 2, "Expression": {"Measure": {"Expression": {"SourceRef": {"Source": "m"}}, "Property": measure}}}],
+                           "OrderBy": [{"Direction": 1 if bottom else 2, "Expression": {"Measure": {"Expression": {"SourceRef": {"Source": "m"}}, "Property": measure}}}],
                            "Top": top}}}, "Type": 2},
                                 {"Name": "d", "Entity": table, "Type": 0}],
                        "Where": [{"Condition": {"In": {"Expressions": [{"Column": {"Expression": {"SourceRef": {"Source": "d"}}, "Property": column}}],
@@ -327,6 +538,18 @@ def card(page, x, y, w, h, field, label, size=20, pad_left=8, background=True, l
                     vco=vco, name=name or "card")
 
 
+def text_card(page, x, y, w, h, measure, label, size=12, label_show=True, background=True, pad_left=12, name="textcard"):
+    """Left-aligned, wrapping text from a measure (multi-row card without the bar)."""
+    vco = {"title": [{"properties": {"show": b(False)}}], "padding": pad(6, 10, 6, pad_left)}
+    if not background:
+        vco["background"] = [{"properties": {"show": b(False)}}]
+    return page.add("multiRowCard", x, y, w, h, query={"Values": {"projections": [proj(mea(measure), label)]}},
+                    objects={"dataLabels": [{"properties": {"fontSize": n(size), "color": solid(INK)}}],
+                             "categoryLabels": [{"properties": {"show": b(label_show), "fontSize": n(9), "color": solid(INK2)}}],
+                             "card": [{"properties": {"barShow": b(False), "outline": s("None")}}]},
+                    vco=vco, name=name)
+
+
 def kpi(page, x, y, w, h, measure, label, icon, size=20, units=None, precision=None):
     name = card(page, x, y, w, h, mea(measure), label, size=size, pad_left=60, units=units, precision=precision, name=f"kpi_{measure}")
     image(page, x + 14, y + (h - 40) / 2, 40, 40, f"icon_{icon}.svg", name=f"icon_{icon}")
@@ -344,9 +567,12 @@ def kpi_row(page, y, items, h=KPI_H, x0=M, total=W - 2 * M):
 
 
 def slicer(page, x, y, w, field, label, mode="Dropdown", filters=None, h=SLICER_H):
-    objects = {"data": [{"properties": {"mode": s(mode)}}],
+    tiles = mode == "Tile"            # buttons side by side (list slicer, horizontal)
+    objects = {"data": [{"properties": {"mode": s("Basic" if tiles else mode)}}],
                "header": [{"properties": {"show": b(True), "fontColor": solid(INK2), "textSize": n(9)}}],
                "items": [{"properties": {"fontColor": solid(INK), "textSize": n(10)}}]}
+    if tiles:
+        objects["general"] = [{"properties": {"orientation": L("1D")}}]
     vco = {"title": [{"properties": {"show": b(False)}}], "padding": pad(4, 10, 4, 10)}
     return page.add("slicer", x, y, w, h, query={"Values": {"projections": [proj(field, label)]}},
                     objects=objects, vco=vco, filters=filters, name="slicer")
@@ -376,8 +602,8 @@ def bar(page, x, y, w, h, cat, measure, title, subtitle=None, colour_measure=Non
     return page.add(vt, x, y, w, h, query=q, objects=objects, vco=title_vco(title, subtitle), filters=fl or None, sort=sort, name="bar", tooltip_page=tooltip_page)
 
 
-def line(page, x, y, w, h, title, subtitle, series=None, filters=None, name="line"):
-    q = {"Category": {"projections": [proj(col("dim_date", "year_month"), "Month")]}, "Y": {"projections": [proj(mea("Interest"), "Search interest")]}}
+def line(page, x, y, w, h, title, subtitle, series=None, filters=None, name="line", axis=("dim_date", "year_month")):
+    q = {"Category": {"projections": [proj(col(*axis), "Month")]}, "Y": {"projections": [proj(mea("Interest"), "Search interest")]}}
     if series:
         q["Series"] = {"projections": [proj(col(*series))]}
     objects = {"lineStyles": [{"properties": {"strokeWidth": n(2), "showMarker": b(False)}}],
@@ -387,7 +613,7 @@ def line(page, x, y, w, h, title, subtitle, series=None, filters=None, name="lin
     if not series:
         objects["dataPoint"] = [{"properties": {"defaultColor": solid(RED)}}]
     return page.add("lineChart", x, y, w, h, query=q, objects=objects, vco=title_vco(title, subtitle), filters=filters,
-                    sort=(col("dim_date", "year_month"), "Ascending"), name=name)
+                    sort=(col(*axis), "Ascending"), name=name)
 
 
 def table(page, x, y, w, h, columns, title, subtitle, filters=None, sort=None, widths=None, status_colour=False, tooltip_page=None, name="table"):
@@ -418,12 +644,15 @@ def matrix(page, x, y, w, h, rows, cols_, value, back, font, title, subtitle, fi
                     vco=title_vco(title, subtitle), filters=filters, name=name)
 
 
-def scatter(page, x, y, w, h, cat, xm, ym, size, title, subtitle, filters=None, tooltip_page=None, name="scatter"):
+def scatter(page, x, y, w, h, cat, xm, ym, size, title, subtitle, filters=None, tooltip_page=None, name="scatter",
+            colour_measure=None, labels=True):
+    point = ({"properties": {"fill": measure_colour(colour_measure)}, "selector": ALL_POINTS} if colour_measure
+             else {"properties": {"defaultColor": solid(RED)}})
     return page.add("scatterChart", x, y, w, h,
                     query={"Category": {"projections": [proj(col(*cat[:2]), cat[2])]}, "X": {"projections": [proj(mea(xm))]},
                            "Y": {"projections": [proj(mea(ym))]}, "Size": {"projections": [proj(mea(size))]}},
-                    objects={"categoryLabels": [{"properties": {"show": b(True), "fontSize": n(8), "color": solid(INK2)}}],
-                             "dataPoint": [{"properties": {"defaultColor": solid(RED)}}], "legend": [{"properties": {"show": b(False)}}],
+                    objects={"categoryLabels": [{"properties": {"show": b(labels), "fontSize": n(8), "color": solid(INK2)}}],
+                             "dataPoint": [point], "legend": [{"properties": {"show": b(False)}}],
                              "categoryAxis": [{"properties": {"showAxisTitle": b(True), "labelColor": solid(INK3), "fontSize": n(8)}}],
                              "valueAxis": [{"properties": {"showAxisTitle": b(True), "labelColor": solid(INK3), "fontSize": n(8)}}]},
                     vco=title_vco(title, subtitle), filters=filters, name=name, tooltip_page=tooltip_page)
@@ -433,9 +662,14 @@ def footnote(page, text):
     textbox(page, M, FOOT_Y, W - 2 * M, 22, [[(text, 8, INK3, False)]], name="footnote")
 
 
-def header(page, title, subtitle, navigator=True):
+def header(page, title, subtitle, navigator=True, headline=None):
+    """headline: optional measure shown as a live one-line summary instead of the static subtitle."""
     image(page, M, 16, 6, 40, "accent_bar.svg", name="accent")
-    textbox(page, M + 16, 10, 820, 56, [[(title, 18, INK, True)], [(subtitle, 9.5, INK2, False)]], name="pagetitle")
+    if headline:
+        textbox(page, M + 16, 8, 820, 32, [[(title, 18, INK, True)]], name="pagetitle")
+        text_card(page, M + 12, 38, 900, 28, headline, "Headline", size=10, label_show=False, background=False, pad_left=4, name="pagetitle_headline")
+    else:
+        textbox(page, M + 16, 10, 820, 56, [[(title, 18, INK, True)], [(subtitle, 9.5, INK2, False)]], name="pagetitle")
     card(page, W - M - 230, 16, 230, 40, mea("Data As Of"), "Data as of", size=10, pad_left=44, label_show=False, name="asof")
     image(page, W - M - 222, 24, 24, 24, "icon_calendar.svg", name="asof_icon")
     if navigator:
@@ -452,6 +686,28 @@ def header(page, title, subtitle, navigator=True):
                  vco=bare(), name="nav")
 
 
+def sl_content(w=200):
+    return (w, col("dim_video", "video_format"), "Content", {"mode": "Tile"})
+
+
+def f_has_videos():
+    """Slicer filter: only list items that have videos under the other filters (avoids picking empty combinations)."""
+    return {"name": uid("fhasvid"), "field": mea("Videos Tracked"), "type": "Advanced",
+            "filter": {"Version": 2, "From": [{"Name": "m", "Entity": "_Measures", "Type": 0}],
+                       "Where": [{"Condition": {"Comparison": {"ComparisonKind": 1,
+                                                               "Left": {"Measure": {"Expression": {"SourceRef": {"Source": "m"}}, "Property": "Videos Tracked"}},
+                                                               "Right": {"Literal": {"Value": "0L"}}}}}]},
+            "howCreated": "User"}
+
+
+def sl_language(w=200):
+    return (w, col("dim_language", "language_label"), "Video language", {"filters": [f_bool("dim_language", "has_videos", True), f_has_videos()]})
+
+
+def sl_category(w=220):
+    return (w, col("dim_category", "category_name"), "YouTube category", {"filters": [f_bool("dim_category", "has_videos", True), f_has_videos()]})
+
+
 def slicer_row(page, specs):
     """specs: list of (width, field, label, extra_kwargs)."""
     x, names = M, []
@@ -462,7 +718,23 @@ def slicer_row(page, specs):
 
 
 # ---------------------------------------------------------------- pages
+def sl_topic(w=240, has_videos=True):
+    filters = [f_exclude_anchor()] + ([f_has_videos()] if has_videos else [])
+    return (w, col("dim_keyword", "topic_group"), "Topic", {"filters": filters})
+
+
+def sl_search_language(w=180):
+    """Language of the search term (pages 2 and 4, decision Q39a): e.g. 'UPSC Telugu' counts as Telugu."""
+    return (w, col("dim_keyword", "keyword_language"), "Language")
+
+
+def note(page, x, text, w=420):
+    """Small grey explanation placed in the filter row, right of the slicers."""
+    textbox(page, x, SLICER_Y + 8, w, SLICER_H - 12, [[(text, 8.5, INK2, False)]], name="filternote")
+
+
 def build_pages():
+    """The 4-page creator journey (Context/four_page_plan.md) + hidden State detail and Keyword tooltip pages."""
     pages = []
     tip = Page("keywordtooltip", "Keyword tooltip", width=320, height=240, ptype="Tooltip", hidden=True)
     TIP = tip.key
@@ -470,174 +742,142 @@ def build_pages():
     half = (full - G) / 2
     third = (full - 2 * G) / 3
 
-    # 1. Overview ---------------------------------------------------------
-    p = Page("overview", "Overview")
-    header(p, "India YouTube Trends", "What India watches and searches on YouTube: trending videos (YouTube API) and search interest (Google Trends)")
-    s_topic, s_cat, s_fmt = slicer_row(p, [(220, col("dim_keyword", "topic_group"), "Topic", {"filters": [f_exclude_anchor()]}),
-                                           (220, col("dim_category", "category_name"), "YouTube category"),
-                                           (160, col("dim_video", "is_short"), "Shorts?")])
-    kpis = kpi_row(p, KPI_Y, [("Videos Tracked", "Videos tracked", "videos"), ("Total Views", "Total views", "views", {"units": 1000000000, "precision": 1}),
-                              ("Engagement Rate", "Engagement rate", "engagement"), ("Shorts Share", "Shorts share", "shorts"),
-                              ("Regional Language Share", "Indian-language videos", "language"), ("Top Category", "Top category", "category", {"size": 13})])
-    r1 = 214
-    v_cat = bar(p, M, BODY_Y, 480, r1, ("dim_category", "category_name"), "Videos Tracked", "Videos by category",
-                "Trending and keyword-search videos, top 6", colour_measure="HL Videos", top=6, tooltips=("Total Views", "Engagement Rate", "Median Views"))
-    v_line = line(p, M + 480 + G, BODY_Y, full - 480 - G, r1, "Search interest on YouTube", "Monthly average of all tracked keywords, index relative to 'cricket' (Google Trends)")
-    y3 = BODY_Y + r1 + G
-    h3 = BODY_END - y3
-    v_rise = table(p, M, y3, 420, h3, [proj(col("dim_keyword", "keyword"), "Keyword"), proj(mea("Trend Label"), "Trend"),
-                                       proj(mea("Interest MoM %"), "MoM"), proj(col("dim_keyword", "topic_group"), "Topic")],
-                   "Fastest-moving keywords", "Biggest month-on-month change in search interest",
-                   filters=[f_exclude_anchor(), f_topn("dim_keyword", "keyword", "Interest MoM %", 5)],
-                   sort=(mea("Interest MoM %"), "Descending"), status_colour=True, tooltip_page=TIP, name="rising")
-    v_lang = bar(p, M + 420 + G, y3, 394, h3, ("dim_language", "language_name"), "Videos Tracked", "Videos by language",
-                 "Audio track, then title script, top 5", colour_measure="HL Videos", top=5)
-    v_orig = bar(p, M + 826 + G, y3, full - 826 - G, h3, ("dim_channel", "channel_origin"), "Channels", "Where channels are based",
-                 "Channels behind the tracked videos", colour_measure="HL Channels")
-    footnote(p, "Trending = YouTube's India 'mostPopular' chart, not all of YouTube. Search interest is a Google Trends index (0-100, scaled to 'cricket'), not search counts. Click any bar to filter the page.")
-    p.interactions += [{"source": s_topic, "target": t, "type": "NoFilter"} for t in kpis + [v_cat, v_lang, v_orig]]
-    p.interactions += [{"source": sl, "target": t, "type": "NoFilter"} for sl in (s_cat, s_fmt) for t in (v_line, v_rise)]
+    # 1. Market pulse ------------------------------------------------------
+    p = Page("pulse", "Market pulse")
+    header(p, "What's happening on YouTube India right now?", None, headline="Overview Headline")
+    s_topic, s_lang, s_fmt = slicer_row(p, [sl_topic(), sl_language(220), sl_content(240)])
+    kpis = kpi_row(p, KPI_Y, [("Videos Tracked", "Videos tracked", "videos"),
+                              ("Median Views", "Median views per video", "views", {"units": 1000000, "precision": 2}),
+                              ("Shorts Share", "Shorts share", "shorts"),
+                              ("Regional Language Share", "Indian-language videos", "language"),
+                              ("Rising Keywords", "Keywords rising vs last month", "rising")])
+    r1 = 200
+    lw = 780
+    v_line = line(p, M, BODY_Y, lw, r1, "How much India searches on YouTube",
+                  "Google Trends score per month over 5 years, higher = more searches", name="pulseline")
+    v_season = line(p, M + lw + G, BODY_Y, full - lw - G, r1, "When does interest peak?",
+                    "Average score by calendar month, across 5 years", name="season", axis=("dim_date", "month_name"),
+                    filters=[f_exclude_anchor()])
+    y2 = BODY_Y + r1 + G
+    h2 = BODY_END - y2
+    qw = (full - 3 * G) / 4
+    kw_cols = [proj(col("dim_keyword", "keyword"), "Keyword"), proj(mea("Trend Label"), "Trend"), proj(mea("Interest MoM %"), "vs last month")]
+    kw_widths = {"dim_keyword.keyword": 130, "_Measures.Trend Label": 85, "_Measures.Interest MoM %": 70}
+    v_up = table(p, M, y2, qw, h2, kw_cols, "Rising fastest", "Biggest increase in searches vs last month",
+                 filters=[f_exclude_anchor(), f_measure("Interest MoM %", "gt", 0.0), f_topn("dim_keyword", "keyword", "Interest MoM %", 5)],
+                 sort=(mea("Interest MoM %"), "Descending"), status_colour=True, tooltip_page=TIP, widths=kw_widths, name="risingfast")
+    v_down = table(p, M + qw + G, y2, qw, h2, kw_cols, "Falling fastest", "Biggest drop in searches vs last month",
+                   filters=[f_exclude_anchor(), f_measure("Interest MoM %", "lt", 0.0), f_topn("dim_keyword", "keyword", "Interest MoM %", 5, bottom=True)],
+                   sort=(mea("Interest MoM %"), "Ascending"), status_colour=True, tooltip_page=TIP, widths=kw_widths, name="fallingfast")
+    bar(p, M + 2 * (qw + G), y2, qw, h2, ("dim_category", "category_name"), "Videos Tracked", "Number of videos by YouTube category",
+        "Top 6 categories", colour_measure="HL Videos", top=6, tooltips=("Median Views", "Engagement Rate"), label="Videos")
+    tvx = M + 3 * (qw + G)
+    hh, dh = 46, 40
+    textbox(p, tvx + 12, y2 + 8, qw - 24, hh - 8,
+            [[("Most-viewed video right now", 12, INK, True)], [("Top video in the current filter, by views", 9, INK2, False)]], name="topvideo_heading")
+    text_card(p, tvx, y2 + hh, qw, h2 - hh - dh, "Top Video Title", "Video", size=12, label_show=False, background=False, name="topvideo")
+    text_card(p, tvx, y2 + h2 - dh, qw, dh, "Top Video Detail", "Channel and views", size=9, label_show=False, background=False, name="topvideodetail")
+    footnote(p, "Videos = YouTube India trending chart + top recent videos for each tracked keyword; picking a topic shows the videos found for it. "
+                "Search score = Google Trends (YouTube Search, India), scaled against 'cricket' so all keywords compare fairly.")
+    # video language and content describe videos, not searches: they don't filter the search visuals
+    search_visuals = (v_line, v_season, v_up, v_down, kpis[4])
+    p.interactions += [{"source": sl, "target": t, "type": "NoFilter"} for sl in (s_lang, s_fmt) for t in search_visuals]
     pages.append(p)
 
-    # 2. India map --------------------------------------------------------
-    p = Page("indiamap", "India map")
-    header(p, "India map", "Which states search most for a topic on YouTube (Google Trends, YouTube Search)")
-    slicer_row(p, [(240, col("dim_keyword", "topic_group"), "Topic", {"filters": [f_exclude_anchor()]}),
-                   (280, col("dim_keyword", "keyword"), "Keyword", {"filters": [f_exclude_anchor(), f_has_state()]}),
-                   (200, col("dim_state", "zone"), "Zone")])
-    map_w = 740
+    # 2. Find your niche ---------------------------------------------------
+    p = Page("niche", "Find your niche")
+    header(p, "Where is demand high and competition weak?", None, headline="Niche Headline")
+    slicer_row(p, [sl_topic(has_videos=False), sl_search_language()])
+    note(p, M + 240 + 180 + 2 * G, "Language = searches for content in that language, for example 'UPSC Telugu'.")
+    kpi_row(p, KPI_Y, [("Keywords Tracked", "Keywords tracked", "keywords"), ("Hot Niches", "Hot niches (high demand, growing)", "opportunity"),
+                       ("Demand Index", "Demand (search score, 12 weeks)", "interest"), ("Growth 12w %", "Growth (12 weeks)", "growth"),
+                       ("Small Channel Share", "Top videos from small channels", "smallch")])
+    rh = 250
+    scatter(p, M, BODY_Y, half, rh, ("dim_keyword", "keyword", "Keyword"), "Demand Index", "Growth 12w %", "Small Channel Share",
+            "Opportunity map", "Right = more demand than average · up = growing · dark red = Hot · bubble = small-channel share",
+            filters=[f_exclude_anchor()], tooltip_page=TIP, name="oppscatter", colour_measure="Quadrant Color", labels=False)
+    table(p, M + half + G, BODY_Y, half, rh,
+          [proj(col("dim_keyword", "keyword"), "Keyword"), proj(col("dim_keyword", "topic_group"), "Topic"),
+           proj(mea("Demand Index"), "Demand"), proj(mea("Growth 12w %"), "Growth"), proj(mea("Small Channel Share"), "Small channels"),
+           proj(mea("Trend Label"), "Trend")],
+          "Hot niches, most open first", "High demand and growing; sorted by share of top videos from small channels",
+          filters=[f_exclude_anchor(), f_measure("Hot Niche Flag", "eq", 1)], sort=(mea("Small Channel Share"), "Descending"),
+          status_colour=True, tooltip_page=TIP,
+          widths={"dim_keyword.keyword": 150, "dim_keyword.topic_group": 130, "_Measures.Demand Index": 60, "_Measures.Growth 12w %": 60,
+                  "_Measures.Small Channel Share": 90, "_Measures.Trend Label": 85}, name="hotniches")
+    my = BODY_Y + rh + G
+    matrix(p, M, my, full, BODY_END - my, ("dim_keyword", "topic_group", "Topic"), ("dim_keyword", "keyword_language", "Language"), "Demand Index",
+           "Heat Color Demand", "Heat Font Demand", "Demand by topic and language", "Darker = more search demand. Empty = no keyword tracked for that pair.",
+           filters=[f_exclude_anchor()], font_size=8, name="langmatrix")
+    footnote(p, "Hot = demand above the average of the keywords in view, and growing over the last 12 weeks. Small channels = under 100K subscribers: "
+                "the API can't count competitors, so this measures whether small channels still reach the top results.")
+    pages.append(p)
+
+    # 3. Make it & grow it -------------------------------------------------
+    p = Page("grow", "Make it & grow it")
+    header(p, "How should I make it, and what does it take to grow?", None, headline="Grow Headline")
+    _, _, s_fmt = slicer_row(p, [sl_topic(), sl_language(220), sl_content(240)])
+    kpi_row(p, KPI_Y, [("Median Views", "Median views per video", "views", {"units": 1000000, "precision": 2}),
+                       ("Engagement Rate", "Engagement rate", "engagement"), ("Shorts Share", "Shorts share", "shorts"),
+                       ("Median Uploads per Month (Small)", "Uploads a month (small channels)", "perday", {"precision": 1})])
+    rh = (BODY_END - BODY_Y - G) / 2
+    y2 = BODY_Y + rh + G
+    sw = (third - G) / 2
+    v_f1 = bar(p, M, BODY_Y, sw, rh, ("dim_video", "video_format"), "Median Views", "Shorts vs long-form",
+               "Median views", colour_measure="HL Median Views", horizontal=False, units=1000000, precision=2, tooltips=("Videos Tracked",))
+    v_f2 = bar(p, M + sw + G, BODY_Y, sw, rh, ("dim_video", "video_format"), "Engagement Rate", "Shorts vs long-form",
+               "Engagement rate", colour_measure="HL Engagement", horizontal=False, units=0, tooltips=("Videos Tracked",))
+    bar(p, M + third + G, BODY_Y, third, rh, ("dim_video", "duration_bucket"), "Median Views", "Median views by video length", "Typical views for each length",
+        colour_measure="HL Median Views", horizontal=False, sort_desc=False, units=1000000, precision=1, tooltips=("Videos Tracked",))
+    bar(p, M + 2 * (third + G), BODY_Y, third, rh, ("dim_video", "title_length_bucket"), "Median Views", "Title length",
+        "Median views by title length in characters (YouTube max 100)", colour_measure="HL Median Views",
+        horizontal=False, sort_desc=False, units=1000000, precision=2, tooltips=("Videos Tracked",))
+    bar(p, M, y2, third, rh, ("dim_channel", "subscriber_tier"), "Median Views", "Can small channels get views?",
+        "Median views per video by channel size (subscribers)", colour_measure="HL Median Views",
+        horizontal=False, sort_desc=False, units=1000000, precision=2, tooltips=("Videos Tracked",), filters=[f_not_blank("dim_channel", "subscriber_tier")])
+    bar(p, M + third + G, y2, third, rh, ("dim_channel", "channel_age_bucket"), "Small Channels in Top Results", "How new are the small channels in top results?",
+        "Channels under 100K subscribers, by channel age", colour_measure="HL Small Channels", horizontal=False, sort_desc=False, label="Channels",
+        filters=[f_not_blank("dim_channel", "channel_age_bucket")])
+    bar(p, M + 2 * (third + G), y2, third, rh, ("dim_channel", "upload_pace_bucket"), "Small Channels in Top Results", "How often do they upload?",
+        "Channels under 100K subscribers, by average uploads", colour_measure="HL Small Channels", horizontal=False, sort_desc=False, label="Channels",
+        filters=[f_not_blank("dim_channel", "upload_pace_bucket")])
+    p.interactions += [{"source": s_fmt, "target": t, "type": "NoFilter"} for t in (v_f1, v_f2)]
+    footnote(p, "Patterns among popular videos, not proof of cause. Median used because a few viral videos skew averages. Upload pace = a channel's "
+                "total videos / its age (lifetime average). Small channels = under 100K subscribers, in top search results.")
+    pages.append(p)
+
+    # 4. Know your audience ------------------------------------------------
+    p = Page("audience", "Know your audience")
+    header(p, "Who am I making it for, and where are they?", None, headline="Audience Headline")
+    slicer_row(p, [sl_topic(200, has_videos=False), sl_search_language(170),
+                   (260, col("dim_keyword", "keyword"), "Keyword", {"filters": [f_exclude_anchor(), f_has_state()]}),
+                   (160, col("dim_state", "zone"), "Zone")])
+    note(p, M + 200 + 170 + 260 + 160 + 4 * G, "Language = searches for content in that language, for example 'UPSC Telugu'. Picking one zooms the map.", w=390)
+    map_w = 640
     p.add("filledMap", M, KPI_Y, map_w, BODY_END - KPI_Y,
           query={"Category": {"projections": [proj(col("dim_state", "state_map_name"), "State")]},
                  "Tooltips": {"projections": [proj(mea("State Index")), proj(mea("Interest vs Cricket")), proj(mea("Top Keyword in State"))]}},
           objects={"dataPoint": [{"properties": {"fill": measure_colour("Map Color")}, "selector": ALL_POINTS}],
                    "mapControls": [{"properties": {"autoZoom": b(True)}}]},
-          vco={"title": [{"properties": {"show": b(True), "text": {"expr": mea("Map Title")}, "fontSize": n(12), "bold": b(True), "fontColor": solid(INK)}}],
-               "subTitle": [{"properties": {"show": b(True), "text": s("Darker = higher share of searches. Right-click a state > Drill through > State detail."), "fontSize": n(9), "fontColor": solid(INK2)}}],
-               "padding": pad(8, 12, 8, 12)},
-          filters=[f_has_state()], name="map")
+          vco={**title_vco("Where people search for it on YouTube",
+                           "Darker = more searches. States with almost none are left blank. Right-click a state > Drill through > State detail.")},
+          filters=[f_has_state(), f_measure("Map Strength", "ge", 0.1)], name="map")
     rx, rw = M + map_w + G, full - map_w - G
-    kpi_row(p, KPI_Y, [("Top State", "Highest interest", "state", {"size": 14}), ("Interest vs Cricket", "Interest vs cricket", "interest")], x0=rx, total=rw)
-    bar(p, rx, BODY_Y, rw, BODY_END - BODY_Y, ("dim_state", "state"), "State Index", "Top 10 states", "State Index, 0-100 within each keyword",
+    th = 230
+    bar(p, rx, KPI_Y, rw, th, ("dim_state", "state"), "State Index", "Top 10 states", "Search score, 0-100 within each keyword",
         colour_measure="HL State Index", top=10, tooltips=("Interest vs Cricket", "Top Keyword in State"), filters=[f_has_state()], precision=0)
-    footnote(p, "State Index = 0-100 within each keyword (100 = highest share of searches). 17 low-volume keywords (mostly regional-language) have no state data and are hidden here.")
+    by = KPI_Y + th + G
+    bw = (rw - G) / 2
+    bar(p, rx, by, bw, BODY_END - by, ("dim_state", "state"), "Interest vs Cricket", "How big is the topic there?",
+        "Top 6 states; 1.0 = as searched as cricket", colour_measure="HL Interest vs Cricket", top=6, filters=[f_exclude_anchor(), f_has_state()],
+        units=0, precision=2)
+    bar(p, rx + bw + G, by, bw, BODY_END - by, ("dim_language", "language_label"), "Videos Tracked", "Videos found, by video language",
+        "Top 5 languages of the videos these searches return", colour_measure="HL Videos", top=5, label="Videos")
+    footnote(p, "YouTube doesn't share where viewers are, so this page uses YouTube search interest by state (Google Trends) as the audience signal. "
+                "Search score = 0-100 within each keyword. Small states can score high from few searches.")
     pages.append(p)
 
-    # 3. Content categories ----------------------------------------------
-    p = Page("categories", "Categories")
-    header(p, "Content categories", "Which categories get the views and the engagement")
-    slicer_row(p, [(160, col("dim_video", "is_short"), "Shorts?"), (220, col("dim_language", "language_name"), "Language"),
-                   (200, col("dim_channel", "channel_origin"), "Channel origin")])
-    kpi_row(p, KPI_Y, [("Videos Tracked", "Videos tracked", "videos"), ("Median Views", "Median views", "median", {"units": 1000000, "precision": 1}),
-                       ("Engagement Rate", "Engagement rate", "engagement"), ("Avg Views per Day", "Avg views per day", "perday", {"units": 1000, "precision": 0})])
-    rh = (BODY_END - BODY_Y - G) / 2
-    scatter(p, M, BODY_Y, half, rh, ("dim_category", "category_name", "Category"), "Median Views", "Engagement Rate", "Videos Tracked",
-            "Reach vs engagement", "Top 8 categories; bubble size = videos tracked", filters=[f_topn("dim_category", "category_name", "Videos Tracked", 8)])
-    bar(p, M + half + G, BODY_Y, half, rh, ("dim_category", "category_name"), "Median Views", "Median views by category", "Median is less skewed by viral hits; top 6",
-        colour_measure="HL Median Views", top=6, units=1000000, precision=1)
-    bar(p, M, BODY_Y + rh + G, half, rh, ("dim_category", "category_name"), "Engagement Rate", "Engagement rate by category", "(Likes + comments) / views; top 6",
-        colour_measure="HL Engagement", top=6, units=0)
-    bar(p, M + half + G, BODY_Y + rh + G, half, rh, ("dim_video", "duration_bucket"), "Videos Tracked", "Videos by length", "How long tracked videos are",
-        colour_measure="HL Videos", horizontal=False, sort_desc=False)
-    footnote(p, "Median used instead of average because a few viral videos dominate totals. Engagement uses only videos with public like counts. Click any bar to filter the page.")
-    pages.append(p)
-
-    # 4. Trending topics -------------------------------------------------
-    p = Page("trending", "Trending topics")
-    header(p, "Trending topics", "Which keywords are rising, which are fading, and how now compares with last year")
-    slicer_row(p, [(240, col("dim_keyword", "topic_group"), "Topic", {"filters": [f_exclude_anchor()]}),
-                   (220, col("dim_keyword", "keyword_language"), "Keyword language"),
-                   (360, col("dim_date", "date"), "Date range", {"mode": "Between"})])
-    kpi_row(p, KPI_Y, [("Rising Keywords", "Rising keywords", "rising"), ("Declining Keywords", "Declining keywords", "declining"),
-                       ("Interest", "Avg search interest", "interest"), ("Interest MoM %", "Month on month", "growth"),
-                       ("Interest YoY % (3M)", "Year on year (3M)", "interest")])
-    lh = 196
-    line(p, M, BODY_Y, full, lh, "Search interest over time", "Monthly, top 5 keywords in the current selection. Pick a topic to compare its keywords.",
-         series=("dim_keyword", "keyword"), filters=[f_exclude_anchor(), f_topn("dim_keyword", "keyword", "Interest", 5)], name="trendline")
-    ty = BODY_Y + lh + G
-    table(p, M, ty, full, BODY_END - ty,
-          [proj(col("dim_keyword", "keyword"), "Keyword"), proj(col("dim_keyword", "topic_group"), "Topic"), proj(mea("Trend Label"), "Trend"),
-           proj(mea("Interest"), "Interest"), proj(mea("Interest MoM %"), "MoM"), proj(mea("Interest YoY % (3M)"), "YoY (3M)")],
-          "All keywords", "Sorted by month-on-month change. Hover a keyword to see its 5-year trend.",
-          filters=[f_exclude_anchor()], sort=(mea("Interest MoM %"), "Descending"), status_colour=True, tooltip_page=TIP,
-          widths={"dim_keyword.keyword": 260, "dim_keyword.topic_group": 200, "_Measures.Trend Label": 160, "_Measures.Interest": 120,
-                  "_Measures.Interest MoM %": 120, "_Measures.Interest YoY % (3M)": 120}, name="kwtable")
-    footnote(p, "Rising = interest up more than 15% vs the previous month; Declining = down more than 15%. Google Trends samples its data, so small changes are noise.")
-    pages.append(p)
-
-    # 5. Videos & channels -----------------------------------------------
-    p = Page("videoschannels", "Videos & channels")
-    header(p, "Videos & channels", "Which videos and channels win, and whether length and timing matter")
-    slicer_row(p, [(220, col("dim_category", "category_name"), "Category"), (200, col("dim_language", "language_name"), "Language"),
-                   (160, col("dim_video", "is_short"), "Shorts?"), (180, col("fact_video_snapshot", "in_trending"), "In trending chart?")])
-    kpi_row(p, KPI_Y, [("Channels", "Channels", "channels"), ("Total Subscribers", "Subscribers (channels in view)", "subscribers", {"units": 1000000000, "precision": 1}),
-                       ("Trending Videos", "In trending charts", "trending"), ("Avg Views per Video", "Avg views per video", "views", {"units": 1000000, "precision": 1})])
-    th = 236
-    vw = 724
-    table(p, M, BODY_Y, vw, th,
-          [proj(col("dim_video", "title"), "Video"), proj(col("dim_channel", "channel_name"), "Channel"),
-           proj(mea("Total Views"), "Views", MILLIONS), proj(mea("Avg Views per Day"), "Views/day", MILLIONS), proj(mea("Engagement Rate"), "Engagement")],
-          "Top 15 videos", "By latest public view count (M = millions)",
-          filters=[f_topn("dim_video", "title", "Total Views", 15)], sort=(mea("Total Views"), "Descending"),
-          widths={"dim_video.title": 330, "dim_channel.channel_name": 130, "_Measures.Total Views": 80, "_Measures.Avg Views per Day": 80, "_Measures.Engagement Rate": 80},
-          name="topvideos")
-    table(p, M + vw + G, BODY_Y, full - vw - G, th,
-          [proj(col("dim_channel", "channel_name"), "Channel"), proj(col("dim_channel", "country"), "Country"),
-           proj(mea("Videos Tracked"), "Videos"), proj(mea("Total Views"), "Views", MILLIONS), proj(mea("Total Subscribers"), "Subs", MILLIONS)],
-          "Channel leaderboard", "Top 20 channels by views of their tracked videos (M = millions)",
-          filters=[f_topn("dim_channel", "channel_name", "Total Views", 20)], sort=(mea("Total Views"), "Descending"),
-          widths={"dim_channel.channel_name": 170, "dim_channel.country": 60, "_Measures.Videos Tracked": 55, "_Measures.Total Views": 70, "_Measures.Total Subscribers": 65},
-          name="channels")
-    cy = BODY_Y + th + G
-    ch = BODY_END - cy
-    bar(p, M, cy, third, ch, ("dim_video", "duration_bucket"), "Median Views", "Median views by length", None, colour_measure="HL Median Views",
-        horizontal=False, sort_desc=False, units=1000000, precision=1)
-    bar(p, M + third + G, cy, third, ch, ("dim_video", "duration_bucket"), "Engagement Rate", "Engagement by length", None, colour_measure="HL Engagement",
-        horizontal=False, sort_desc=False, units=0)
-    bar(p, M + 2 * (third + G), cy, third, ch, ("dim_video", "publish_hour_ist"), "Videos Tracked", "Publish hour (IST)", None, colour_measure="HL Videos",
-        horizontal=False, sort_desc=False)
-    footnote(p, "Views are each video's latest public count. Like counts hidden by creators are left out of the engagement rate. Click any bar to filter the page.")
-    pages.append(p)
-
-    # 6. Creator opportunities -------------------------------------------
-    p = Page("opportunities", "Creator opportunities")
-    header(p, "Creator opportunities", "Where demand is growing faster than established creators are serving it")
-    slicer_row(p, [(240, col("dim_keyword", "topic_group"), "Topic", {"filters": [f_exclude_anchor()]}),
-                   (220, col("dim_keyword", "keyword_language"), "Keyword language")])
-    kpi_row(p, KPI_Y, [("Keywords Scored", "Keywords scored", "keywords"), ("Content Gap Score", "Content gap score", "gap"),
-                       ("Demand Index", "Demand index", "interest"), ("Growth 12w %", "Growth (12 weeks)", "growth"),
-                       ("Small Channel Share", "Small-channel share", "smallch")])
-    rh = 226
-    scatter(p, M, BODY_Y, half, rh, ("dim_keyword", "keyword", "Keyword"), "Demand Index", "Growth 12w %", "Small Channel Share",
-            "Opportunity map", "Top 20 keywords by demand. Right = more demand, up = growing", filters=[f_exclude_anchor(), f_topn("dim_keyword", "keyword", "Demand Index", 20)],
-            tooltip_page=TIP, name="oppscatter")
-    bar(p, M + half + G, BODY_Y, half, rh, ("dim_keyword", "keyword"), "Content Gap Score", "Top content gaps", "0-100: demand + growth + small-channel share; top 6",
-        colour_measure="HL Gap", top=6, tooltips=("Demand Index", "Growth 12w %", "Small Channel Share"), filters=[f_exclude_anchor()], tooltip_page=TIP, units=0, precision=0)
-    my = BODY_Y + rh + G
-    matrix(p, M, my, full, BODY_END - my, ("dim_keyword", "keyword_language", "Language"), ("dim_keyword", "topic_group", "Topic"), "Demand Index",
-           "Heat Color Demand", "Heat Font Demand", "Demand by language and topic", "Darker = more search demand. Empty cells = no keyword tracked there yet.",
-           filters=[f_exclude_anchor()], name="langmatrix")
-    footnote(p, "Content gap score = 40% demand + 30% growth + 30% share of top recent videos from channels under 100K subscribers. Scores fill in as the daily search rotation runs.")
-    pages.append(p)
-
-    # 7. Business & marketing --------------------------------------------
-    p = Page("business", "Business")
-    header(p, "Business & marketing", "Which regions to target for a topic")
-    s_topic, _ = slicer_row(p, [(260, col("dim_keyword", "topic_group"), "Target topic", {"filters": [f_exclude_anchor()]}),
-                                (200, col("dim_state", "zone"), "Zone")])
-    heat_h = 286
-    heat = matrix(p, M, KPI_Y, full, heat_h, ("dim_state", "state", "State"), ("dim_keyword", "topic_group", "Topic"), "State Index",
-                  "Heat Color State", "Heat Font State", "State x topic interest", "State Index; darker = stronger interest. Scroll for all states. Not filtered by the topic slicer.",
-                  filters=[f_exclude_anchor(), f_has_state()], font_size=8, name="heatmap")
-    p.interactions.append({"source": s_topic, "target": heat, "type": "NoFilter"})
-    by = KPI_Y + heat_h + G
-    bar(p, M, by, half, BODY_END - by, ("dim_state", "state"), "State Index", "Best states to target", "Top 6 by State Index for the selected topic",
-        colour_measure="HL State Index", top=6, filters=[f_exclude_anchor(), f_has_state()], precision=0)
-    bar(p, M + half + G, by, half, BODY_END - by, ("dim_state", "state"), "Interest vs Cricket", "Topic size vs cricket", "Top 6; 1.0 = as popular as cricket in that state",
-        colour_measure="HL Interest vs Cricket", top=6, filters=[f_exclude_anchor(), f_has_state()], units=0, precision=2)
-    footnote(p, "State Index compares states for the same topic. Interest vs Cricket shows how big the topic is relative to cricket in that state. Small UTs can score high from few searches.")
-    pages.append(p)
-
-    # 8. State detail (drill-through) ------------------------------------
+    # State detail (drill-through, hidden) ----------------------------------
     p = Page("statedetail", "State detail", ptype="Drillthrough", hidden=True)
     p.filters.append({"name": uid("fdrill"), "field": col("dim_state", "state"), "type": "Categorical", "howCreated": "Drillthrough"})
     p.binding = {"name": uid("drillstate"), "type": "Drillthrough", "parameters": []}
@@ -648,22 +888,22 @@ def build_pages():
                    "outline": [{"properties": {"show": b(False)}, "selector": {"id": "default"}}]},
           vco={**bare(), "visualLink": [{"properties": {"show": b(True), "type": s("Back")}}]}, name="back")
     card(p, M + 64, 14, 860, 44, mea("State Page Title"), "State", size=17, label_show=False, background=False, name="statetitle")
-    kpi_row(p, KPI_Y - 90, [("Top Keyword in State", "Most-searched keyword", "keywords", {"size": 14}), ("State Index", "Avg State Index", "state"),
+    kpi_row(p, KPI_Y - 90, [("Top Keyword in State", "Most-searched keyword", "keywords", {"size": 14}), ("State Index", "Average search score", "state"),
                             ("Interest vs Cricket", "Interest vs cricket", "interest")])
     top_y = KPI_Y + 2
-    bar(p, M, top_y, half, BODY_END - top_y, ("dim_keyword", "keyword"), "State Index", "Top 12 keywords", "State Index for this state",
+    bar(p, M, top_y, half, BODY_END - top_y, ("dim_keyword", "keyword"), "State Index", "Top 12 keywords", "Search score in this state",
         colour_measure="HL State Index", top=12, filters=[f_exclude_anchor(), f_has_state()], precision=0)
     hh = (BODY_END - top_y - G) / 2
-    bar(p, M + half + G, top_y, half, hh, ("dim_keyword", "topic_group"), "State Index", "By topic", "Average State Index, top 6",
+    bar(p, M + half + G, top_y, half, hh, ("dim_keyword", "topic_group"), "State Index", "By topic", "Average search score, top 6",
         colour_measure="HL State Index", top=6, filters=[f_exclude_anchor(), f_has_state()], precision=0)
-    bar(p, M + half + G, top_y + hh + G, half, hh, ("dim_keyword", "keyword_language"), "State Index", "By keyword language", "Average State Index, top 6",
+    bar(p, M + half + G, top_y + hh + G, half, hh, ("dim_keyword", "keyword_language"), "State Index", "By search language", "Average search score, top 6",
         colour_measure="HL State Index", top=6, filters=[f_exclude_anchor(), f_has_state()], precision=0)
-    footnote(p, "Drill-through page: right-click a state on the India map or Business page and choose Drill through > State detail. Use the back arrow to return.")
+    footnote(p, "Drill-through page: right-click a state on the Know your audience map and choose Drill through > State detail. Use the back arrow to return.")
     pages.append(p)
 
-    # 9. Keyword tooltip ---------------------------------------------------
+    # Keyword tooltip (hidden) ---------------------------------------------
     card(tip, 8, 8, 148, 60, mea("Trend Label"), "Trend", size=13, colour_measure="Trend Status Color", name="tipstatus")
-    card(tip, 164, 8, 148, 60, mea("Interest MoM %"), "Month on month", size=13, name="tipmom")
+    card(tip, 164, 8, 148, 60, mea("Interest MoM %"), "vs last month", size=13, name="tipmom")
     line(tip, 8, 76, 304, 156, "Search interest, 5 years", None, name="tipline")
     tip.binding = {"name": uid("tipbinding"), "type": "Tooltip", "parameters": []}
     pages.append(tip)

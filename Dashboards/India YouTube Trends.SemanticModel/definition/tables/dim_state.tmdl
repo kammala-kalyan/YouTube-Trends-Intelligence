@@ -24,7 +24,7 @@ table dim_state
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(File.Contents(DataFolder & "dim_state.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Source = Csv.Document(Web.Contents(DataFolder & "dim_state.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    Typed = Table.TransformColumnTypes(Promoted, {{"state", type text}, {"state_map_name", type text}, {"zone", type text}}, "en-US")
 				in

@@ -1,48 +1,77 @@
 # India YouTube Trends & Content Intelligence
 
-A Power BI dashboard about what India watches and searches on YouTube. It uses public YouTube Data API v3 data and Google Trends (YouTube Search), so you don't need to own a channel.
+A Power BI dashboard that helps someone **choose a YouTube niche in India before uploading anything**: what people search for, which topics are growing, which formats and languages get views, and where small creators can still win.
 
-## Pipeline
+It uses public YouTube Data API v3 data and Google Trends (YouTube Search), so you don't need to own a channel. The data refreshes **every day on GitHub Actions**.
+
+The dashboard has 4 pages, one per question a new creator asks: **Market pulse** (what's happening?) → **Find your niche** (where is demand high and competition weak?) → **Make it & grow it** (how to make it, and what it takes to grow) → **Know your audience** (who, and where?). See [Context/four_page_plan.md](Context/four_page_plan.md) for the plan, every decision and the project rules.
+
+## Open the dashboard
+
+1. Clone this repo (or download it as a ZIP).
+2. Open **`Dashboards/India YouTube Trends.pbip`** in Power BI Desktop. Don't use the `.pbix`: it's an older copy.
+3. Click **Home → Refresh**. The first time, Power BI asks how to connect to `raw.githubusercontent.com`: choose **Anonymous** → Connect.
+
+The dashboard reads its data straight from `data/model/` in this repo, so it always shows the latest daily data. No local paths or setup needed. It opens empty until you click Refresh, because the data cache isn't stored in git.
+
+## How the data updates
+
+[.github/workflows/daily.yml](.github/workflows/daily.yml) runs every day at 9:00 AM IST:
+
+1. Runs [run_daily.py](run_daily.py) (the steps below).
+2. Commits **only the `data/` folder** (`data: YYYY-MM-DD`). Code and dashboard files are never changed by the job.
+3. If a step fails (for example, Google Trends blocks the GitHub server), the data that did arrive is still committed, **previous data is kept**, and the run is marked failed so GitHub sends an email.
 
 | Script | What it does | Quota | How often |
 |---|---|---|---|
 | `fetch_trending.py` | India trending chart, overall and per category | ~60 units | daily |
-| `fetch_topics.py` | Top videos from the last 30 days for one-third of the keywords (rotates daily), plus supply estimate | ~3,600 units | daily |
+| `fetch_topics.py` | Top videos from the last 30 days for one-third of the keywords (rotates daily), plus a supply estimate | ~6,200 units | daily |
 | `fetch_channels.py` | Stats for every channel seen in the latest trending and topic files | ~55 units | daily |
-| `fetch_trends.py` | Google Trends 5-year weekly interest and state breakdown for every keyword | none (rate-limited) | weekly |
-| `build_model.py` | Cleans everything and writes the star schema to `data/model/` | none | after each run |
-| `run_daily.py` | Runs all of the above in order; Trends only when the last run is 7+ days old | | daily |
+| `fetch_trends.py` | Google Trends 5-year weekly interest and state breakdown: a seventh of the keywords each day (plus any new keyword), so every keyword refreshes weekly with few requests per run | none (rate-limited) | daily (slice) |
+| `build_model.py` | Cleans everything and writes the star schema to `data/model/` | none | every run |
 
-Keywords live in `keywords.py`: 105 keywords across 13 topic groups, including regional terms in Hindi, Tamil, Telugu, Kannada, Malayalam, Bengali, Marathi and Punjabi. The anchor term `cricket` is added to every Trends batch so values can be compared across batches.
+Keywords live in [keywords.py](keywords.py): 184 keywords across 26 topic groups. Regional keywords follow how people actually search, **topic + language in English letters** ("UPSC Telugu", "share market Tamil"), for Telugu, Tamil, Kannada, Malayalam, Bengali, Marathi and Gujarati, plus older native-script terms. Five optional niche groups sit behind `INCLUDE_TIER2`. Every Trends batch includes a reference term so values from different batches and days land on one scale: `cricket` for most keywords, and for small keywords (which round to 0 next to cricket) a **chain of smaller references**, `Excel` and then `bike review` (both searched nationwide, so state results chain correctly), each measured one level up so everything converts back to the cricket scale. `python fetch_trends.py --dry` shows the day's plan without contacting Google. The pipeline moves a keyword to a smaller reference automatically when it comes back all zero.
 
-### Setup
+Before relying on new keywords, run `python test_keywords.py`: it checks each keyword without Trends data against Google Trends and lists any that return nothing.
+
+History is the main asset, because the YouTube API only shows current numbers. Old data files are never deleted.
+
+### Set up the daily job (once)
+
+1. Push the repo to GitHub, including `data/`.
+2. Add the repository secret **`YOUTUBE_API_KEY`** (Settings → Secrets and variables → Actions).
+3. Actions tab → **Daily data pipeline** → **Run workflow** to test it once.
+4. Make sure failure emails are on: GitHub → Settings → Notifications → Actions.
+
+### Run it locally (optional)
 
 ```
 python -m venv venv
 venv\Scripts\activate
 pip install -r requirements.txt
 copy .env.example .env      # then paste your YouTube API key
-python run_daily.py
+python test_key.py          # checks the key works
+python run_daily.py         # add --trends to pull Google Trends for every keyword at once
+python test_keywords.py     # check new keywords return Google Trends data
 ```
 
-### Schedule it (Windows Task Scheduler)
+Don't schedule it on your PC as well: GitHub Actions is the only scheduler.
 
-Create Basic Task → Daily (for example, 9:00 AM) → Start a program → `run_daily.bat` (full path). Under Conditions, untick "Start only if on AC power". Logs go to `logs/`.
+## Changing the dashboard
 
-History is the main asset, since the YouTube API only shows current numbers. Keep the daily run going.
+The report pages and helper measures are generated by [build_report.py](build_report.py). Make changes there, **close Power BI Desktop**, then run `python build_report.py`. It rebuilds every page, so edits made by hand in Power BI are overwritten.
 
 ## Star schema (`data/model/`)
 
 - **Facts:** `fact_video_snapshot` (video × day: views, likes, comments, ranks, engagement), `fact_channel_snapshot`, `fact_trends_keyword` (keyword × week, raw and anchor-normalized interest), `fact_trends_region` (keyword × state), `fact_keyword_opportunity` (demand, growth, supply, content gap score)
 - **Dimensions:** `dim_video` (with detected language, duration bucket, Shorts flag), `dim_channel`, `dim_category`, `dim_keyword`, `dim_language`, `dim_state`, `dim_date`
-- **Bridge:** `bridge_keyword_video` (which keyword search returned which video)
-
-See [POWERBI_SETUP.md](POWERBI_SETUP.md) for import steps, relationships and DAX.
+- **Bridge:** `bridge_keyword_video` (which keyword search returned which video). It lets one Topic filter drive both search trends and video stats.
 
 ## Data caveats
 
 - The trending chart covers only trending videos, not all of YouTube.
 - Google Trends values are relative indexes and sampled, so they vary slightly between runs.
-- The search API's `totalResults` is capped at 1,000,000, so the content gap score uses demand, growth and small-channel share instead.
+- The search API's `totalResults` is capped at 1,000,000, so the content gap score uses demand, growth and small-channel share instead of a raw competition count.
 - Like counts can be hidden by creators.
-- About 22% of channels have no country set; these are labelled "Unknown".
+- About 20% of channels have no country set; these are labelled "Unknown".
+- Video patterns (format, length, upload day) describe popular videos. They are not proof of cause.

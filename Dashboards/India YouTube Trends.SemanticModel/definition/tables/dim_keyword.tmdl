@@ -49,7 +49,7 @@ table dim_keyword
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(File.Contents(DataFolder & "dim_keyword.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Source = Csv.Document(Web.Contents(DataFolder & "dim_keyword.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    Typed = Table.TransformColumnTypes(Promoted, {{"keyword", type text}, {"topic_group", type text}, {"keyword_lang", type text}, {"keyword_language", type text}, {"keyword_script", type text}, {"is_regional", type logical}, {"is_anchor", type logical}}, "en-US")
 				in

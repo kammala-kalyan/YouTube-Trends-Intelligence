@@ -6,7 +6,7 @@ import glob, os, re, math
 import numpy as np
 import pandas as pd
 from config import DATA_DIR
-from keywords import all_keywords, ANCHOR
+from keywords import all_keywords, ANCHOR, ANCHOR_CHAIN
 
 OUT = os.path.join(DATA_DIR, "model")
 os.makedirs(OUT, exist_ok=True)
@@ -242,23 +242,48 @@ dim_keyword["keyword_script"] = dim_keyword["keyword"].map(lambda k: detect_scri
 dim_keyword["is_regional"] = dim_keyword["keyword_script"] != "Latin"
 dim_keyword["is_anchor"] = dim_keyword["keyword"] == ANCHOR
 
-# ---- fact_trends_keyword: weekly interest, normalized across batches via the anchor
+# ---- fact_trends_keyword: weekly interest on ONE scale (cricket), across batches, days and chain levels
+# Each batch has one reference term (anchor_used): cricket for level 0, then ANCHOR_CHAIN[1], [2] for
+# small keywords (decision Q40). Level 0: scale = global median cricket mean / this batch's cricket mean.
+# Level k: scale = (reference's own normalized mean, from its level k-1 batch) / (its raw mean in this batch).
+# Older files without anchor_used are cricket batches.
 fact_trends = pd.DataFrame()
 if not t_time.empty:
     t = t_time.copy()
-    t["date"] = pd.to_datetime(t["date"]).dt.date
-    # scale factor per (snapshot, batch) = reference anchor mean / this batch's anchor mean
-    anc = (t[t["keyword"] == ANCHOR].groupby(["snapshot_date", "batch_id"])["interest"]
-           .mean().rename("anchor_mean").reset_index())
-    anc["ref"] = anc.groupby("snapshot_date")["anchor_mean"].transform("median")
-    anc["scale"] = anc["ref"] / anc["anchor_mean"].replace(0, np.nan)
-    t = t.merge(anc[["snapshot_date", "batch_id", "scale"]], on=["snapshot_date", "batch_id"])
-    t["interest_norm"] = (t["interest"] * t["scale"]).round(3)
-    # each run returns the full 5-year history, so per keyword keep only its latest snapshot.
-    # the anchor appears in every batch: average its normalized copies into one series.
-    is_latest = t["snapshot_date"] == t.groupby("keyword")["snapshot_date"].transform("max")
-    kw_part = t[(t["keyword"] != ANCHOR) & is_latest]
-    anchor_part = (t[(t["keyword"] == ANCHOR) & (t["snapshot_date"] == t["snapshot_date"].max())]
+    t["date"] = pd.to_datetime(t["date"], format="mixed").dt.date
+    if "anchor_used" not in t.columns:
+        t["anchor_used"] = ANCHOR
+    t["anchor_used"] = t["anchor_used"].fillna(ANCHOR)
+    batch = ["snapshot_date", "batch_id"]
+    t["interest_norm"] = np.nan
+    for lvl, ref in enumerate(ANCHOR_CHAIN):
+        rows = t["anchor_used"] == ref
+        if not rows.any():
+            continue
+        ref_mean = (t[rows & (t["keyword"] == ref)].groupby(batch)["interest"].mean()
+                    .rename("ref_mean").reset_index())
+        if lvl == 0:
+            target = ref_mean["ref_mean"].median()
+        else:
+            # the reference's normalized level, from its latest batch one level up
+            prev = t[(t["keyword"] == ref) & (t["anchor_used"] == ANCHOR_CHAIN[lvl - 1]) & t["interest_norm"].notna()]
+            if prev.empty:
+                print(f"  ! no measurement of '{ref}' one level up yet: level {lvl} batches skipped")
+                continue
+            prev = prev[prev["snapshot_date"] == prev["snapshot_date"].max()]
+            target = prev["interest_norm"].mean()
+        ref_mean["scale"] = target / ref_mean["ref_mean"].replace(0, np.nan)
+        scale = t[rows][batch].merge(ref_mean, on=batch, how="left")["scale"].to_numpy()
+        t.loc[rows, "interest_norm"] = (t.loc[rows, "interest"].to_numpy() * scale).round(3)
+    # a chain reference appears in its own batches only as the yardstick: drop those copies
+    # (cricket is kept separately below as the anchor series)
+    t = t[t["interest_norm"].notna()]
+    meas = t[t["keyword"] != t["anchor_used"]]
+    # each run returns the full 5-year history, so per keyword keep only its latest measurement
+    is_latest = meas["snapshot_date"] == meas.groupby("keyword")["snapshot_date"].transform("max")
+    kw_part = meas[is_latest & (meas["keyword"] != ANCHOR)]
+    cr = t[(t["keyword"] == ANCHOR)]
+    anchor_part = (cr[cr["snapshot_date"] == cr["snapshot_date"].max()]
                    .groupby(["date", "keyword", "snapshot_date"], as_index=False)
                    .agg(interest=("interest", "mean"), interest_norm=("interest_norm", "mean")))
     fact_trends = pd.concat([kw_part, anchor_part], ignore_index=True)
@@ -266,18 +291,40 @@ if not t_time.empty:
     fact_trends = fact_trends[["date", "keyword", "interest_raw", "interest_norm", "snapshot_date"]]
     save(fact_trends, "fact_trends_keyword")
 
-# ---- fact_trends_region: state-level interest, comparable via ratio to the anchor
+# ---- fact_trends_region: state-level interest relative to cricket in the same state
+# Level 0: ratio = keyword / cricket in the same batch and state.
+# Level k: ratio = keyword / reference (same batch, state) x the reference's own ratio to cricket in that state.
+# Match each batch to its reference from the SAME snapshot first, then keep each keyword's latest
+# measurement (filtering first would drop references for keywords whose latest data is older).
 if not t_state.empty:
     s = t_state.copy()
-    s = s[s["snapshot_date"] == s.groupby("keyword")["snapshot_date"].transform("max")]
-    anc = (s[s["keyword"] == ANCHOR][["snapshot_date", "batch_id", "state", "interest"]]
-           .rename(columns={"interest": "anchor_interest"}))
-    s = s.merge(anc, on=["snapshot_date", "batch_id", "state"], how="left")
-    s["ratio_to_anchor"] = s["interest"] / s["anchor_interest"].where(s["anchor_interest"] > 0)
+    if "anchor_used" not in s.columns:
+        s["anchor_used"] = ANCHOR
+    s["anchor_used"] = s["anchor_used"].fillna(ANCHOR)
+    key = ["snapshot_date", "batch_id", "state"]
+    s["ratio_to_anchor"] = np.nan
+    for lvl, ref in enumerate(ANCHOR_CHAIN):
+        rows = s["anchor_used"] == ref
+        if not rows.any():
+            continue
+        r = (s[rows & (s["keyword"] == ref)][key + ["interest"]].rename(columns={"interest": "ref_interest"}))
+        part = s[rows].reset_index().merge(r, on=key, how="left").set_index("index")
+        ratio = part["interest"] / part["ref_interest"].where(part["ref_interest"] > 0)
+        if lvl > 0:
+            prev = s[(s["keyword"] == ref) & (s["anchor_used"] == ANCHOR_CHAIN[lvl - 1]) & s["ratio_to_anchor"].notna()]
+            if prev.empty:
+                continue
+            prev = prev[prev["snapshot_date"] == prev["snapshot_date"].max()]
+            ref_to_cricket = prev.groupby("state")["ratio_to_anchor"].mean()
+            ratio = ratio * part["state"].map(ref_to_cricket)
+        s.loc[ratio.index, "ratio_to_anchor"] = ratio
+    meas = s[s["keyword"] != s["anchor_used"]]
+    meas = meas[meas["snapshot_date"] == meas.groupby("keyword")["snapshot_date"].transform("max")]
+    s_kw = meas[meas["keyword"] != ANCHOR]
     # anchor: one row per state (identical across batches up to sampling noise)
-    s_kw = s[s["keyword"] != ANCHOR]
-    s_anchor = (s[s["keyword"] == ANCHOR].groupby(["state", "keyword", "snapshot_date"], as_index=False)
-                .agg(interest=("interest", "mean")))
+    cr = s[(s["keyword"] == ANCHOR)]
+    s_anchor = (cr[cr["snapshot_date"] == cr["snapshot_date"].max()]
+                .groupby(["state", "keyword", "snapshot_date"], as_index=False).agg(interest=("interest", "mean")))
     s_anchor["ratio_to_anchor"] = 1.0
     s = pd.concat([s_kw, s_anchor], ignore_index=True)
     # 0-100 per keyword: 100 = state where the keyword is strongest relative to cricket
@@ -330,15 +377,13 @@ if not topics.empty:
     opp = opp.merge(agg.round(3), left_on="keyword", right_index=True, how="left")
 if "videos_last_30d_est" in opp.columns:
     opp["supply_capped"] = opp["videos_last_30d_est"] >= 1_000_000
-if {"demand_index", "growth_12w", "small_channel_share"} <= set(opp.columns):
-    # totalResults is capped at 1M for most keywords, so it can't rank supply.
-    # Instead: high demand + growing + small channels reach the top = open opportunity.
-    # Percentile ranks keep the three signals on the same 0-1 scale. Blank until searched.
-    scored = opp["small_channel_share"].notna()
-    pct = lambda c: opp.loc[scored, c].rank(pct=True).fillna(0)
-    opp.loc[scored, "content_gap_score"] = (100 * (0.4 * pct("demand_index")
-                                                   + 0.3 * pct("growth_12w")
-                                                   + 0.3 * pct("small_channel_share"))).round(1)
+# No combined "content gap score" (removed, decision Q31): the dashboard ranks niches with
+# simple quadrants (demand above average + growing) and shows small-channel share as is.
+# Fixed column order so the Power BI table definition always matches, even if a source is missing.
+OPP_COLS = ["keyword", "demand_index", "growth_12w", "growth_yoy", "trend_status", "videos_last_30d_est",
+            "supply_snapshot_date", "top_videos_median_views", "top_videos_avg_views", "small_channel_share",
+            "supply_capped"]
+opp = opp.reindex(columns=OPP_COLS)
 save(opp, "fact_keyword_opportunity")
 save(dim_keyword, "dim_keyword")
 

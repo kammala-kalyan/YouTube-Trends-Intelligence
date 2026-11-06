@@ -18,11 +18,23 @@ table dim_language
 		lineageTag: 99a21a73-9278-4f2a-9920-24eaaa4af385
 		sourceColumn: is_indian_regional
 
+	/// True when at least one tracked video is in this language. Used to hide empty languages in slicers.
+	column has_videos = CALCULATE(COUNTROWS(dim_video)) > 0
+		dataType: boolean
+		lineageTag: 21486981-ad74-42af-8c6d-571e7767d65d
+		summarizeBy: none
+
+	/// English and Indian languages by name; everything else grouped as Other languages.
+	column language_label = IF(dim_language[is_indian_regional] || dim_language[language] = "en", dim_language[language_name], "Other languages")
+		dataType: string
+		lineageTag: 3b9fd5df-156b-4c87-b561-0ed50e530abf
+		summarizeBy: none
+
 	partition dim_language = m
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(File.Contents(DataFolder & "dim_language.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Source = Csv.Document(Web.Contents(DataFolder & "dim_language.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    Typed = Table.TransformColumnTypes(Promoted, {{"language", type text}, {"language_name", type text}, {"is_indian_regional", type logical}}, "en-US")
 				in

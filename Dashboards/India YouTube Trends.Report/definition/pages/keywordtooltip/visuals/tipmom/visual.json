@@ -29,7 +29,7 @@
               },
               "queryRef": "_Measures.Interest MoM %",
               "nativeQueryRef": "Interest MoM %",
-              "displayName": "Month on month"
+              "displayName": "vs last month"
             }
           ]
         }

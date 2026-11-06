@@ -1,16 +1,17 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.4.0/schema.json",
   "name": "bar14",
   "position": {
-    "x": 24,
-    "y": 182,
-    "z": 10000,
-    "height": 506,
-    "width": 610,
-    "tabOrder": 10000
+    "x": 646.0,
+    "y": 441.0,
+    "z": 12000,
+    "height": 247.0,
+    "width": 610.0,
+    "tabOrder": 12000
   },
   "visual": {
     "visualType": "clusteredBarChart",
+    "drillFilterOtherVisuals": true,
     "query": {
       "queryState": {
         "Category": {
@@ -23,12 +24,11 @@
                       "Entity": "dim_keyword"
                     }
                   },
-                  "Property": "keyword"
+                  "Property": "keyword_language"
                 }
               },
-              "queryRef": "dim_keyword.keyword",
-              "nativeQueryRef": "keyword",
-              "active": true
+              "queryRef": "dim_keyword.keyword_language",
+              "nativeQueryRef": "keyword_language"
             }
           ]
         },
@@ -66,7 +66,8 @@
             },
             "direction": "Descending"
           }
-        ]
+        ],
+        "isDefaultSort": false
       }
     },
     "objects": {
@@ -232,7 +233,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Top 12 keywords'"
+                  "Value": "'By search language'"
                 }
               }
             },
@@ -277,7 +278,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'State Index for this state'"
+                  "Value": "'Average search score, top 6'"
                 }
               }
             },
@@ -336,13 +337,12 @@
           }
         }
       ]
-    },
-    "drillFilterOtherVisuals": true
+    }
   },
   "filterConfig": {
     "filters": [
       {
-        "name": "fisanchor16",
+        "name": "fisanchor15",
         "field": {
           "Column": {
             "Expression": {
@@ -450,7 +450,7 @@
         "howCreated": "User"
       },
       {
-        "name": "ftop15",
+        "name": "ftop9",
         "field": {
           "Column": {
             "Expression": {
@@ -458,7 +458,7 @@
                 "Entity": "dim_keyword"
               }
             },
-            "Property": "keyword"
+            "Property": "keyword_language"
           }
         },
         "type": "TopN",
@@ -491,7 +491,7 @@
                               "Source": "d"
                             }
                           },
-                          "Property": "keyword"
+                          "Property": "keyword_language"
                         },
                         "Name": "field"
                       }
@@ -511,7 +511,7 @@
                         }
                       }
                     ],
-                    "Top": 12
+                    "Top": 6
                   }
                 }
               },
@@ -535,7 +535,7 @@
                             "Source": "d"
                           }
                         },
-                        "Property": "keyword"
+                        "Property": "keyword_language"
                       }
                     }
                   ],

@@ -1,0 +1,186 @@
+﻿keyword,topic_group,keyword_lang,keyword_language,keyword_script,is_regional,is_anchor
+iPhone,Tech,en,English,Latin,False,False
+AI tools,Tech,en,English,Latin,False,False
+ChatGPT,Tech,en,English,Latin,False,False
+Android,Tech,en,English,Latin,False,False
+laptop,Tech,en,English,Latin,False,False
+Samsung,Tech,en,English,Latin,False,False
+unboxing,Tech,en,English,Latin,False,False
+मोबाइल रिव्यू,Tech,hi,Hindi,Devanagari,True,False
+mobile review Telugu,Tech,te,Telugu,Latin,False,False
+mobile review Tamil,Tech,ta,Tamil,Latin,False,False
+mobile review Kannada,Tech,kn,Kannada,Latin,False,False
+mobile review Malayalam,Tech,ml,Malayalam,Latin,False,False
+mobile review Bengali,Tech,bn,Bengali,Latin,False,False
+mobile review Marathi,Tech,mr,Marathi,Latin,False,False
+mobile review Gujarati,Tech,gu,Gujarati,Latin,False,False
+SIP,Finance,en,English,Latin,False,False
+share market,Finance,en,English,Latin,False,False
+mutual funds,Finance,en,English,Latin,False,False
+credit card,Finance,en,English,Latin,False,False
+UPI,Finance,en,English,Latin,False,False
+income tax,Finance,en,English,Latin,False,False
+gold rate,Finance,en,English,Latin,False,False
+शेयर बाजार,Finance,hi,Hindi,Devanagari,True,False
+ஷேர் மார்க்கெட்,Finance,ta,Tamil,Tamil,True,False
+शेअर मार्केट,Finance,mr,Marathi,Devanagari,True,False
+share market Telugu,Finance,te,Telugu,Latin,False,False
+share market Tamil,Finance,ta,Tamil,Latin,False,False
+share market Kannada,Finance,kn,Kannada,Latin,False,False
+share market Malayalam,Finance,ml,Malayalam,Latin,False,False
+share market Bengali,Finance,bn,Bengali,Latin,False,False
+share market Marathi,Finance,mr,Marathi,Latin,False,False
+share market Gujarati,Finance,gu,Gujarati,Latin,False,False
+UPSC,Education,en,English,Latin,False,False
+JEE,Education,en,English,Latin,False,False
+NEET,Education,en,English,Latin,False,False
+coding,Education,en,English,Latin,False,False
+Excel,Education,en,English,Latin,False,False
+English speaking,Education,en,English,Latin,False,False
+सामान्य ज्ञान,Education,hi,Hindi,Devanagari,True,False
+பொது அறிவு,Education,ta,Tamil,Tamil,True,False
+UPSC Telugu,Education,te,Telugu,Latin,False,False
+UPSC Tamil,Education,ta,Tamil,Latin,False,False
+UPSC Kannada,Education,kn,Kannada,Latin,False,False
+UPSC Malayalam,Education,ml,Malayalam,Latin,False,False
+UPSC Bengali,Education,bn,Bengali,Latin,False,False
+UPSC Marathi,Education,mr,Marathi,Latin,False,False
+UPSC Gujarati,Education,gu,Gujarati,Latin,False,False
+BGMI,Gaming,en,English,Latin,False,False
+Free Fire,Gaming,en,English,Latin,False,False
+Minecraft,Gaming,en,English,Latin,False,False
+GTA 5,Gaming,en,English,Latin,False,False
+Roblox,Gaming,en,English,Latin,False,False
+Valorant,Gaming,en,English,Latin,False,False
+गेमिंग,Gaming,hi,Hindi,Devanagari,True,False
+గేమింగ్,Gaming,te,Telugu,Telugu,True,False
+street food,Food,en,English,Latin,False,False
+biryani,Food,en,English,Latin,False,False
+chicken recipe,Food,en,English,Latin,False,False
+veg recipe,Food,en,English,Latin,False,False
+cake recipe,Food,en,English,Latin,False,False
+रेसिपी,Food,hi,Hindi,Devanagari,True,False
+சமையல்,Food,ta,Tamil,Tamil,True,False
+వంటలు,Food,te,Telugu,Telugu,True,False
+ಅಡುಗೆ,Food,kn,Kannada,Kannada,True,False
+রান্না,Food,bn,Bengali,Bengali,True,False
+പാചകം,Food,ml,Malayalam,Malayalam,True,False
+Goa,Travel,en,English,Latin,False,False
+Manali,Travel,en,English,Latin,False,False
+Kashmir,Travel,en,English,Latin,False,False
+Ladakh,Travel,en,English,Latin,False,False
+travel vlog,Travel,en,English,Latin,False,False
+ट्रैवल व्लॉग,Travel,hi,Hindi,Devanagari,True,False
+Bhojpuri song,Music,hi,Hindi,Latin,False,False
+Punjabi song,Music,en,English,Latin,False,False
+Haryanvi song,Music,hi,Hindi,Latin,False,False
+lofi,Music,en,English,Latin,False,False
+ਪੰਜਾਬੀ ਗੀਤ,Music,pa,Punjabi,Gurmukhi,True,False
+বাংলা গান,Music,bn,Bengali,Bengali,True,False
+ಕನ್ನಡ ಹಾಡುಗಳು,Music,kn,Kannada,Kannada,True,False
+मराठी गाणी,Music,mr,Marathi,Devanagari,True,False
+movie review,Movies,en,English,Latin,False,False
+trailer,Movies,en,English,Latin,False,False
+South movie Hindi dubbed,Movies,hi,Hindi,Latin,False,False
+web series,Movies,en,English,Latin,False,False
+தமிழ் படம்,Movies,ta,Tamil,Tamil,True,False
+తెలుగు సినిమా,Movies,te,Telugu,Telugu,True,False
+മലയാളം സിനിമ,Movies,ml,Malayalam,Malayalam,True,False
+ਪੰਜਾਬੀ ਫਿਲਮ,Movies,pa,Punjabi,Gurmukhi,True,False
+IPL,Sports,en,English,Latin,False,False
+Virat Kohli,Sports,en,English,Latin,False,False
+India vs New Zealand,Sports,en,English,Latin,False,False
+football,Sports,en,English,Latin,False,False
+WWE,Sports,en,English,Latin,False,False
+kabaddi,Sports,en,English,Latin,False,False
+ਕਬੱਡੀ,Sports,pa,Punjabi,Gurmukhi,True,False
+hindi news,News,hi,Hindi,Latin,False,False
+breaking news,News,en,English,Latin,False,False
+election,News,en,English,Latin,False,False
+PM Modi,News,en,English,Latin,False,False
+తెలుగు వార్తలు,News,te,Telugu,Telugu,True,False
+தமிழ் செய்திகள்,News,ta,Tamil,Tamil,True,False
+मराठी बातम्या,News,mr,Marathi,Devanagari,True,False
+ಕನ್ನಡ ಸುದ್ದಿ,News,kn,Kannada,Kannada,True,False
+മലയാളം വാർത്ത,News,ml,Malayalam,Malayalam,True,False
+workout,Health & Fitness,en,English,Latin,False,False
+yoga,Health & Fitness,en,English,Latin,False,False
+weight loss,Health & Fitness,en,English,Latin,False,False
+diet plan,Health & Fitness,en,English,Latin,False,False
+gym,Health & Fitness,en,English,Latin,False,False
+घरेलू उपाय,Health & Fitness,hi,Hindi,Devanagari,True,False
+health tips Telugu,Health & Fitness,te,Telugu,Latin,False,False
+health tips Tamil,Health & Fitness,ta,Tamil,Latin,False,False
+health tips Kannada,Health & Fitness,kn,Kannada,Latin,False,False
+health tips Malayalam,Health & Fitness,ml,Malayalam,Latin,False,False
+health tips Bengali,Health & Fitness,bn,Bengali,Latin,False,False
+health tips Marathi,Health & Fitness,mr,Marathi,Latin,False,False
+health tips Gujarati,Health & Fitness,gu,Gujarati,Latin,False,False
+business ideas,Business & Startups,en,English,Latin,False,False
+startup,Business & Startups,en,English,Latin,False,False
+Shark Tank India,Business & Startups,en,English,Latin,False,False
+digital marketing,Business & Startups,en,English,Latin,False,False
+make money online,Business & Startups,en,English,Latin,False,False
+बिजनेस आइडिया,Business & Startups,hi,Hindi,Devanagari,True,False
+makeup,Beauty & Lifestyle,en,English,Latin,False,False
+skincare,Beauty & Lifestyle,en,English,Latin,False,False
+saree,Beauty & Lifestyle,en,English,Latin,False,False
+mehndi design,Beauty & Lifestyle,en,English,Latin,False,False
+hairstyle,Beauty & Lifestyle,en,English,Latin,False,False
+मेहंदी डिजाइन,Beauty & Lifestyle,hi,Hindi,Devanagari,True,False
+মেকআপ,Beauty & Lifestyle,bn,Bengali,Bengali,True,False
+bhajan,Devotional & Spiritual,hi,Hindi,Latin,False,False
+devotional songs,Devotional & Spiritual,en,English,Latin,False,False
+Hanuman Chalisa,Devotional & Spiritual,hi,Hindi,Latin,False,False
+bhakti,Devotional & Spiritual,hi,Hindi,Latin,False,False
+temple vlog,Devotional & Spiritual,en,English,Latin,False,False
+comedy video,Comedy & Entertainment,en,English,Latin,False,False
+funny video,Comedy & Entertainment,en,English,Latin,False,False
+prank,Comedy & Entertainment,en,English,Latin,False,False
+roast,Comedy & Entertainment,en,English,Latin,False,False
+cartoon,Kids & Family,en,English,Latin,False,False
+kids songs,Kids & Family,en,English,Latin,False,False
+rhymes,Kids & Family,en,English,Latin,False,False
+moral stories,Kids & Family,en,English,Latin,False,False
+car review,Automobiles,en,English,Latin,False,False
+bike review,Automobiles,en,English,Latin,False,False
+electric scooter,Automobiles,en,English,Latin,False,False
+new car launch,Automobiles,en,English,Latin,False,False
+farming,Agriculture & Village life,en,English,Latin,False,False
+organic farming,Agriculture & Village life,en,English,Latin,False,False
+village life,Agriculture & Village life,en,English,Latin,False,False
+kisan,Agriculture & Village life,hi,Hindi,Latin,False,False
+SSC CGL,Government jobs,en,English,Latin,False,False
+govt jobs,Government jobs,en,English,Latin,False,False
+railway exam,Government jobs,en,English,Latin,False,False
+bank exam,Government jobs,en,English,Latin,False,False
+police exam,Government jobs,en,English,Latin,False,False
+amazing facts,Facts & Knowledge,en,English,Latin,False,False
+science facts,Facts & Knowledge,en,English,Latin,False,False
+history facts,Facts & Knowledge,en,English,Latin,False,False
+mystery,Facts & Knowledge,en,English,Latin,False,False
+motivation,Motivation & Self-improvement,en,English,Latin,False,False
+success story,Motivation & Self-improvement,en,English,Latin,False,False
+study motivation,Motivation & Self-improvement,en,English,Latin,False,False
+life lessons,Motivation & Self-improvement,en,English,Latin,False,False
+rashifal,Astrology,hi,Hindi,Latin,False,False
+horoscope,Astrology,en,English,Latin,False,False
+vastu,Astrology,en,English,Latin,False,False
+astrology,Astrology,en,English,Latin,False,False
+daily vlog,Daily vlogs,en,English,Latin,False,False
+couple vlog,Daily vlogs,en,English,Latin,False,False
+family vlog,Daily vlogs,en,English,Latin,False,False
+village vlog,Daily vlogs,en,English,Latin,False,False
+DIY,DIY & Crafts,en,English,Latin,False,False
+craft ideas,DIY & Crafts,en,English,Latin,False,False
+home decor,DIY & Crafts,en,English,Latin,False,False
+drawing,DIY & Crafts,en,English,Latin,False,False
+dog,Pets & Animals,en,English,Latin,False,False
+cat,Pets & Animals,en,English,Latin,False,False
+pet care,Pets & Animals,en,English,Latin,False,False
+animals,Pets & Animals,en,English,Latin,False,False
+home tour,Home & Interior,en,English,Latin,False,False
+interior design,Home & Interior,en,English,Latin,False,False
+house construction,Home & Interior,en,English,Latin,False,False
+kitchen design,Home & Interior,en,English,Latin,False,False
+cricket,Anchor,en,English,Latin,False,True

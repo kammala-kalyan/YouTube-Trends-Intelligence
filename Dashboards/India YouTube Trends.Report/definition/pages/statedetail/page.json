@@ -20,22 +20,7 @@
           }
         },
         "type": "Categorical",
-        "howCreated": "Drillthrough",
-        "objects": {
-          "general": [
-            {
-              "properties": {
-                "requireSingleSelect": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "true"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
+        "howCreated": "Drillthrough"
       }
     ]
   },
@@ -44,6 +29,8 @@
     "type": "Drillthrough",
     "parameters": []
   },
+  "type": "Drillthrough",
+  "visibility": "HiddenInViewMode",
   "objects": {
     "background": [
       {
@@ -86,7 +73,5 @@
         }
       }
     ]
-  },
-  "visibility": "HiddenInViewMode",
-  "type": "Drillthrough"
+  }
 }

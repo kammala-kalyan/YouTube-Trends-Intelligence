@@ -68,11 +68,30 @@ table dim_channel
 		summarizeBy: none
 		sourceColumn: video_count
 
+	/// Channel age, grouped.
+	column channel_age_bucket = SWITCH(TRUE(), ISBLANK(dim_channel[channel_age_years]) || dim_channel[channel_age_years] <= 0, BLANK(), dim_channel[channel_age_years] < 1, "1. Under 1 year", dim_channel[channel_age_years] < 2, "2. 1-2 years", dim_channel[channel_age_years] < 5, "3. 2-5 years", "4. 5+ years")
+		dataType: string
+		lineageTag: eedb9672-072c-4bd1-adfb-0d440beb4d0b
+		summarizeBy: none
+
+	/// Average uploads per month over the channel's life (total videos / age in months). Not its current pace.
+	column uploads_per_month = DIVIDE(dim_channel[video_count], dim_channel[channel_age_years] * 12)
+		dataType: double
+		formatString: 0.0
+		lineageTag: 241ef308-567f-4122-ae27-d290fefa1ff2
+		summarizeBy: none
+
+	/// Average upload pace over the channel's life, grouped.
+	column upload_pace_bucket = VAR u = DIVIDE(dim_channel[video_count], dim_channel[channel_age_years] * 12) RETURN SWITCH(TRUE(), ISBLANK(u), BLANK(), u < 4, "1. Under once a week", u < 12, "2. 1-3 a week", u < 30, "3. 3-7 a week", "4. Daily or more")
+		dataType: string
+		lineageTag: 7c4320d7-98e2-40bc-8558-8e627bfa8c42
+		summarizeBy: none
+
 	partition dim_channel = m
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(File.Contents(DataFolder & "dim_channel.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Source = Csv.Document(Web.Contents(DataFolder & "dim_channel.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    Typed = Table.TransformColumnTypes(Promoted, {{"channel_id", type text}, {"channel_name", type text}, {"country", type text}, {"channel_origin", type text}, {"created_at", type datetime}, {"channel_age_years", type number}, {"subscribers", Int64.Type}, {"subscribers_hidden", type logical}, {"subscriber_tier", type text}, {"total_views", Int64.Type}, {"video_count", Int64.Type}}, "en-US")
 				in

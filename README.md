@@ -139,3 +139,5 @@ These are patterns among popular videos, not guarantees, but they're a far bette
 ### Technical details
 
 How to open the dashboard, how the daily pipeline works, how to run it yourself, the data model and data limits: **[docs/HOW_TO_USE.md](docs/HOW_TO_USE.md)**
+
+The full architecture and pipeline, from YouTube and Google Trends to the dashboard, explained step by step in plain words: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**

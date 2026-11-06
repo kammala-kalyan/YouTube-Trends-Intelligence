@@ -66,20 +66,60 @@ def norm_lang(code):
     return code.split("-")[0].lower()
 
 
+# Indian language names as written in English titles/tags ("Telugu", "#tamil", "Hindi dubbed")
+NAMED_LANGS = {"telugu": "te", "tamil": "ta", "kannada": "kn", "malayalam": "ml", "bengali": "bn", "bangla": "bn",
+               "marathi": "mr", "gujarati": "gu", "punjabi": "pa", "bhojpuri": "bh", "odia": "or", "oriya": "or",
+               "hindi": "hi"}
+NAMED_RE = re.compile(r"(?<![a-z])(" + "|".join(NAMED_LANGS) + r")(?![a-z])")
+HINDI_AUDIO_RE = re.compile(r"hindi dubbed|in hindi|hindi version")
+WEAK_SOURCES = {"default language", "title script (latin)", "unknown"}
+
+
+def named_language(text):
+    """Language named in a title/tags, if exactly one Indian language is named (or it's a Hindi dub)."""
+    t = str(text).lower()
+    if HINDI_AUDIO_RE.search(t):
+        return "hi"
+    found = {NAMED_LANGS[m] for m in NAMED_RE.findall(t)}
+    return found.pop() if len(found) == 1 else None
+
+
 def resolve_language(row):
-    """audio language > non-Latin title script > default language > Latin title."""
+    """Decision Q43 (6 Nov 2026): Indian-language audio track > native title script > one Indian language
+    named in title/tags > English audio track > default language > Latin title (weak). A channel-level
+    pass afterwards relabels weak results with the channel's main language."""
     script, script_lang = detect_script(f"{row['title']} ")
     audio = norm_lang(row.get("audio_lang"))
-    if audio:
+    if audio and audio != "en":
         return audio, "audio track", script
     if script and script != "Latin":
         return script_lang, "title script", script
+    named = named_language(f"{row['title']} {row.get('tags', '')}")
+    if named:
+        return named, "title/tags", script
+    if audio:
+        return audio, "audio track", script
     default = norm_lang(row.get("default_lang"))
     if default:
         return default, "default language", script
     if script == "Latin":
-        return "en", "title script", script
+        return "en", "title script (latin)", script
     return "unknown", "unknown", script
+
+
+def apply_channel_language(df):
+    """Relabel weakly detected videos with their channel's main language: the language of at least 60%
+    of the channel's strongly labelled videos (audio track, native script or title/tags), min 2 videos."""
+    strong = df[~df["language_source"].isin(WEAK_SOURCES)]
+    counts = strong.groupby(["channel_id", "language"]).size().rename("n").reset_index()
+    tot = counts.groupby("channel_id")["n"].transform("sum")
+    main = counts[(tot >= 2) & (counts["n"] / tot >= 0.6)].set_index("channel_id")["language"]
+    weak = df["language_source"].isin(WEAK_SOURCES) & df["channel_id"].isin(main.index)
+    new = df.loc[weak, "channel_id"].map(main)
+    changed = weak & (df["language"] != df["channel_id"].map(main))
+    df.loc[weak, "language"] = new
+    df.loc[changed, "language_source"] = "channel language"
+    return df
 
 
 # ---------------------------------------------------------------- helpers
@@ -157,6 +197,7 @@ latest = (all_videos.sort_values("snapshot_date")
           .drop_duplicates("video_id", keep="last").copy())
 lang = latest.apply(resolve_language, axis=1, result_type="expand")
 latest[["language", "language_source", "title_script"]] = lang
+latest = apply_channel_language(latest)
 latest["duration_sec"] = latest["duration"].map(duration_seconds)
 latest["duration_bucket"] = latest["duration_sec"].map(duration_bucket)
 text = (latest["title"].fillna("") + " " + latest["tags"].fillna("")).str.lower()
@@ -327,9 +368,19 @@ if not t_state.empty:
                 .groupby(["state", "keyword", "snapshot_date"], as_index=False).agg(interest=("interest", "mean")))
     s_anchor["ratio_to_anchor"] = 1.0
     s = pd.concat([s_kw, s_anchor], ignore_index=True)
-    # 0-100 per keyword: 100 = state where the keyword is strongest relative to cricket
-    s["state_index"] = (100 * s["ratio_to_anchor"]
-                        / s.groupby("keyword")["ratio_to_anchor"].transform("max")).round(1)
+    # Popularity within the state (decision Q41): ratio to cricket x cricket's own popularity in that state.
+    # Without this, states that search little cricket (the north-east) inflate every topic.
+    # Falls back to the plain ratio if no cricket profile has been collected yet.
+    profiles = sorted(glob.glob(os.path.join(DATA_DIR, "trends_cricket_states_*.csv")))
+    if profiles:
+        cricket_pop = pd.read_csv(profiles[-1]).set_index("state")["interest"]
+        s["popularity"] = s["ratio_to_anchor"] * s["state"].map(cricket_pop)
+    else:
+        print("  ! no cricket state profile yet: state scores use the plain ratio to cricket")
+        s["popularity"] = s["ratio_to_anchor"]
+    # 0-100 per keyword: 100 = the state where the keyword is most popular
+    s["state_index"] = (100 * s["popularity"]
+                        / s.groupby("keyword")["popularity"].transform("max")).round(1)
     s["zone"] = s["state"].map(STATE_ZONE).fillna("Other")
     s["state_map_name"] = s["state"] + ", India"   # helps Power BI's map geocode correctly
     s = s.rename(columns={"interest": "interest_share"})

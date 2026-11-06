@@ -336,7 +336,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "ftop6",
+        "name": "ftop5",
         "field": {
           "Column": {
             "Expression": {

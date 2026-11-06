@@ -142,8 +142,28 @@ def with_retry(fn, tries=3):
     return None
 
 
+def fetch_cricket_profile():
+    """Cricket's own popularity per state (one request a day, decision Q41). build_model.py multiplies each
+    keyword's ratio-to-cricket by this, so states that search little cricket (e.g. the north-east) don't
+    make every topic look oversized."""
+    path = f"{DATA_DIR}/trends_cricket_states_{TODAY}.csv"
+    if os.path.exists(path):
+        return True
+    ok = with_retry(lambda: pt.build_payload([ANCHOR], geo="IN", timeframe="today 5-y", gprop="youtube") or True)
+    bs = with_retry(lambda: pt.interest_by_region(resolution="REGION", inc_low_vol=True)) if ok else None
+    if bs is None or bs.empty or ANCHOR not in bs.columns:
+        print("  ! cricket state profile not collected - previous profile is kept")
+        return False
+    (bs.reset_index().rename(columns={"geoName": "state", ANCHOR: "interest"})[["state", "interest"]]
+       .assign(snapshot_date=TODAY).to_csv(path, index=False))
+    print(f"Saved cricket state profile ({len(bs)} states)")
+    time.sleep(10)
+    return True
+
+
 over_time, by_state, failed = [], [], []
 fails_in_row = 0
+profile_ok = fetch_cricket_profile()
 for b_id, (lvl, batch) in enumerate(batches):
     if fails_in_row >= STOP_AFTER_FAILED_BATCHES:
         print(f"{fails_in_row} batches failed in a row - Google Trends is probably blocking. Stopping.")
@@ -217,6 +237,8 @@ bs["snapshot_date"] = TODAY
 bs = save_merged(bs, f"{DATA_DIR}/trends_by_state_{TODAY}.csv")
 
 print(f"Saved {len(ot)} time rows and {len(bs)} state rows")
+if not profile_ok:
+    sys.exit(2)
 if failed:
     print(f"Batches with missing data: {sorted(set(failed))} - previous data kept for those keywords")
     sys.exit(2)

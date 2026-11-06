@@ -44,16 +44,6 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.9
 			          }
-			        },
-			        {
-			          "Engagement": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -106,19 +96,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "Top Category"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Top category": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.total_views": {
 			      "Definition": {
@@ -127,29 +105,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "Total Views"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Total views": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        },
-			        {
-			          "Views": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.videos_tracked": {
 			      "Definition": {
@@ -161,7 +117,7 @@ cultureInfo en-US
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Videos tracked": {
+			          "Videos": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -171,7 +127,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Videos": {
+			          "Videos tracked": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -193,26 +149,6 @@ cultureInfo en-US
 			      "Terms": [
 			        {
 			          "Search interest": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        },
-			        {
-			          "Avg search interest": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        },
-			        {
-			          "Interest": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -254,17 +190,7 @@ cultureInfo en-US
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "MoM": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        },
-			        {
-			          "Month on month": {
+			          "vs last month": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -303,19 +229,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "Top State"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Highest interest": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.avg_views_per_day": {
 			      "Definition": {
@@ -324,29 +238,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "Avg Views per Day"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Avg views per day": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        },
-			        {
-			          "Views/day": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.median_views": {
 			      "Definition": {
@@ -358,7 +250,7 @@ cultureInfo en-US
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Median views": {
+			          "Median views per video": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -376,19 +268,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "Declining Keywords"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Declining keywords": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.interest_yoy__3m": {
 			      "Definition": {
@@ -397,29 +277,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "Interest YoY % (3M)"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Year on year (3M)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        },
-			        {
-			          "YoY (3M)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.rising_keywords": {
 			      "Definition": {
@@ -431,7 +289,7 @@ cultureInfo en-US
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Rising keywords": {
+			          "Keywords rising vs last month": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -449,29 +307,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "Total Subscribers"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Subs": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        },
-			        {
-			          "Subscribers (channels in view)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.avg_views_per_video": {
 			      "Definition": {
@@ -480,19 +316,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "Avg Views per Video"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Avg views per video": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.channels": {
 			      "Definition": {
@@ -501,19 +325,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "Channels"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Channels": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.trending_videos": {
 			      "Definition": {
@@ -522,19 +334,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "Trending Videos"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "In trending charts": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.content_gap_score": {
 			      "Definition": {
@@ -543,19 +343,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "Content Gap Score"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Content gap score": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.demand_index": {
 			      "Definition": {
@@ -567,7 +355,17 @@ cultureInfo en-US
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Demand index": {
+			          "Demand": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Demand (search score, 12 weeks)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -588,6 +386,16 @@ cultureInfo en-US
 			      "State": "Generated",
 			      "Terms": [
 			        {
+			          "Growth": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
 			          "Growth (12 weeks)": {
 			            "State": "Suggested",
 			            "Source": {
@@ -606,19 +414,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "Keywords Scored"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Keywords scored": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.small_channel_share": {
 			      "Definition": {
@@ -630,7 +426,17 @@ cultureInfo en-US
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Small-channel share": {
+			          "Small channels": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        },
+			        {
+			          "Top videos from small channels": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -651,7 +457,7 @@ cultureInfo en-US
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Avg State Index": {
+			          "Average search score": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -732,19 +538,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "date"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Date range": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "dim_keyword.keyword": {
 			      "Definition": {
@@ -785,16 +579,6 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.9
 			          }
-			        },
-			        {
-			          "Target topic": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -807,16 +591,6 @@ cultureInfo en-US
 			      },
 			      "State": "Generated",
 			      "Terms": [
-			        {
-			          "Keyword language": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        },
 			        {
 			          "Language": {
 			            "State": "Suggested",
@@ -836,29 +610,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "category_name"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "YouTube category": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        },
-			        {
-			          "Category": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "dim_video.is_short": {
 			      "Definition": {
@@ -867,19 +619,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "is_short"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Shorts?": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "dim_video.title": {
 			      "Definition": {
@@ -888,19 +628,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "title"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Video": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "dim_state.state_map_name": {
 			      "Definition": {
@@ -951,19 +679,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "state"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "State": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "dim_language.language_name": {
 			      "Definition": {
@@ -972,19 +688,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "language_name"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Language": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "dim_channel.channel_origin": {
 			      "Definition": {
@@ -993,19 +697,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "channel_origin"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Channel origin": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "dim_channel.channel_name": {
 			      "Definition": {
@@ -1014,19 +706,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "channel_name"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Channel": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "dim_channel.country": {
 			      "Definition": {
@@ -1035,10 +715,28 @@ cultureInfo en-US
 			          "ConceptualProperty": "country"
 			        }
 			      },
+			      "State": "Generated"
+			    },
+			    "fact_video_snapshot.in_trending": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "fact_video_snapshot",
+			          "ConceptualProperty": "in_trending"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_measures.overview_headline": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Overview Headline"
+			        }
+			      },
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Country": {
+			          "Headline": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -1049,17 +747,248 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "fact_video_snapshot.in_trending": {
+			    "table_measures.top_video_title": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "fact_video_snapshot",
-			          "ConceptualProperty": "in_trending"
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Top Video Title"
 			        }
 			      },
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "In trending chart?": {
+			          "Video": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.top_video_detail": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Top Video Detail"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Channel and views": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.hot_niches": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Hot Niches"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Hot niches (high demand, growing)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.keywords_tracked": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Keywords Tracked"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Keywords tracked": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.niche_headline": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Niche Headline"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Headline": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.small_channels_in_top_results": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Small Channels in Top Results"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Channels": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.median_uploads_per_month_small": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Median Uploads per Month (Small)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Uploads a month (small channels)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.grow_headline": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Grow Headline"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Headline": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures.audience_headline": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Audience Headline"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Headline": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dim_date.month_name": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_date",
+			          "ConceptualProperty": "month_name"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Month": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dim_language.language_label": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_language",
+			          "ConceptualProperty": "language_label"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Video language": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "dim_video.video_format": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_video",
+			          "ConceptualProperty": "video_format"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Content": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",

@@ -6,48 +6,66 @@ table fact_trends_region
 		dataType: string
 		isHidden
 		lineageTag: 898c0017-9eb2-4a1f-a429-4f0a5249cbb1
+		summarizeBy: none
 		sourceColumn: keyword
+
+		annotation SummarizationSetBy = Automatic
 
 	column state
 		dataType: string
 		isHidden
 		lineageTag: 1cec1e58-7d92-4aad-be71-e812073563ec
 		dataCategory: StateOrProvince
+		summarizeBy: none
 		sourceColumn: state
+
+		annotation SummarizationSetBy = Automatic
 
 	column state_map_name
 		dataType: string
 		isHidden
 		lineageTag: 870016d0-000c-40b0-93fb-e80f46a1a21f
 		dataCategory: Place
+		summarizeBy: none
 		sourceColumn: state_map_name
+
+		annotation SummarizationSetBy = Automatic
 
 	column zone
 		dataType: string
 		isHidden
 		lineageTag: ef4b70ba-abc1-4819-a377-e577c6d7be3d
+		summarizeBy: none
 		sourceColumn: zone
+
+		annotation SummarizationSetBy = Automatic
 
 	column interest_share
 		dataType: double
 		formatString: 0.0
 		lineageTag: 0e6f9234-dd0f-4be6-b2fb-349651ce4cb4
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: interest_share
+
+		annotation SummarizationSetBy = Automatic
 
 	column ratio_to_anchor
 		dataType: double
 		formatString: 0.00
 		lineageTag: 72ea3776-1571-4c0e-92a8-7694f3c457aa
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: ratio_to_anchor
+
+		annotation SummarizationSetBy = Automatic
 
 	column state_index
 		dataType: double
 		formatString: 0.0
 		lineageTag: 20c2f88b-639b-4a34-90ae-8309e968d7fc
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: state_index
+
+		annotation SummarizationSetBy = Automatic
 
 	column snapshot_date
 		dataType: dateTime
@@ -56,6 +74,13 @@ table fact_trends_region
 		lineageTag: 8f9dcfcc-72de-4ad1-ae0f-1f70bd61d294
 		summarizeBy: none
 		sourceColumn: snapshot_date
+
+		variation Variation
+			isDefault
+			relationship: e145ab62-e73c-4d92-8e16-3c9a57b8b4cb
+			defaultHierarchy: LocalDateTable_7676138d-a072-43a3-85c8-d1f71a04f7a3.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	partition fact_trends_region = m
 		mode: import

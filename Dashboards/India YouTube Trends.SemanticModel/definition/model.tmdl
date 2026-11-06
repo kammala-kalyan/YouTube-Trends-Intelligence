@@ -11,6 +11,8 @@ annotation __PBI_TimeIntelligenceEnabled = 1
 
 annotation PBI_ProTooling = ["MCP-PBIModeling","DevMode"]
 
+annotation PBI_QueryOrder = ["dim_category","dim_date","dim_video","dim_channel","dim_language","dim_keyword","dim_state","fact_video_snapshot","fact_channel_snapshot","fact_trends_keyword","fact_trends_region","fact_keyword_opportunity","bridge_keyword_video","DataFolder"]
+
 ref table dim_category
 ref table dim_date
 ref table dim_video
@@ -25,6 +27,11 @@ ref table fact_trends_region
 ref table fact_keyword_opportunity
 ref table bridge_keyword_video
 ref table _Measures
+ref table DateTableTemplate_25d0b1ea-e2df-44f6-b7a4-5b9144460bfd
+ref table LocalDateTable_87b79045-8eb3-4c3e-b7eb-7f1d2c875536
+ref table LocalDateTable_7676138d-a072-43a3-85c8-d1f71a04f7a3
+ref table LocalDateTable_8437ae53-d64c-451b-9e82-d5a0e12da688
+ref table LocalDateTable_29b53d0e-2c2d-46a1-a690-55d0b4278806
 
 ref cultureInfo en-US
 

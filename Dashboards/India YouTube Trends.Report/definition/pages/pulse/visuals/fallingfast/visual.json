@@ -419,7 +419,7 @@
         "howCreated": "User"
       },
       {
-        "name": "fm2",
+        "name": "fm3",
         "field": {
           "Measure": {
             "Expression": {
@@ -458,6 +458,55 @@
                   "Right": {
                     "Literal": {
                       "Value": "0.0D"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      },
+      {
+        "name": "fm4",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Recent Interest"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "_Measures",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 2,
+                  "Left": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "m"
+                        }
+                      },
+                      "Property": "Recent Interest"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "0.5D"
                     }
                   }
                 }

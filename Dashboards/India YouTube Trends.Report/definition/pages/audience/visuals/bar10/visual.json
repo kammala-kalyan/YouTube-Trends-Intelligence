@@ -24,11 +24,11 @@
                       "Entity": "dim_state"
                     }
                   },
-                  "Property": "state"
+                  "Property": "zone"
                 }
               },
-              "queryRef": "dim_state.state",
-              "nativeQueryRef": "state"
+              "queryRef": "dim_state.zone",
+              "nativeQueryRef": "zone"
             }
           ]
         },
@@ -42,11 +42,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Interest vs Cricket"
+                  "Property": "State Index"
                 }
               },
-              "queryRef": "_Measures.Interest vs Cricket",
-              "nativeQueryRef": "Interest vs Cricket"
+              "queryRef": "_Measures.State Index",
+              "nativeQueryRef": "State Index"
             }
           ]
         }
@@ -61,7 +61,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "Interest vs Cricket"
+                "Property": "State Index"
               }
             },
             "direction": "Descending"
@@ -102,14 +102,14 @@
             "labelDisplayUnits": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "1D"
                 }
               }
             },
             "labelPrecision": {
               "expr": {
                 "Literal": {
-                  "Value": "2L"
+                  "Value": "0L"
                 }
               }
             }
@@ -200,7 +200,7 @@
                           "Entity": "_Measures"
                         }
                       },
-                      "Property": "HL Interest vs Cricket"
+                      "Property": "HL State Index"
                     }
                   }
                 }
@@ -233,7 +233,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'How big is the topic there?'"
+                  "Value": "'Which part of India?'"
                 }
               }
             },
@@ -278,7 +278,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Top 6 states; 1.0 = as searched as cricket'"
+                  "Value": "'Average search score by zone'"
                 }
               }
             },
@@ -396,7 +396,7 @@
         "howCreated": "User"
       },
       {
-        "name": "fhasstatedata4",
+        "name": "fhasstatedata3",
         "field": {
           "Column": {
             "Expression": {
@@ -450,7 +450,7 @@
         "howCreated": "User"
       },
       {
-        "name": "ftop5",
+        "name": "fissmallregion2",
         "field": {
           "Column": {
             "Expression": {
@@ -458,67 +458,15 @@
                 "Entity": "dim_state"
               }
             },
-            "Property": "state"
+            "Property": "is_small_region"
           }
         },
-        "type": "TopN",
+        "type": "Categorical",
         "filter": {
           "Version": 2,
           "From": [
             {
-              "Name": "subquery",
-              "Expression": {
-                "Subquery": {
-                  "Query": {
-                    "Version": 2,
-                    "From": [
-                      {
-                        "Name": "d",
-                        "Entity": "dim_state",
-                        "Type": 0
-                      },
-                      {
-                        "Name": "m",
-                        "Entity": "_Measures",
-                        "Type": 0
-                      }
-                    ],
-                    "Select": [
-                      {
-                        "Column": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Source": "d"
-                            }
-                          },
-                          "Property": "state"
-                        },
-                        "Name": "field"
-                      }
-                    ],
-                    "OrderBy": [
-                      {
-                        "Direction": 2,
-                        "Expression": {
-                          "Measure": {
-                            "Expression": {
-                              "SourceRef": {
-                                "Source": "m"
-                              }
-                            },
-                            "Property": "Interest vs Cricket"
-                          }
-                        }
-                      }
-                    ],
-                    "Top": 6
-                  }
-                }
-              },
-              "Type": 2
-            },
-            {
-              "Name": "d",
+              "Name": "t",
               "Entity": "dim_state",
               "Type": 0
             }
@@ -532,18 +480,22 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Source": "d"
+                            "Source": "t"
                           }
                         },
-                        "Property": "state"
+                        "Property": "is_small_region"
                       }
                     }
                   ],
-                  "Table": {
-                    "SourceRef": {
-                      "Source": "subquery"
-                    }
-                  }
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "false"
+                        }
+                      }
+                    ]
+                  ]
                 }
               }
             }

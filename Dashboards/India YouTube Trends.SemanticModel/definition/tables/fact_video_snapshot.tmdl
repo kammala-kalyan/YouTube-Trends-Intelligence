@@ -10,6 +10,8 @@ table fact_video_snapshot
 		summarizeBy: none
 		sourceColumn: snapshot_date
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column video_id
 		dataType: string
 		isHidden
@@ -100,4 +102,6 @@ table fact_video_snapshot
 				    Typed = Table.TransformColumnTypes(Promoted, {{"snapshot_date", type date}, {"video_id", type text}, {"views", Int64.Type}, {"likes", Int64.Type}, {"comments", Int64.Type}, {"in_trending", type logical}, {"in_topic_search", type logical}, {"trending_rank_overall", Int64.Type}, {"trending_rank_category", Int64.Type}, {"charts_count", Int64.Type}, {"days_since_publish", type number}, {"views_per_day", type number}, {"likes_hidden", type logical}, {"engagement_rate", type number}}, "en-US")
 				in
 				    Typed
+
+	annotation PBI_ResultType = Exception
 

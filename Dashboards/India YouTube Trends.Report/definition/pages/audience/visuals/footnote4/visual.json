@@ -20,7 +20,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "YouTube doesn't share where viewers are, so this page uses YouTube search interest by state (Google Trends) as the audience signal. Search score = 0-100 within each keyword. Small states can score high from few searches.",
+                    "value": "YouTube doesn't share where viewers are, so this page uses YouTube search popularity by state (Google Trends) as the audience signal. States/UTs under 2 million people are hidden: a handful of searches swings their scores.",
                     "textStyle": {
                       "fontSize": "8pt",
                       "color": "#909090"

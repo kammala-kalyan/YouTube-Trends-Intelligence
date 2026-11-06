@@ -10,6 +10,8 @@ table fact_channel_snapshot
 		summarizeBy: none
 		sourceColumn: snapshot_date
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column channel_id
 		dataType: string
 		isHidden

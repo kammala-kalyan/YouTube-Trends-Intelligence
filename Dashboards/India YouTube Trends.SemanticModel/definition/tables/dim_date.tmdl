@@ -12,6 +12,8 @@ table dim_date
 		summarizeBy: none
 		sourceColumn: date
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column year
 		dataType: int64
 		formatString: 0
@@ -49,6 +51,8 @@ table dim_date
 		lineageTag: e867c329-4147-41f9-a853-ccfb3fafd84c
 		summarizeBy: none
 		sourceColumn: week_start
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	column weekday
 		dataType: string

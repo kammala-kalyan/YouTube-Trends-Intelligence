@@ -192,6 +192,13 @@
                   "Value": "8D"
                 }
               }
+            },
+            "axisScale": {
+              "expr": {
+                "Literal": {
+                  "Value": "'log'"
+                }
+              }
             }
           }
         }

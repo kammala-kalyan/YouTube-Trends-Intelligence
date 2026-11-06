@@ -20,6 +20,12 @@ table dim_state
 		lineageTag: efeca47b-595b-4fbe-b35d-5327e56c971c
 		sourceColumn: zone
 
+	/// True for states/UTs under 2 million people (Census 2011). Their Google Trends scores are noisy, so they're hidden on the audience page.
+	column is_small_region = dim_state[state] IN {"Andaman and Nicobar Islands", "Arunachal Pradesh", "Chandigarh", "Dadra and Nagar Haveli", "Daman and Diu", "Goa", "Lakshadweep", "Mizoram", "Nagaland", "Puducherry", "Sikkim"}
+		dataType: boolean
+		lineageTag: d54b8be7-b488-4ffe-b4e2-b30a44719ea1
+		summarizeBy: none
+
 	partition dim_state = m
 		mode: import
 		source =

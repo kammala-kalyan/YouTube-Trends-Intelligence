@@ -60,3 +60,23 @@ relationship dim_video_published_date_dim_date_date
 	fromColumn: dim_video.published_date
 	toColumn: dim_date.date
 
+relationship dcfe07e1-b37d-44e7-83fc-b1b1abfad5b5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_trends_keyword.snapshot_date
+	toColumn: LocalDateTable_87b79045-8eb3-4c3e-b7eb-7f1d2c875536.Date
+
+relationship e145ab62-e73c-4d92-8e16-3c9a57b8b4cb
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_trends_region.snapshot_date
+	toColumn: LocalDateTable_7676138d-a072-43a3-85c8-d1f71a04f7a3.Date
+
+relationship 50ce08ba-c72f-483d-8249-a34b4bbac94b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: fact_keyword_opportunity.supply_snapshot_date
+	toColumn: LocalDateTable_8437ae53-d64c-451b-9e82-d5a0e12da688.Date
+
+relationship 45c506f9-d12a-49e7-8468-62feffab9592
+	joinOnDateBehavior: datePartOnly
+	fromColumn: bridge_keyword_video.snapshot_date
+	toColumn: LocalDateTable_29b53d0e-2c2d-46a1-a690-55d0b4278806.Date
+

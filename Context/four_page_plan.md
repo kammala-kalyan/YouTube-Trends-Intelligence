@@ -446,6 +446,38 @@ Weak: bike review, railway exam, bank exam, amazing facts, daily vlog, couple vl
 
 ---
 
+## Screenshot review 1 (6 Nov 2026): diagnosis and proposed fixes
+
+| # | What the user saw | Real cause (checked) | Proposed fix |
+|---|---|---|---|
+| 1 | "Data as of 5 Nov", today's data missing | It **was** extracted: GitHub has 4,707 video rows for 6 Nov. Power BI was refreshed a few minutes before the daily job finished committing | No fix. Refresh again. (GitHub raw files can lag ~5 min after a commit) |
+| 2 | Mizoram (and the north-east) top every map and chart | State scores = keyword ÷ **cricket** in that state. Cricket is weak there (share 28 in Mizoram vs 60+ elsewhere), so every topic looks oversized | **❓ Q41.** Convert to **popularity within the state**: one extra daily request for cricket's own state profile, then `keyword popularity = ratio to cricket × cricket's popularity in that state`. Optional: also weight by state size |
+| 3 | Map is one flat colour | The rule-based colour measure isn't applied per state on the filled map | Use Power BI's built-in **gradient colour rule** on the state score (light → dark red) |
+| 4 | Language columns on page 2 all "0.0" | That grid is **search demand by search-term language**, not videos. Regional terms are tiny on the cricket scale (UPSC Telugu ≈ 0.06 vs UPSC ≈ 8.4), so they round to 0.0 | **❓ Q42.** Scale each language column to its own maximum ("within Telugu, which topic has the most demand?") |
+| 5 | Only English and Hindi videos, "Telugu videos have English titles" | Video language comes from YouTube's audio-track setting first (4,232 videos), then default language (1,483), then title script (423). 224 videos labelled English name an Indian language in their title or tags (Hindi 84, Punjabi 45, Tamil 30, Telugu 16…) | **❓ Q43.** Smarter detection, in order: audio track → native script → **language named in title/tags** ("Telugu", "#tamil", "Hindi dubbed") → **language of the search that found it** (e.g. "UPSC Telugu") → **channel's main language** → English |
+| 6 | Hot niches: "bhajan" Growth +15.7% but Trend "Declining" | Growth = 12 weeks; Trend = last month vs the month before. Both true, but it looks contradictory | Show the 12-week trend label in that table, or rename the column "Last month" |
+| 7 | Rising/Falling lists show ±100% for tiny keywords | Tiny keywords flip between 0 and 1 on Google's scale, giving ±100% | Leave low-volume keywords out of Rising/Falling |
+| 8 | Headlines cut off with a grey block; top video title cut off | The text card is too short and shows a scrollbar | Taller, wrapping text boxes for the headline and video title |
+| 9 | Page 4 "Videos found, by video language" empty for Agriculture | New topics' videos are searched on a 3-day rotation; Agriculture keywords haven't had their turn yet | No fix; fills in within 3 days |
+| 10 | Opportunity map squashed to the left | One very large keyword ("cartoon", ~330) stretches the axis | Log scale on the demand axis |
+
+**Decisions (6 Nov):** Q41 = **popularity within the state** (no state-size weighting) · Q42 = **scale per language** · Q43 = **language named in title/tags + channel's main language** (not "language of the search").
+
+**Done (6 Nov):**
+- **Q41:** `fetch_trends.py` makes 1 extra request a day for cricket's own state profile (`data/trends_cricket_states_DATE.csv`). `build_model.py`: `popularity = ratio to cricket × cricket's popularity in the state`, then `state_index` = popularity scaled 0–100 per keyword (falls back to the plain ratio if no profile exists). Result: Mizoram no longer tops everything (Devotional → Kerala, Puducherry, Tamil Nadu; UPSC Telugu → Andhra Pradesh, Telangana).
+- **Tiny regions hidden** on the audience page (map, top states, zone chart, headline): states/UTs under 2 million people (Census 2011): A&N Islands, Arunachal Pradesh, Chandigarh, Dadra & Nagar Haveli, Daman & Diu, Goa, Lakshadweep, Mizoram, Nagaland, Puducherry, Sikkim (`dim_state[is_small_region]`). They still exist in the data and on the State detail page.
+- **Map colour:** Power BI's built-in gradient rule on the search score (light → dark red), replacing the rule-based colour measure.
+- **"How big is the topic there?"** (ratio to cricket, the same bias) replaced by **"Which part of India?"**: average search score by zone.
+- **Q42:** new measure `Demand Within Language` (100 = the language's top topic); the grid is titled "Which topics lead within each language?".
+- **Q43:** language order is now: Indian-language audio track → native script → one Indian language named in title/tags ("Hindi dubbed" = Hindi) → English audio track → default language → English letters (weak); then **channel's main language** (≥60% of its strongly labelled videos, min 2) relabels weak ones. Result: 198 videos relabelled from title/tags and 30 from the channel; Punjabi 63 → 116, Telugu 230 → 250, Kannada 210 → 230; English 2,496 → 2,195.
+- **Low volume:** `Trend Status` = "Low volume" when last month's search score is under 0.5 (new `Recent Interest` measure). Rising/Falling lists exclude these (no more ±100% noise).
+- **Hot niches table:** Trend column removed; Growth labelled "(12 wk)".
+- **Headlines** shortened, and the headline card has no inner padding (no grey scrollbar). **Top video title** uses a wrapping card.
+- **Opportunity map:** log scale on demand.
+- **Build-script bug fixed:** helper measures that Power BI had re-saved on one line weren't being updated (e.g. `Map Strength`). The sync now matches both layouts; a second run reports "no changes".
+
+---
+
 ## Rules for anyone (or any AI) working on this project later
 
 1. **Until the user signs off the 4 pages, the dashboard is generated by `build_report.py`.** Make report and page changes there, not by editing the PBIR JSON files by hand. The script rebuilds every page from scratch, so manual Power BI edits are overwritten. **After sign-off (Q38), never run `build_report.py` on the report pages again**: the user polishes by hand in Power BI, and those edits must be preserved.
@@ -458,6 +490,8 @@ Weak: bike review, railway exam, bank exam, amazing facts, daily vlog, couple vl
 8. **Back up before big changes:** commit to git first, so any change can be undone from history. The old `backups/` folder was removed on 6 Nov 2026.
 9. **Filters must only show choices that have data** (the `has_videos` columns plus the `Videos Tracked > 0` slicer filter), so pages never go blank.
 10. **Video numbers are a snapshot of popular videos, not proof of cause.** Say so in footnotes, and don't build "over time" charts on video data until weeks of history exist.
+11. **Always `git pull` before you push.** The daily GitHub Actions job commits `data/` every morning (as `github-actions[bot]`), so the local copy is usually behind.
+12. **No Claude / AI-tool attribution in the repo** (user's instruction, 6 Nov): no co-author lines in commits, and no tool-specific config files tracked (`.mcp.json` is git-ignored).
 
 ---
 
@@ -712,6 +746,7 @@ The Content Gap Score is `40% demand + 30% growth + 30% small-channel share`.
 | Q35 | Approve the 24 regional keywords? Add Gujarati / Punjabi? | ✅ **24 + Gujarati (28)** |
 | Q36 | What "Language" means | ✅ **Video language** on pages 1 and 3 |
 | Q39 | Language filter on pages 2 and 4 (search-based) | ✅ **(a)**: "Language" + note explaining it's based on searches |
+| — | First GitHub Actions run (6 Nov, manual) | ✅ Passed in 1m43s: trending (2,123 rows), topic search (62 keywords, ~6,261 quota units), channels, Trends retry, model rebuild; committed `data: 2026-11-06` |
 | Q40 | Small keywords round to 0 next to cricket in Google Trends | ✅ **(b) chained references**: cricket → Excel → bike review (all nationwide), with automatic levels; verified |
 | Q37 | Page 3 has Topic + YouTube category again | ✅ **Topic only** |
 | Q38 | When hand edits in Power BI take over from the build script | ✅ **After sign-off, no more script runs on pages** |

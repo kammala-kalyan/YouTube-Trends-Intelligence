@@ -62,11 +62,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Demand Index"
+                  "Property": "Demand Within Language"
                 }
               },
-              "queryRef": "_Measures.Demand Index",
-              "nativeQueryRef": "Demand Index"
+              "queryRef": "_Measures.Demand Within Language",
+              "nativeQueryRef": "Demand Within Language"
             }
           ]
         }
@@ -128,7 +128,7 @@
                 }
               }
             ],
-            "metadata": "_Measures.Demand Index"
+            "metadata": "_Measures.Demand Within Language"
           }
         }
       ],
@@ -224,7 +224,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Demand by topic and language'"
+                  "Value": "'Which topics lead within each language?'"
                 }
               }
             },
@@ -269,7 +269,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Darker = more search demand. Empty = no keyword tracked for that pair.'"
+                  "Value": "'100 = the top topic in that language; read down a column. Empty = no keyword tracked for that pair.'"
                 }
               }
             },

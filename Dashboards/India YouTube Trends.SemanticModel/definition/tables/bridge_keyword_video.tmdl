@@ -10,15 +10,28 @@ table bridge_keyword_video
 		summarizeBy: none
 		sourceColumn: snapshot_date
 
+		variation Variation
+			isDefault
+			relationship: 45c506f9-d12a-49e7-8468-62feffab9592
+			defaultHierarchy: LocalDateTable_29b53d0e-2c2d-46a1-a690-55d0b4278806.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
 	column keyword
 		dataType: string
 		lineageTag: 2688c110-4e3d-4167-862f-54650822560c
+		summarizeBy: none
 		sourceColumn: keyword
+
+		annotation SummarizationSetBy = Automatic
 
 	column video_id
 		dataType: string
 		lineageTag: 7abfe51a-a0e1-4522-aca9-f8c79cde60a7
+		summarizeBy: none
 		sourceColumn: video_id
+
+		annotation SummarizationSetBy = Automatic
 
 	partition bridge_keyword_video = m
 		mode: import

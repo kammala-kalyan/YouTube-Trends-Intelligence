@@ -74,7 +74,7 @@
               },
               "queryRef": "_Measures.Growth 12w %",
               "nativeQueryRef": "Growth 12w %",
-              "displayName": "Growth"
+              "displayName": "Growth (12 wk)"
             },
             {
               "field": {
@@ -90,21 +90,6 @@
               "queryRef": "_Measures.Small Channel Share",
               "nativeQueryRef": "Small Channel Share",
               "displayName": "Small channels"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Trend Label"
-                }
-              },
-              "queryRef": "_Measures.Trend Label",
-              "nativeQueryRef": "Trend Label",
-              "displayName": "Trend"
             }
           ]
         }
@@ -153,36 +138,6 @@
               }
             }
           }
-        },
-        {
-          "properties": {
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "_Measures"
-                        }
-                      },
-                      "Property": "Trend Status Color"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "data": [
-              {
-                "dataViewWildcard": {
-                  "matchingOption": 1
-                }
-              }
-            ],
-            "metadata": "_Measures.Trend Label"
-          }
         }
       ],
       "columnHeaders": [
@@ -228,7 +183,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "150D"
+                  "Value": "170D"
                 }
               }
             }
@@ -242,7 +197,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "130D"
+                  "Value": "160D"
                 }
               }
             }
@@ -256,7 +211,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "60D"
+                  "Value": "70D"
                 }
               }
             }
@@ -270,7 +225,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "60D"
+                  "Value": "85D"
                 }
               }
             }
@@ -284,27 +239,13 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "90D"
+                  "Value": "100D"
                 }
               }
             }
           },
           "selector": {
             "metadata": "_Measures.Small Channel Share"
-          }
-        },
-        {
-          "properties": {
-            "value": {
-              "expr": {
-                "Literal": {
-                  "Value": "85D"
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Trend Label"
           }
         }
       ]
@@ -506,7 +447,7 @@
         "howCreated": "User"
       },
       {
-        "name": "fm3",
+        "name": "fm5",
         "field": {
           "Measure": {
             "Expression": {

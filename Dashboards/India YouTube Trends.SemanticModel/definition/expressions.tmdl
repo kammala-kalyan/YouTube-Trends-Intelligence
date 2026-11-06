@@ -2,3 +2,5 @@
 expression DataFolder = "https://raw.githubusercontent.com/kammala-kalyan/YouTube-Trends-Intelligence/main/data/model/" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
 	lineageTag: 6b5b01af-f178-4403-9e74-889265d79464
 
+	annotation PBI_ResultType = Text
+

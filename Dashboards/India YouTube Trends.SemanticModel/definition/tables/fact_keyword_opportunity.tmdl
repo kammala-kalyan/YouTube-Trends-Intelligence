@@ -6,40 +6,54 @@ table fact_keyword_opportunity
 		dataType: string
 		isHidden
 		lineageTag: cdac4d90-af48-43ff-9069-8ce180359c18
+		summarizeBy: none
 		sourceColumn: keyword
+
+		annotation SummarizationSetBy = Automatic
 
 	column demand_index
 		dataType: double
 		formatString: 0.0
 		lineageTag: 0df80342-5ee3-4292-924b-54b575258675
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: demand_index
+
+		annotation SummarizationSetBy = Automatic
 
 	column growth_12w
 		dataType: double
 		formatString: 0.0%
 		lineageTag: ea05645a-c732-46b6-8a5c-7abcea1d7e19
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: growth_12w
+
+		annotation SummarizationSetBy = Automatic
 
 	column growth_yoy
 		dataType: double
 		formatString: 0.0%
 		lineageTag: e831e13d-41a0-4368-95c3-73ab6b99293a
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: growth_yoy
+
+		annotation SummarizationSetBy = Automatic
 
 	column trend_status
 		dataType: string
 		lineageTag: 4c6bcfd5-6c60-4443-8351-df7731a0183a
+		summarizeBy: none
 		sourceColumn: trend_status
+
+		annotation SummarizationSetBy = Automatic
 
 	column videos_last_30d_est
 		dataType: int64
 		formatString: #,0
 		lineageTag: 461d2d96-2915-4c9d-ab82-c6d192b7d659
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: videos_last_30d_est
+
+		annotation SummarizationSetBy = Automatic
 
 	column supply_snapshot_date
 		dataType: dateTime
@@ -48,31 +62,47 @@ table fact_keyword_opportunity
 		summarizeBy: none
 		sourceColumn: supply_snapshot_date
 
+		variation Variation
+			isDefault
+			relationship: 50ce08ba-c72f-483d-8249-a34b4bbac94b
+			defaultHierarchy: LocalDateTable_8437ae53-d64c-451b-9e82-d5a0e12da688.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
+
 	column top_videos_median_views
 		dataType: double
 		formatString: #,0
 		lineageTag: 5b81d58d-4c19-4b60-bfe8-10a3bd92acd2
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: top_videos_median_views
+
+		annotation SummarizationSetBy = Automatic
 
 	column top_videos_avg_views
 		dataType: double
 		formatString: #,0
 		lineageTag: 40ba3205-d5ca-4261-9fb6-a427eb5f0e96
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: top_videos_avg_views
+
+		annotation SummarizationSetBy = Automatic
 
 	column small_channel_share
 		dataType: double
 		formatString: 0.0%
 		lineageTag: cbda7eed-4efa-4243-8af2-9cf35cf8d099
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: small_channel_share
+
+		annotation SummarizationSetBy = Automatic
 
 	column supply_capped
 		dataType: boolean
 		lineageTag: cef16703-f1ce-47ef-bcb8-4b573611545a
+		summarizeBy: none
 		sourceColumn: supply_capped
+
+		annotation SummarizationSetBy = Automatic
 
 	partition fact_keyword_opportunity = m
 		mode: import

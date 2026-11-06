@@ -10,25 +10,34 @@ table fact_trends_keyword
 		summarizeBy: none
 		sourceColumn: date
 
+		annotation UnderlyingDateTimeDataType = Date
+
 	column keyword
 		dataType: string
 		isHidden
 		lineageTag: ba187708-10c9-4fc9-938a-f5c6a584b728
+		summarizeBy: none
 		sourceColumn: keyword
+
+		annotation SummarizationSetBy = Automatic
 
 	column interest_raw
 		dataType: double
 		formatString: 0.0
 		lineageTag: 50a50bfa-c64f-4a48-93c9-7773d8992f1d
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: interest_raw
+
+		annotation SummarizationSetBy = Automatic
 
 	column interest_norm
 		dataType: double
 		formatString: 0.0
 		lineageTag: 03361de2-771c-45c4-897d-e99b98a1c451
-		summarizeBy: none
+		summarizeBy: sum
 		sourceColumn: interest_norm
+
+		annotation SummarizationSetBy = Automatic
 
 	column snapshot_date
 		dataType: dateTime
@@ -37,6 +46,13 @@ table fact_trends_keyword
 		lineageTag: c4272320-4465-4949-8e0b-e54b0d332d1b
 		summarizeBy: none
 		sourceColumn: snapshot_date
+
+		variation Variation
+			isDefault
+			relationship: dcfe07e1-b37d-44e7-83fc-b1b1abfad5b5
+			defaultHierarchy: LocalDateTable_87b79045-8eb3-4c3e-b7eb-7f1d2c875536.'Date Hierarchy'
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	partition fact_trends_keyword = m
 		mode: import

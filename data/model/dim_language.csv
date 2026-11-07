@@ -4,6 +4,7 @@ ab,AB,False
 af,AF,False
 ar,AR,False
 as,Assamese,True
+ase,ASE,False
 be,BE,False
 bgc,BGC,False
 bh,Bhojpuri,True
@@ -35,6 +36,7 @@ pl,PL,False
 pt,PT,False
 ru,RU,False
 si,SI,False
+su,SU,False
 ta,Tamil,True
 te,Telugu,True
 th,TH,False

@@ -15,6 +15,7 @@ de,DE,False
 en,English,False
 es,ES,False
 eu,EU,False
+fa,FA,False
 fi,FI,False
 fr,FR,False
 gu,Gujarati,True
@@ -32,11 +33,14 @@ mr,Marathi,True
 ms,MS,False
 mt,MT,False
 ne,Nepali,True
+nl,NL,False
 or,Odia,True
 pa,Punjabi,True
 pl,PL,False
 pt,PT,False
+ro,RO,False
 ru,RU,False
+sa,SA,False
 sat,SAT,False
 si,SI,False
 su,SU,False

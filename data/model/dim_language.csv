@@ -21,6 +21,7 @@ fr,FR,False
 gu,Gujarati,True
 hi,Hindi,True
 id,ID,False
+is,IS,False
 it,IT,False
 iw,IW,False
 ja,JA,False
@@ -33,7 +34,6 @@ mr,Marathi,True
 ms,MS,False
 mt,MT,False
 ne,Nepali,True
-nl,NL,False
 or,Odia,True
 pa,Punjabi,True
 pl,PL,False
@@ -43,6 +43,7 @@ ru,RU,False
 sa,SA,False
 sat,SAT,False
 si,SI,False
+sk,SK,False
 su,SU,False
 ta,Tamil,True
 te,Telugu,True

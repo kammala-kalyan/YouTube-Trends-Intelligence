@@ -1,0 +1,1045 @@
+state,keyword,interest,batch_id,anchor_used,category,snapshot_date
+Andaman and Nicobar Islands,Samsung,24,0,cricket,Tech,2026-11-13
+Andhra Pradesh,Samsung,29,0,cricket,Tech,2026-11-13
+Arunachal Pradesh,Samsung,29,0,cricket,Tech,2026-11-13
+Assam,Samsung,28,0,cricket,Tech,2026-11-13
+Bihar,Samsung,27,0,cricket,Tech,2026-11-13
+Chandigarh,Samsung,30,0,cricket,Tech,2026-11-13
+Chhattisgarh,Samsung,26,0,cricket,Tech,2026-11-13
+Dadra and Nagar Haveli,Samsung,21,0,cricket,Tech,2026-11-13
+Daman and Diu,Samsung,21,0,cricket,Tech,2026-11-13
+Delhi,Samsung,27,0,cricket,Tech,2026-11-13
+Goa,Samsung,25,0,cricket,Tech,2026-11-13
+Gujarat,Samsung,28,0,cricket,Tech,2026-11-13
+Haryana,Samsung,27,0,cricket,Tech,2026-11-13
+Himachal Pradesh,Samsung,29,0,cricket,Tech,2026-11-13
+Jammu & Kashmir,Samsung,23,0,cricket,Tech,2026-11-13
+Jharkhand,Samsung,24,0,cricket,Tech,2026-11-13
+Karnataka,Samsung,28,0,cricket,Tech,2026-11-13
+Kerala,Samsung,40,0,cricket,Tech,2026-11-13
+Lakshadweep,Samsung,0,0,cricket,Tech,2026-11-13
+Madhya Pradesh,Samsung,26,0,cricket,Tech,2026-11-13
+Maharashtra,Samsung,24,0,cricket,Tech,2026-11-13
+Manipur,Samsung,29,0,cricket,Tech,2026-11-13
+Meghalaya,Samsung,30,0,cricket,Tech,2026-11-13
+Mizoram,Samsung,31,0,cricket,Tech,2026-11-13
+Nagaland,Samsung,30,0,cricket,Tech,2026-11-13
+Odisha,Samsung,22,0,cricket,Tech,2026-11-13
+Puducherry,Samsung,32,0,cricket,Tech,2026-11-13
+Punjab,Samsung,27,0,cricket,Tech,2026-11-13
+Rajasthan,Samsung,23,0,cricket,Tech,2026-11-13
+Sikkim,Samsung,33,0,cricket,Tech,2026-11-13
+Tamil Nadu,Samsung,35,0,cricket,Tech,2026-11-13
+Telangana,Samsung,29,0,cricket,Tech,2026-11-13
+Tripura,Samsung,30,0,cricket,Tech,2026-11-13
+Uttar Pradesh,Samsung,28,0,cricket,Tech,2026-11-13
+Uttarakhand,Samsung,26,0,cricket,Tech,2026-11-13
+West Bengal,Samsung,29,0,cricket,Tech,2026-11-13
+Andaman and Nicobar Islands,UPI,3,0,cricket,Finance,2026-11-13
+Andhra Pradesh,UPI,3,0,cricket,Finance,2026-11-13
+Arunachal Pradesh,UPI,4,0,cricket,Finance,2026-11-13
+Assam,UPI,5,0,cricket,Finance,2026-11-13
+Bihar,UPI,5,0,cricket,Finance,2026-11-13
+Chandigarh,UPI,3,0,cricket,Finance,2026-11-13
+Chhattisgarh,UPI,4,0,cricket,Finance,2026-11-13
+Dadra and Nagar Haveli,UPI,2,0,cricket,Finance,2026-11-13
+Daman and Diu,UPI,2,0,cricket,Finance,2026-11-13
+Delhi,UPI,4,0,cricket,Finance,2026-11-13
+Goa,UPI,2,0,cricket,Finance,2026-11-13
+Gujarat,UPI,3,0,cricket,Finance,2026-11-13
+Haryana,UPI,3,0,cricket,Finance,2026-11-13
+Himachal Pradesh,UPI,3,0,cricket,Finance,2026-11-13
+Jammu & Kashmir,UPI,3,0,cricket,Finance,2026-11-13
+Jharkhand,UPI,4,0,cricket,Finance,2026-11-13
+Karnataka,UPI,3,0,cricket,Finance,2026-11-13
+Kerala,UPI,4,0,cricket,Finance,2026-11-13
+Lakshadweep,UPI,0,0,cricket,Finance,2026-11-13
+Madhya Pradesh,UPI,4,0,cricket,Finance,2026-11-13
+Maharashtra,UPI,2,0,cricket,Finance,2026-11-13
+Manipur,UPI,3,0,cricket,Finance,2026-11-13
+Meghalaya,UPI,3,0,cricket,Finance,2026-11-13
+Mizoram,UPI,2,0,cricket,Finance,2026-11-13
+Nagaland,UPI,3,0,cricket,Finance,2026-11-13
+Odisha,UPI,4,0,cricket,Finance,2026-11-13
+Puducherry,UPI,2,0,cricket,Finance,2026-11-13
+Punjab,UPI,3,0,cricket,Finance,2026-11-13
+Rajasthan,UPI,4,0,cricket,Finance,2026-11-13
+Sikkim,UPI,5,0,cricket,Finance,2026-11-13
+Tamil Nadu,UPI,3,0,cricket,Finance,2026-11-13
+Telangana,UPI,3,0,cricket,Finance,2026-11-13
+Tripura,UPI,4,0,cricket,Finance,2026-11-13
+Uttar Pradesh,UPI,4,0,cricket,Finance,2026-11-13
+Uttarakhand,UPI,3,0,cricket,Finance,2026-11-13
+West Bengal,UPI,4,0,cricket,Finance,2026-11-13
+Andaman and Nicobar Islands,JEE,7,0,cricket,Education,2026-11-13
+Andhra Pradesh,JEE,12,0,cricket,Education,2026-11-13
+Arunachal Pradesh,JEE,6,0,cricket,Education,2026-11-13
+Assam,JEE,7,0,cricket,Education,2026-11-13
+Bihar,JEE,16,0,cricket,Education,2026-11-13
+Chandigarh,JEE,14,0,cricket,Education,2026-11-13
+Chhattisgarh,JEE,16,0,cricket,Education,2026-11-13
+Dadra and Nagar Haveli,JEE,13,0,cricket,Education,2026-11-13
+Daman and Diu,JEE,10,0,cricket,Education,2026-11-13
+Delhi,JEE,17,0,cricket,Education,2026-11-13
+Goa,JEE,8,0,cricket,Education,2026-11-13
+Gujarat,JEE,7,0,cricket,Education,2026-11-13
+Haryana,JEE,18,0,cricket,Education,2026-11-13
+Himachal Pradesh,JEE,15,0,cricket,Education,2026-11-13
+Jammu & Kashmir,JEE,9,0,cricket,Education,2026-11-13
+Jharkhand,JEE,23,0,cricket,Education,2026-11-13
+Karnataka,JEE,9,0,cricket,Education,2026-11-13
+Kerala,JEE,8,0,cricket,Education,2026-11-13
+Lakshadweep,JEE,0,0,cricket,Education,2026-11-13
+Madhya Pradesh,JEE,14,0,cricket,Education,2026-11-13
+Maharashtra,JEE,13,0,cricket,Education,2026-11-13
+Manipur,JEE,6,0,cricket,Education,2026-11-13
+Meghalaya,JEE,5,0,cricket,Education,2026-11-13
+Mizoram,JEE,4,0,cricket,Education,2026-11-13
+Nagaland,JEE,5,0,cricket,Education,2026-11-13
+Odisha,JEE,8,0,cricket,Education,2026-11-13
+Puducherry,JEE,12,0,cricket,Education,2026-11-13
+Punjab,JEE,13,0,cricket,Education,2026-11-13
+Rajasthan,JEE,19,0,cricket,Education,2026-11-13
+Sikkim,JEE,9,0,cricket,Education,2026-11-13
+Tamil Nadu,JEE,7,0,cricket,Education,2026-11-13
+Telangana,JEE,13,0,cricket,Education,2026-11-13
+Tripura,JEE,5,0,cricket,Education,2026-11-13
+Uttar Pradesh,JEE,16,0,cricket,Education,2026-11-13
+Uttarakhand,JEE,17,0,cricket,Education,2026-11-13
+West Bengal,JEE,9,0,cricket,Education,2026-11-13
+Andaman and Nicobar Islands,BGMI,32,0,cricket,Gaming,2026-11-13
+Andhra Pradesh,BGMI,10,0,cricket,Gaming,2026-11-13
+Arunachal Pradesh,BGMI,44,0,cricket,Gaming,2026-11-13
+Assam,BGMI,23,0,cricket,Gaming,2026-11-13
+Bihar,BGMI,13,0,cricket,Gaming,2026-11-13
+Chandigarh,BGMI,20,0,cricket,Gaming,2026-11-13
+Chhattisgarh,BGMI,17,0,cricket,Gaming,2026-11-13
+Dadra and Nagar Haveli,BGMI,23,0,cricket,Gaming,2026-11-13
+Daman and Diu,BGMI,25,0,cricket,Gaming,2026-11-13
+Delhi,BGMI,21,0,cricket,Gaming,2026-11-13
+Goa,BGMI,18,0,cricket,Gaming,2026-11-13
+Gujarat,BGMI,20,0,cricket,Gaming,2026-11-13
+Haryana,BGMI,18,0,cricket,Gaming,2026-11-13
+Himachal Pradesh,BGMI,17,0,cricket,Gaming,2026-11-13
+Jammu & Kashmir,BGMI,18,0,cricket,Gaming,2026-11-13
+Jharkhand,BGMI,18,0,cricket,Gaming,2026-11-13
+Karnataka,BGMI,14,0,cricket,Gaming,2026-11-13
+Kerala,BGMI,17,0,cricket,Gaming,2026-11-13
+Lakshadweep,BGMI,100,0,cricket,Gaming,2026-11-13
+Madhya Pradesh,BGMI,15,0,cricket,Gaming,2026-11-13
+Maharashtra,BGMI,19,0,cricket,Gaming,2026-11-13
+Manipur,BGMI,42,0,cricket,Gaming,2026-11-13
+Meghalaya,BGMI,37,0,cricket,Gaming,2026-11-13
+Mizoram,BGMI,52,0,cricket,Gaming,2026-11-13
+Nagaland,BGMI,39,0,cricket,Gaming,2026-11-13
+Odisha,BGMI,12,0,cricket,Gaming,2026-11-13
+Puducherry,BGMI,15,0,cricket,Gaming,2026-11-13
+Punjab,BGMI,20,0,cricket,Gaming,2026-11-13
+Rajasthan,BGMI,17,0,cricket,Gaming,2026-11-13
+Sikkim,BGMI,26,0,cricket,Gaming,2026-11-13
+Tamil Nadu,BGMI,13,0,cricket,Gaming,2026-11-13
+Telangana,BGMI,12,0,cricket,Gaming,2026-11-13
+Tripura,BGMI,36,0,cricket,Gaming,2026-11-13
+Uttar Pradesh,BGMI,17,0,cricket,Gaming,2026-11-13
+Uttarakhand,BGMI,22,0,cricket,Gaming,2026-11-13
+West Bengal,BGMI,17,0,cricket,Gaming,2026-11-13
+Andaman and Nicobar Islands,cricket,34,0,cricket,Anchor,2026-11-13
+Andhra Pradesh,cricket,46,0,cricket,Anchor,2026-11-13
+Arunachal Pradesh,cricket,17,0,cricket,Anchor,2026-11-13
+Assam,cricket,37,0,cricket,Anchor,2026-11-13
+Bihar,cricket,39,0,cricket,Anchor,2026-11-13
+Chandigarh,cricket,33,0,cricket,Anchor,2026-11-13
+Chhattisgarh,cricket,37,0,cricket,Anchor,2026-11-13
+Dadra and Nagar Haveli,cricket,41,0,cricket,Anchor,2026-11-13
+Daman and Diu,cricket,42,0,cricket,Anchor,2026-11-13
+Delhi,cricket,31,0,cricket,Anchor,2026-11-13
+Goa,cricket,47,0,cricket,Anchor,2026-11-13
+Gujarat,cricket,42,0,cricket,Anchor,2026-11-13
+Haryana,cricket,34,0,cricket,Anchor,2026-11-13
+Himachal Pradesh,cricket,36,0,cricket,Anchor,2026-11-13
+Jammu & Kashmir,cricket,47,0,cricket,Anchor,2026-11-13
+Jharkhand,cricket,31,0,cricket,Anchor,2026-11-13
+Karnataka,cricket,46,0,cricket,Anchor,2026-11-13
+Kerala,cricket,31,0,cricket,Anchor,2026-11-13
+Lakshadweep,cricket,0,0,cricket,Anchor,2026-11-13
+Madhya Pradesh,cricket,41,0,cricket,Anchor,2026-11-13
+Maharashtra,cricket,42,0,cricket,Anchor,2026-11-13
+Manipur,cricket,20,0,cricket,Anchor,2026-11-13
+Meghalaya,cricket,25,0,cricket,Anchor,2026-11-13
+Mizoram,cricket,11,0,cricket,Anchor,2026-11-13
+Nagaland,cricket,23,0,cricket,Anchor,2026-11-13
+Odisha,cricket,54,0,cricket,Anchor,2026-11-13
+Puducherry,cricket,39,0,cricket,Anchor,2026-11-13
+Punjab,cricket,37,0,cricket,Anchor,2026-11-13
+Rajasthan,cricket,37,0,cricket,Anchor,2026-11-13
+Sikkim,cricket,27,0,cricket,Anchor,2026-11-13
+Tamil Nadu,cricket,42,0,cricket,Anchor,2026-11-13
+Telangana,cricket,43,0,cricket,Anchor,2026-11-13
+Tripura,cricket,25,0,cricket,Anchor,2026-11-13
+Uttar Pradesh,cricket,35,0,cricket,Anchor,2026-11-13
+Uttarakhand,cricket,32,0,cricket,Anchor,2026-11-13
+West Bengal,cricket,41,0,cricket,Anchor,2026-11-13
+Andaman and Nicobar Islands,Kashmir,6,1,cricket,Travel,2026-11-13
+Andhra Pradesh,Kashmir,4,1,cricket,Travel,2026-11-13
+Arunachal Pradesh,Kashmir,8,1,cricket,Travel,2026-11-13
+Assam,Kashmir,6,1,cricket,Travel,2026-11-13
+Bihar,Kashmir,4,1,cricket,Travel,2026-11-13
+Chandigarh,Kashmir,7,1,cricket,Travel,2026-11-13
+Chhattisgarh,Kashmir,4,1,cricket,Travel,2026-11-13
+Dadra and Nagar Haveli,Kashmir,4,1,cricket,Travel,2026-11-13
+Daman and Diu,Kashmir,4,1,cricket,Travel,2026-11-13
+Delhi,Kashmir,6,1,cricket,Travel,2026-11-13
+Goa,Kashmir,4,1,cricket,Travel,2026-11-13
+Gujarat,Kashmir,4,1,cricket,Travel,2026-11-13
+Haryana,Kashmir,6,1,cricket,Travel,2026-11-13
+Himachal Pradesh,Kashmir,7,1,cricket,Travel,2026-11-13
+Jammu & Kashmir,Kashmir,61,1,cricket,Travel,2026-11-13
+Jharkhand,Kashmir,4,1,cricket,Travel,2026-11-13
+Karnataka,Kashmir,5,1,cricket,Travel,2026-11-13
+Kerala,Kashmir,9,1,cricket,Travel,2026-11-13
+Lakshadweep,Kashmir,0,1,cricket,Travel,2026-11-13
+Madhya Pradesh,Kashmir,4,1,cricket,Travel,2026-11-13
+Maharashtra,Kashmir,5,1,cricket,Travel,2026-11-13
+Manipur,Kashmir,5,1,cricket,Travel,2026-11-13
+Meghalaya,Kashmir,6,1,cricket,Travel,2026-11-13
+Mizoram,Kashmir,7,1,cricket,Travel,2026-11-13
+Nagaland,Kashmir,6,1,cricket,Travel,2026-11-13
+Odisha,Kashmir,3,1,cricket,Travel,2026-11-13
+Puducherry,Kashmir,6,1,cricket,Travel,2026-11-13
+Punjab,Kashmir,7,1,cricket,Travel,2026-11-13
+Rajasthan,Kashmir,5,1,cricket,Travel,2026-11-13
+Sikkim,Kashmir,6,1,cricket,Travel,2026-11-13
+Tamil Nadu,Kashmir,5,1,cricket,Travel,2026-11-13
+Telangana,Kashmir,5,1,cricket,Travel,2026-11-13
+Tripura,Kashmir,7,1,cricket,Travel,2026-11-13
+Uttar Pradesh,Kashmir,6,1,cricket,Travel,2026-11-13
+Uttarakhand,Kashmir,7,1,cricket,Travel,2026-11-13
+West Bengal,Kashmir,5,1,cricket,Travel,2026-11-13
+Andaman and Nicobar Islands,lofi,23,1,cricket,Music,2026-11-13
+Andhra Pradesh,lofi,6,1,cricket,Music,2026-11-13
+Arunachal Pradesh,lofi,15,1,cricket,Music,2026-11-13
+Assam,lofi,17,1,cricket,Music,2026-11-13
+Bihar,lofi,23,1,cricket,Music,2026-11-13
+Chandigarh,lofi,17,1,cricket,Music,2026-11-13
+Chhattisgarh,lofi,23,1,cricket,Music,2026-11-13
+Dadra and Nagar Haveli,lofi,17,1,cricket,Music,2026-11-13
+Daman and Diu,lofi,15,1,cricket,Music,2026-11-13
+Delhi,lofi,22,1,cricket,Music,2026-11-13
+Goa,lofi,13,1,cricket,Music,2026-11-13
+Gujarat,lofi,22,1,cricket,Music,2026-11-13
+Haryana,lofi,18,1,cricket,Music,2026-11-13
+Himachal Pradesh,lofi,23,1,cricket,Music,2026-11-13
+Jammu & Kashmir,lofi,7,1,cricket,Music,2026-11-13
+Jharkhand,lofi,23,1,cricket,Music,2026-11-13
+Karnataka,lofi,13,1,cricket,Music,2026-11-13
+Kerala,lofi,23,1,cricket,Music,2026-11-13
+Lakshadweep,lofi,0,1,cricket,Music,2026-11-13
+Madhya Pradesh,lofi,26,1,cricket,Music,2026-11-13
+Maharashtra,lofi,18,1,cricket,Music,2026-11-13
+Manipur,lofi,23,1,cricket,Music,2026-11-13
+Meghalaya,lofi,18,1,cricket,Music,2026-11-13
+Mizoram,lofi,25,1,cricket,Music,2026-11-13
+Nagaland,lofi,17,1,cricket,Music,2026-11-13
+Odisha,lofi,13,1,cricket,Music,2026-11-13
+Puducherry,lofi,7,1,cricket,Music,2026-11-13
+Punjab,lofi,15,1,cricket,Music,2026-11-13
+Rajasthan,lofi,23,1,cricket,Music,2026-11-13
+Sikkim,lofi,16,1,cricket,Music,2026-11-13
+Tamil Nadu,lofi,6,1,cricket,Music,2026-11-13
+Telangana,lofi,12,1,cricket,Music,2026-11-13
+Tripura,lofi,19,1,cricket,Music,2026-11-13
+Uttar Pradesh,lofi,22,1,cricket,Music,2026-11-13
+Uttarakhand,lofi,21,1,cricket,Music,2026-11-13
+West Bengal,lofi,26,1,cricket,Music,2026-11-13
+Andaman and Nicobar Islands,South movie Hindi dubbed,20,1,cricket,Movies,2026-11-13
+Andhra Pradesh,South movie Hindi dubbed,3,1,cricket,Movies,2026-11-13
+Arunachal Pradesh,South movie Hindi dubbed,42,1,cricket,Movies,2026-11-13
+Assam,South movie Hindi dubbed,33,1,cricket,Movies,2026-11-13
+Bihar,South movie Hindi dubbed,32,1,cricket,Movies,2026-11-13
+Chandigarh,South movie Hindi dubbed,28,1,cricket,Movies,2026-11-13
+Chhattisgarh,South movie Hindi dubbed,33,1,cricket,Movies,2026-11-13
+Dadra and Nagar Haveli,South movie Hindi dubbed,35,1,cricket,Movies,2026-11-13
+Daman and Diu,South movie Hindi dubbed,33,1,cricket,Movies,2026-11-13
+Delhi,South movie Hindi dubbed,31,1,cricket,Movies,2026-11-13
+Goa,South movie Hindi dubbed,25,1,cricket,Movies,2026-11-13
+Gujarat,South movie Hindi dubbed,27,1,cricket,Movies,2026-11-13
+Haryana,South movie Hindi dubbed,26,1,cricket,Movies,2026-11-13
+Himachal Pradesh,South movie Hindi dubbed,28,1,cricket,Movies,2026-11-13
+Jammu & Kashmir,South movie Hindi dubbed,8,1,cricket,Movies,2026-11-13
+Jharkhand,South movie Hindi dubbed,36,1,cricket,Movies,2026-11-13
+Karnataka,South movie Hindi dubbed,13,1,cricket,Movies,2026-11-13
+Kerala,South movie Hindi dubbed,7,1,cricket,Movies,2026-11-13
+Lakshadweep,South movie Hindi dubbed,0,1,cricket,Movies,2026-11-13
+Madhya Pradesh,South movie Hindi dubbed,29,1,cricket,Movies,2026-11-13
+Maharashtra,South movie Hindi dubbed,30,1,cricket,Movies,2026-11-13
+Manipur,South movie Hindi dubbed,51,1,cricket,Movies,2026-11-13
+Meghalaya,South movie Hindi dubbed,37,1,cricket,Movies,2026-11-13
+Mizoram,South movie Hindi dubbed,30,1,cricket,Movies,2026-11-13
+Nagaland,South movie Hindi dubbed,41,1,cricket,Movies,2026-11-13
+Odisha,South movie Hindi dubbed,33,1,cricket,Movies,2026-11-13
+Puducherry,South movie Hindi dubbed,4,1,cricket,Movies,2026-11-13
+Punjab,South movie Hindi dubbed,26,1,cricket,Movies,2026-11-13
+Rajasthan,South movie Hindi dubbed,26,1,cricket,Movies,2026-11-13
+Sikkim,South movie Hindi dubbed,47,1,cricket,Movies,2026-11-13
+Tamil Nadu,South movie Hindi dubbed,8,1,cricket,Movies,2026-11-13
+Telangana,South movie Hindi dubbed,10,1,cricket,Movies,2026-11-13
+Tripura,South movie Hindi dubbed,36,1,cricket,Movies,2026-11-13
+Uttar Pradesh,South movie Hindi dubbed,30,1,cricket,Movies,2026-11-13
+Uttarakhand,South movie Hindi dubbed,25,1,cricket,Movies,2026-11-13
+West Bengal,South movie Hindi dubbed,26,1,cricket,Movies,2026-11-13
+Andaman and Nicobar Islands,Virat Kohli,6,1,cricket,Sports,2026-11-13
+Andhra Pradesh,Virat Kohli,15,1,cricket,Sports,2026-11-13
+Arunachal Pradesh,Virat Kohli,5,1,cricket,Sports,2026-11-13
+Assam,Virat Kohli,7,1,cricket,Sports,2026-11-13
+Bihar,Virat Kohli,8,1,cricket,Sports,2026-11-13
+Chandigarh,Virat Kohli,7,1,cricket,Sports,2026-11-13
+Chhattisgarh,Virat Kohli,7,1,cricket,Sports,2026-11-13
+Dadra and Nagar Haveli,Virat Kohli,6,1,cricket,Sports,2026-11-13
+Daman and Diu,Virat Kohli,6,1,cricket,Sports,2026-11-13
+Delhi,Virat Kohli,7,1,cricket,Sports,2026-11-13
+Goa,Virat Kohli,7,1,cricket,Sports,2026-11-13
+Gujarat,Virat Kohli,8,1,cricket,Sports,2026-11-13
+Haryana,Virat Kohli,7,1,cricket,Sports,2026-11-13
+Himachal Pradesh,Virat Kohli,7,1,cricket,Sports,2026-11-13
+Jammu & Kashmir,Virat Kohli,3,1,cricket,Sports,2026-11-13
+Jharkhand,Virat Kohli,6,1,cricket,Sports,2026-11-13
+Karnataka,Virat Kohli,13,1,cricket,Sports,2026-11-13
+Kerala,Virat Kohli,5,1,cricket,Sports,2026-11-13
+Lakshadweep,Virat Kohli,0,1,cricket,Sports,2026-11-13
+Madhya Pradesh,Virat Kohli,7,1,cricket,Sports,2026-11-13
+Maharashtra,Virat Kohli,7,1,cricket,Sports,2026-11-13
+Manipur,Virat Kohli,2,1,cricket,Sports,2026-11-13
+Meghalaya,Virat Kohli,5,1,cricket,Sports,2026-11-13
+Mizoram,Virat Kohli,3,1,cricket,Sports,2026-11-13
+Nagaland,Virat Kohli,5,1,cricket,Sports,2026-11-13
+Odisha,Virat Kohli,7,1,cricket,Sports,2026-11-13
+Puducherry,Virat Kohli,10,1,cricket,Sports,2026-11-13
+Punjab,Virat Kohli,6,1,cricket,Sports,2026-11-13
+Rajasthan,Virat Kohli,8,1,cricket,Sports,2026-11-13
+Sikkim,Virat Kohli,4,1,cricket,Sports,2026-11-13
+Tamil Nadu,Virat Kohli,9,1,cricket,Sports,2026-11-13
+Telangana,Virat Kohli,14,1,cricket,Sports,2026-11-13
+Tripura,Virat Kohli,5,1,cricket,Sports,2026-11-13
+Uttar Pradesh,Virat Kohli,8,1,cricket,Sports,2026-11-13
+Uttarakhand,Virat Kohli,8,1,cricket,Sports,2026-11-13
+West Bengal,Virat Kohli,7,1,cricket,Sports,2026-11-13
+Andaman and Nicobar Islands,cricket,45,1,cricket,Anchor,2026-11-13
+Andhra Pradesh,cricket,72,1,cricket,Anchor,2026-11-13
+Arunachal Pradesh,cricket,30,1,cricket,Anchor,2026-11-13
+Assam,cricket,37,1,cricket,Anchor,2026-11-13
+Bihar,cricket,33,1,cricket,Anchor,2026-11-13
+Chandigarh,cricket,41,1,cricket,Anchor,2026-11-13
+Chhattisgarh,cricket,33,1,cricket,Anchor,2026-11-13
+Dadra and Nagar Haveli,cricket,38,1,cricket,Anchor,2026-11-13
+Daman and Diu,cricket,42,1,cricket,Anchor,2026-11-13
+Delhi,cricket,34,1,cricket,Anchor,2026-11-13
+Goa,cricket,51,1,cricket,Anchor,2026-11-13
+Gujarat,cricket,39,1,cricket,Anchor,2026-11-13
+Haryana,cricket,43,1,cricket,Anchor,2026-11-13
+Himachal Pradesh,cricket,35,1,cricket,Anchor,2026-11-13
+Jammu & Kashmir,cricket,21,1,cricket,Anchor,2026-11-13
+Jharkhand,cricket,31,1,cricket,Anchor,2026-11-13
+Karnataka,cricket,56,1,cricket,Anchor,2026-11-13
+Kerala,cricket,56,1,cricket,Anchor,2026-11-13
+Lakshadweep,cricket,0,1,cricket,Anchor,2026-11-13
+Madhya Pradesh,cricket,34,1,cricket,Anchor,2026-11-13
+Maharashtra,cricket,40,1,cricket,Anchor,2026-11-13
+Manipur,cricket,19,1,cricket,Anchor,2026-11-13
+Meghalaya,cricket,34,1,cricket,Anchor,2026-11-13
+Mizoram,cricket,35,1,cricket,Anchor,2026-11-13
+Nagaland,cricket,31,1,cricket,Anchor,2026-11-13
+Odisha,cricket,44,1,cricket,Anchor,2026-11-13
+Puducherry,cricket,73,1,cricket,Anchor,2026-11-13
+Punjab,cricket,46,1,cricket,Anchor,2026-11-13
+Rajasthan,cricket,38,1,cricket,Anchor,2026-11-13
+Sikkim,cricket,27,1,cricket,Anchor,2026-11-13
+Tamil Nadu,cricket,72,1,cricket,Anchor,2026-11-13
+Telangana,cricket,59,1,cricket,Anchor,2026-11-13
+Tripura,cricket,33,1,cricket,Anchor,2026-11-13
+Uttar Pradesh,cricket,34,1,cricket,Anchor,2026-11-13
+Uttarakhand,cricket,39,1,cricket,Anchor,2026-11-13
+West Bengal,cricket,36,1,cricket,Anchor,2026-11-13
+Andaman and Nicobar Islands,business ideas,5,2,cricket,Business & Startups,2026-11-13
+Andhra Pradesh,business ideas,6,2,cricket,Business & Startups,2026-11-13
+Arunachal Pradesh,business ideas,8,2,cricket,Business & Startups,2026-11-13
+Assam,business ideas,5,2,cricket,Business & Startups,2026-11-13
+Bihar,business ideas,3,2,cricket,Business & Startups,2026-11-13
+Chandigarh,business ideas,3,2,cricket,Business & Startups,2026-11-13
+Chhattisgarh,business ideas,4,2,cricket,Business & Startups,2026-11-13
+Dadra and Nagar Haveli,business ideas,3,2,cricket,Business & Startups,2026-11-13
+Daman and Diu,business ideas,3,2,cricket,Business & Startups,2026-11-13
+Delhi,business ideas,4,2,cricket,Business & Startups,2026-11-13
+Goa,business ideas,3,2,cricket,Business & Startups,2026-11-13
+Gujarat,business ideas,3,2,cricket,Business & Startups,2026-11-13
+Haryana,business ideas,3,2,cricket,Business & Startups,2026-11-13
+Himachal Pradesh,business ideas,3,2,cricket,Business & Startups,2026-11-13
+Jammu & Kashmir,business ideas,2,2,cricket,Business & Startups,2026-11-13
+Jharkhand,business ideas,4,2,cricket,Business & Startups,2026-11-13
+Karnataka,business ideas,4,2,cricket,Business & Startups,2026-11-13
+Kerala,business ideas,3,2,cricket,Business & Startups,2026-11-13
+Lakshadweep,business ideas,0,2,cricket,Business & Startups,2026-11-13
+Madhya Pradesh,business ideas,3,2,cricket,Business & Startups,2026-11-13
+Maharashtra,business ideas,4,2,cricket,Business & Startups,2026-11-13
+Manipur,business ideas,8,2,cricket,Business & Startups,2026-11-13
+Meghalaya,business ideas,6,2,cricket,Business & Startups,2026-11-13
+Mizoram,business ideas,7,2,cricket,Business & Startups,2026-11-13
+Nagaland,business ideas,7,2,cricket,Business & Startups,2026-11-13
+Odisha,business ideas,3,2,cricket,Business & Startups,2026-11-13
+Puducherry,business ideas,7,2,cricket,Business & Startups,2026-11-13
+Punjab,business ideas,3,2,cricket,Business & Startups,2026-11-13
+Rajasthan,business ideas,3,2,cricket,Business & Startups,2026-11-13
+Sikkim,business ideas,5,2,cricket,Business & Startups,2026-11-13
+Tamil Nadu,business ideas,8,2,cricket,Business & Startups,2026-11-13
+Telangana,business ideas,6,2,cricket,Business & Startups,2026-11-13
+Tripura,business ideas,6,2,cricket,Business & Startups,2026-11-13
+Uttar Pradesh,business ideas,3,2,cricket,Business & Startups,2026-11-13
+Uttarakhand,business ideas,3,2,cricket,Business & Startups,2026-11-13
+West Bengal,business ideas,4,2,cricket,Business & Startups,2026-11-13
+Andaman and Nicobar Islands,devotional songs,6,2,cricket,Devotional & Spiritual,2026-11-13
+Andhra Pradesh,devotional songs,13,2,cricket,Devotional & Spiritual,2026-11-13
+Arunachal Pradesh,devotional songs,2,2,cricket,Devotional & Spiritual,2026-11-13
+Assam,devotional songs,1,2,cricket,Devotional & Spiritual,2026-11-13
+Bihar,devotional songs,0,2,cricket,Devotional & Spiritual,2026-11-13
+Chandigarh,devotional songs,0,2,cricket,Devotional & Spiritual,2026-11-13
+Chhattisgarh,devotional songs,1,2,cricket,Devotional & Spiritual,2026-11-13
+Dadra and Nagar Haveli,devotional songs,2,2,cricket,Devotional & Spiritual,2026-11-13
+Daman and Diu,devotional songs,1,2,cricket,Devotional & Spiritual,2026-11-13
+Delhi,devotional songs,1,2,cricket,Devotional & Spiritual,2026-11-13
+Goa,devotional songs,2,2,cricket,Devotional & Spiritual,2026-11-13
+Gujarat,devotional songs,0,2,cricket,Devotional & Spiritual,2026-11-13
+Haryana,devotional songs,0,2,cricket,Devotional & Spiritual,2026-11-13
+Himachal Pradesh,devotional songs,0,2,cricket,Devotional & Spiritual,2026-11-13
+Jammu & Kashmir,devotional songs,0,2,cricket,Devotional & Spiritual,2026-11-13
+Jharkhand,devotional songs,0,2,cricket,Devotional & Spiritual,2026-11-13
+Karnataka,devotional songs,16,2,cricket,Devotional & Spiritual,2026-11-13
+Kerala,devotional songs,39,2,cricket,Devotional & Spiritual,2026-11-13
+Lakshadweep,devotional songs,0,2,cricket,Devotional & Spiritual,2026-11-13
+Madhya Pradesh,devotional songs,0,2,cricket,Devotional & Spiritual,2026-11-13
+Maharashtra,devotional songs,1,2,cricket,Devotional & Spiritual,2026-11-13
+Manipur,devotional songs,1,2,cricket,Devotional & Spiritual,2026-11-13
+Meghalaya,devotional songs,1,2,cricket,Devotional & Spiritual,2026-11-13
+Mizoram,devotional songs,1,2,cricket,Devotional & Spiritual,2026-11-13
+Nagaland,devotional songs,1,2,cricket,Devotional & Spiritual,2026-11-13
+Odisha,devotional songs,0,2,cricket,Devotional & Spiritual,2026-11-13
+Puducherry,devotional songs,18,2,cricket,Devotional & Spiritual,2026-11-13
+Punjab,devotional songs,0,2,cricket,Devotional & Spiritual,2026-11-13
+Rajasthan,devotional songs,0,2,cricket,Devotional & Spiritual,2026-11-13
+Sikkim,devotional songs,1,2,cricket,Devotional & Spiritual,2026-11-13
+Tamil Nadu,devotional songs,14,2,cricket,Devotional & Spiritual,2026-11-13
+Telangana,devotional songs,12,2,cricket,Devotional & Spiritual,2026-11-13
+Tripura,devotional songs,1,2,cricket,Devotional & Spiritual,2026-11-13
+Uttar Pradesh,devotional songs,0,2,cricket,Devotional & Spiritual,2026-11-13
+Uttarakhand,devotional songs,0,2,cricket,Devotional & Spiritual,2026-11-13
+West Bengal,devotional songs,0,2,cricket,Devotional & Spiritual,2026-11-13
+Andaman and Nicobar Islands,roast,13,2,cricket,Comedy & Entertainment,2026-11-13
+Andhra Pradesh,roast,6,2,cricket,Comedy & Entertainment,2026-11-13
+Arunachal Pradesh,roast,23,2,cricket,Comedy & Entertainment,2026-11-13
+Assam,roast,12,2,cricket,Comedy & Entertainment,2026-11-13
+Bihar,roast,9,2,cricket,Comedy & Entertainment,2026-11-13
+Chandigarh,roast,16,2,cricket,Comedy & Entertainment,2026-11-13
+Chhattisgarh,roast,15,2,cricket,Comedy & Entertainment,2026-11-13
+Dadra and Nagar Haveli,roast,13,2,cricket,Comedy & Entertainment,2026-11-13
+Daman and Diu,roast,12,2,cricket,Comedy & Entertainment,2026-11-13
+Delhi,roast,20,2,cricket,Comedy & Entertainment,2026-11-13
+Goa,roast,11,2,cricket,Comedy & Entertainment,2026-11-13
+Gujarat,roast,9,2,cricket,Comedy & Entertainment,2026-11-13
+Haryana,roast,15,2,cricket,Comedy & Entertainment,2026-11-13
+Himachal Pradesh,roast,16,2,cricket,Comedy & Entertainment,2026-11-13
+Jammu & Kashmir,roast,9,2,cricket,Comedy & Entertainment,2026-11-13
+Jharkhand,roast,15,2,cricket,Comedy & Entertainment,2026-11-13
+Karnataka,roast,10,2,cricket,Comedy & Entertainment,2026-11-13
+Kerala,roast,20,2,cricket,Comedy & Entertainment,2026-11-13
+Lakshadweep,roast,0,2,cricket,Comedy & Entertainment,2026-11-13
+Madhya Pradesh,roast,12,2,cricket,Comedy & Entertainment,2026-11-13
+Maharashtra,roast,12,2,cricket,Comedy & Entertainment,2026-11-13
+Manipur,roast,20,2,cricket,Comedy & Entertainment,2026-11-13
+Meghalaya,roast,17,2,cricket,Comedy & Entertainment,2026-11-13
+Mizoram,roast,26,2,cricket,Comedy & Entertainment,2026-11-13
+Nagaland,roast,17,2,cricket,Comedy & Entertainment,2026-11-13
+Odisha,roast,9,2,cricket,Comedy & Entertainment,2026-11-13
+Puducherry,roast,11,2,cricket,Comedy & Entertainment,2026-11-13
+Punjab,roast,15,2,cricket,Comedy & Entertainment,2026-11-13
+Rajasthan,roast,13,2,cricket,Comedy & Entertainment,2026-11-13
+Sikkim,roast,17,2,cricket,Comedy & Entertainment,2026-11-13
+Tamil Nadu,roast,8,2,cricket,Comedy & Entertainment,2026-11-13
+Telangana,roast,7,2,cricket,Comedy & Entertainment,2026-11-13
+Tripura,roast,13,2,cricket,Comedy & Entertainment,2026-11-13
+Uttar Pradesh,roast,12,2,cricket,Comedy & Entertainment,2026-11-13
+Uttarakhand,roast,18,2,cricket,Comedy & Entertainment,2026-11-13
+West Bengal,roast,14,2,cricket,Comedy & Entertainment,2026-11-13
+Andaman and Nicobar Islands,electric scooter,1,2,cricket,Automobiles,2026-11-13
+Andhra Pradesh,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Arunachal Pradesh,electric scooter,2,2,cricket,Automobiles,2026-11-13
+Assam,electric scooter,1,2,cricket,Automobiles,2026-11-13
+Bihar,electric scooter,1,2,cricket,Automobiles,2026-11-13
+Chandigarh,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Chhattisgarh,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Dadra and Nagar Haveli,electric scooter,2,2,cricket,Automobiles,2026-11-13
+Daman and Diu,electric scooter,2,2,cricket,Automobiles,2026-11-13
+Delhi,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Goa,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Gujarat,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Haryana,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Himachal Pradesh,electric scooter,1,2,cricket,Automobiles,2026-11-13
+Jammu & Kashmir,electric scooter,1,2,cricket,Automobiles,2026-11-13
+Jharkhand,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Karnataka,electric scooter,2,2,cricket,Automobiles,2026-11-13
+Kerala,electric scooter,4,2,cricket,Automobiles,2026-11-13
+Lakshadweep,electric scooter,0,2,cricket,Automobiles,2026-11-13
+Madhya Pradesh,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Maharashtra,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Manipur,electric scooter,2,2,cricket,Automobiles,2026-11-13
+Meghalaya,electric scooter,2,2,cricket,Automobiles,2026-11-13
+Mizoram,electric scooter,8,2,cricket,Automobiles,2026-11-13
+Nagaland,electric scooter,1,2,cricket,Automobiles,2026-11-13
+Odisha,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Puducherry,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Punjab,electric scooter,2,2,cricket,Automobiles,2026-11-13
+Rajasthan,electric scooter,2,2,cricket,Automobiles,2026-11-13
+Sikkim,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Tamil Nadu,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Telangana,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Tripura,electric scooter,2,2,cricket,Automobiles,2026-11-13
+Uttar Pradesh,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Uttarakhand,electric scooter,3,2,cricket,Automobiles,2026-11-13
+West Bengal,electric scooter,3,2,cricket,Automobiles,2026-11-13
+Andaman and Nicobar Islands,cricket,75,2,cricket,Anchor,2026-11-13
+Andhra Pradesh,cricket,72,2,cricket,Anchor,2026-11-13
+Arunachal Pradesh,cricket,65,2,cricket,Anchor,2026-11-13
+Assam,cricket,81,2,cricket,Anchor,2026-11-13
+Bihar,cricket,87,2,cricket,Anchor,2026-11-13
+Chandigarh,cricket,78,2,cricket,Anchor,2026-11-13
+Chhattisgarh,cricket,77,2,cricket,Anchor,2026-11-13
+Dadra and Nagar Haveli,cricket,80,2,cricket,Anchor,2026-11-13
+Daman and Diu,cricket,82,2,cricket,Anchor,2026-11-13
+Delhi,cricket,72,2,cricket,Anchor,2026-11-13
+Goa,cricket,81,2,cricket,Anchor,2026-11-13
+Gujarat,cricket,85,2,cricket,Anchor,2026-11-13
+Haryana,cricket,79,2,cricket,Anchor,2026-11-13
+Himachal Pradesh,cricket,80,2,cricket,Anchor,2026-11-13
+Jammu & Kashmir,cricket,88,2,cricket,Anchor,2026-11-13
+Jharkhand,cricket,78,2,cricket,Anchor,2026-11-13
+Karnataka,cricket,68,2,cricket,Anchor,2026-11-13
+Kerala,cricket,34,2,cricket,Anchor,2026-11-13
+Lakshadweep,cricket,0,2,cricket,Anchor,2026-11-13
+Madhya Pradesh,cricket,82,2,cricket,Anchor,2026-11-13
+Maharashtra,cricket,80,2,cricket,Anchor,2026-11-13
+Manipur,cricket,69,2,cricket,Anchor,2026-11-13
+Meghalaya,cricket,74,2,cricket,Anchor,2026-11-13
+Mizoram,cricket,58,2,cricket,Anchor,2026-11-13
+Nagaland,cricket,74,2,cricket,Anchor,2026-11-13
+Odisha,cricket,85,2,cricket,Anchor,2026-11-13
+Puducherry,cricket,61,2,cricket,Anchor,2026-11-13
+Punjab,cricket,80,2,cricket,Anchor,2026-11-13
+Rajasthan,cricket,82,2,cricket,Anchor,2026-11-13
+Sikkim,cricket,74,2,cricket,Anchor,2026-11-13
+Tamil Nadu,cricket,67,2,cricket,Anchor,2026-11-13
+Telangana,cricket,72,2,cricket,Anchor,2026-11-13
+Tripura,cricket,78,2,cricket,Anchor,2026-11-13
+Uttar Pradesh,cricket,82,2,cricket,Anchor,2026-11-13
+Uttarakhand,cricket,76,2,cricket,Anchor,2026-11-13
+West Bengal,cricket,79,2,cricket,Anchor,2026-11-13
+Andaman and Nicobar Islands,mystery,10,3,cricket,Facts & Knowledge,2026-11-13
+Andhra Pradesh,mystery,5,3,cricket,Facts & Knowledge,2026-11-13
+Arunachal Pradesh,mystery,15,3,cricket,Facts & Knowledge,2026-11-13
+Assam,mystery,5,3,cricket,Facts & Knowledge,2026-11-13
+Bihar,mystery,4,3,cricket,Facts & Knowledge,2026-11-13
+Chandigarh,mystery,7,3,cricket,Facts & Knowledge,2026-11-13
+Chhattisgarh,mystery,7,3,cricket,Facts & Knowledge,2026-11-13
+Dadra and Nagar Haveli,mystery,6,3,cricket,Facts & Knowledge,2026-11-13
+Daman and Diu,mystery,5,3,cricket,Facts & Knowledge,2026-11-13
+Delhi,mystery,9,3,cricket,Facts & Knowledge,2026-11-13
+Goa,mystery,6,3,cricket,Facts & Knowledge,2026-11-13
+Gujarat,mystery,4,3,cricket,Facts & Knowledge,2026-11-13
+Haryana,mystery,6,3,cricket,Facts & Knowledge,2026-11-13
+Himachal Pradesh,mystery,6,3,cricket,Facts & Knowledge,2026-11-13
+Jammu & Kashmir,mystery,4,3,cricket,Facts & Knowledge,2026-11-13
+Jharkhand,mystery,6,3,cricket,Facts & Knowledge,2026-11-13
+Karnataka,mystery,8,3,cricket,Facts & Knowledge,2026-11-13
+Kerala,mystery,7,3,cricket,Facts & Knowledge,2026-11-13
+Lakshadweep,mystery,0,3,cricket,Facts & Knowledge,2026-11-13
+Madhya Pradesh,mystery,5,3,cricket,Facts & Knowledge,2026-11-13
+Maharashtra,mystery,6,3,cricket,Facts & Knowledge,2026-11-13
+Manipur,mystery,17,3,cricket,Facts & Knowledge,2026-11-13
+Meghalaya,mystery,14,3,cricket,Facts & Knowledge,2026-11-13
+Mizoram,mystery,35,3,cricket,Facts & Knowledge,2026-11-13
+Nagaland,mystery,14,3,cricket,Facts & Knowledge,2026-11-13
+Odisha,mystery,4,3,cricket,Facts & Knowledge,2026-11-13
+Puducherry,mystery,18,3,cricket,Facts & Knowledge,2026-11-13
+Punjab,mystery,6,3,cricket,Facts & Knowledge,2026-11-13
+Rajasthan,mystery,4,3,cricket,Facts & Knowledge,2026-11-13
+Sikkim,mystery,14,3,cricket,Facts & Knowledge,2026-11-13
+Tamil Nadu,mystery,17,3,cricket,Facts & Knowledge,2026-11-13
+Telangana,mystery,6,3,cricket,Facts & Knowledge,2026-11-13
+Tripura,mystery,9,3,cricket,Facts & Knowledge,2026-11-13
+Uttar Pradesh,mystery,5,3,cricket,Facts & Knowledge,2026-11-13
+Uttarakhand,mystery,7,3,cricket,Facts & Knowledge,2026-11-13
+West Bengal,mystery,7,3,cricket,Facts & Knowledge,2026-11-13
+Andaman and Nicobar Islands,vastu,4,3,cricket,Astrology,2026-11-13
+Andhra Pradesh,vastu,6,3,cricket,Astrology,2026-11-13
+Arunachal Pradesh,vastu,4,3,cricket,Astrology,2026-11-13
+Assam,vastu,10,3,cricket,Astrology,2026-11-13
+Bihar,vastu,4,3,cricket,Astrology,2026-11-13
+Chandigarh,vastu,4,3,cricket,Astrology,2026-11-13
+Chhattisgarh,vastu,5,3,cricket,Astrology,2026-11-13
+Dadra and Nagar Haveli,vastu,5,3,cricket,Astrology,2026-11-13
+Daman and Diu,vastu,4,3,cricket,Astrology,2026-11-13
+Delhi,vastu,4,3,cricket,Astrology,2026-11-13
+Goa,vastu,7,3,cricket,Astrology,2026-11-13
+Gujarat,vastu,9,3,cricket,Astrology,2026-11-13
+Haryana,vastu,4,3,cricket,Astrology,2026-11-13
+Himachal Pradesh,vastu,4,3,cricket,Astrology,2026-11-13
+Jammu & Kashmir,vastu,1,3,cricket,Astrology,2026-11-13
+Jharkhand,vastu,4,3,cricket,Astrology,2026-11-13
+Karnataka,vastu,6,3,cricket,Astrology,2026-11-13
+Kerala,vastu,2,3,cricket,Astrology,2026-11-13
+Lakshadweep,vastu,0,3,cricket,Astrology,2026-11-13
+Madhya Pradesh,vastu,4,3,cricket,Astrology,2026-11-13
+Maharashtra,vastu,9,3,cricket,Astrology,2026-11-13
+Manipur,vastu,2,3,cricket,Astrology,2026-11-13
+Meghalaya,vastu,3,3,cricket,Astrology,2026-11-13
+Mizoram,vastu,2,3,cricket,Astrology,2026-11-13
+Nagaland,vastu,4,3,cricket,Astrology,2026-11-13
+Odisha,vastu,4,3,cricket,Astrology,2026-11-13
+Puducherry,vastu,4,3,cricket,Astrology,2026-11-13
+Punjab,vastu,4,3,cricket,Astrology,2026-11-13
+Rajasthan,vastu,4,3,cricket,Astrology,2026-11-13
+Sikkim,vastu,3,3,cricket,Astrology,2026-11-13
+Tamil Nadu,vastu,4,3,cricket,Astrology,2026-11-13
+Telangana,vastu,6,3,cricket,Astrology,2026-11-13
+Tripura,vastu,2,3,cricket,Astrology,2026-11-13
+Uttar Pradesh,vastu,4,3,cricket,Astrology,2026-11-13
+Uttarakhand,vastu,4,3,cricket,Astrology,2026-11-13
+West Bengal,vastu,3,3,cricket,Astrology,2026-11-13
+Andaman and Nicobar Islands,craft ideas,9,3,cricket,DIY & Crafts,2026-11-13
+Andhra Pradesh,craft ideas,6,3,cricket,DIY & Crafts,2026-11-13
+Arunachal Pradesh,craft ideas,5,3,cricket,DIY & Crafts,2026-11-13
+Assam,craft ideas,3,3,cricket,DIY & Crafts,2026-11-13
+Bihar,craft ideas,2,3,cricket,DIY & Crafts,2026-11-13
+Chandigarh,craft ideas,5,3,cricket,DIY & Crafts,2026-11-13
+Chhattisgarh,craft ideas,4,3,cricket,DIY & Crafts,2026-11-13
+Dadra and Nagar Haveli,craft ideas,4,3,cricket,DIY & Crafts,2026-11-13
+Daman and Diu,craft ideas,4,3,cricket,DIY & Crafts,2026-11-13
+Delhi,craft ideas,5,3,cricket,DIY & Crafts,2026-11-13
+Goa,craft ideas,4,3,cricket,DIY & Crafts,2026-11-13
+Gujarat,craft ideas,3,3,cricket,DIY & Crafts,2026-11-13
+Haryana,craft ideas,4,3,cricket,DIY & Crafts,2026-11-13
+Himachal Pradesh,craft ideas,4,3,cricket,DIY & Crafts,2026-11-13
+Jammu & Kashmir,craft ideas,2,3,cricket,DIY & Crafts,2026-11-13
+Jharkhand,craft ideas,5,3,cricket,DIY & Crafts,2026-11-13
+Karnataka,craft ideas,6,3,cricket,DIY & Crafts,2026-11-13
+Kerala,craft ideas,18,3,cricket,DIY & Crafts,2026-11-13
+Lakshadweep,craft ideas,0,3,cricket,DIY & Crafts,2026-11-13
+Madhya Pradesh,craft ideas,4,3,cricket,DIY & Crafts,2026-11-13
+Maharashtra,craft ideas,4,3,cricket,DIY & Crafts,2026-11-13
+Manipur,craft ideas,6,3,cricket,DIY & Crafts,2026-11-13
+Meghalaya,craft ideas,5,3,cricket,DIY & Crafts,2026-11-13
+Mizoram,craft ideas,7,3,cricket,DIY & Crafts,2026-11-13
+Nagaland,craft ideas,6,3,cricket,DIY & Crafts,2026-11-13
+Odisha,craft ideas,3,3,cricket,DIY & Crafts,2026-11-13
+Puducherry,craft ideas,10,3,cricket,DIY & Crafts,2026-11-13
+Punjab,craft ideas,5,3,cricket,DIY & Crafts,2026-11-13
+Rajasthan,craft ideas,3,3,cricket,DIY & Crafts,2026-11-13
+Sikkim,craft ideas,6,3,cricket,DIY & Crafts,2026-11-13
+Tamil Nadu,craft ideas,10,3,cricket,DIY & Crafts,2026-11-13
+Telangana,craft ideas,5,3,cricket,DIY & Crafts,2026-11-13
+Tripura,craft ideas,5,3,cricket,DIY & Crafts,2026-11-13
+Uttar Pradesh,craft ideas,5,3,cricket,DIY & Crafts,2026-11-13
+Uttarakhand,craft ideas,5,3,cricket,DIY & Crafts,2026-11-13
+West Bengal,craft ideas,4,3,cricket,DIY & Crafts,2026-11-13
+Andaman and Nicobar Islands,home tour,3,3,cricket,Home & Interior,2026-11-13
+Andhra Pradesh,home tour,8,3,cricket,Home & Interior,2026-11-13
+Arunachal Pradesh,home tour,6,3,cricket,Home & Interior,2026-11-13
+Assam,home tour,4,3,cricket,Home & Interior,2026-11-13
+Bihar,home tour,1,3,cricket,Home & Interior,2026-11-13
+Chandigarh,home tour,3,3,cricket,Home & Interior,2026-11-13
+Chhattisgarh,home tour,2,3,cricket,Home & Interior,2026-11-13
+Dadra and Nagar Haveli,home tour,2,3,cricket,Home & Interior,2026-11-13
+Daman and Diu,home tour,2,3,cricket,Home & Interior,2026-11-13
+Delhi,home tour,2,3,cricket,Home & Interior,2026-11-13
+Goa,home tour,1,3,cricket,Home & Interior,2026-11-13
+Gujarat,home tour,1,3,cricket,Home & Interior,2026-11-13
+Haryana,home tour,3,3,cricket,Home & Interior,2026-11-13
+Himachal Pradesh,home tour,3,3,cricket,Home & Interior,2026-11-13
+Jammu & Kashmir,home tour,2,3,cricket,Home & Interior,2026-11-13
+Jharkhand,home tour,2,3,cricket,Home & Interior,2026-11-13
+Karnataka,home tour,4,3,cricket,Home & Interior,2026-11-13
+Kerala,home tour,14,3,cricket,Home & Interior,2026-11-13
+Lakshadweep,home tour,0,3,cricket,Home & Interior,2026-11-13
+Madhya Pradesh,home tour,1,3,cricket,Home & Interior,2026-11-13
+Maharashtra,home tour,2,3,cricket,Home & Interior,2026-11-13
+Manipur,home tour,3,3,cricket,Home & Interior,2026-11-13
+Meghalaya,home tour,3,3,cricket,Home & Interior,2026-11-13
+Mizoram,home tour,4,3,cricket,Home & Interior,2026-11-13
+Nagaland,home tour,4,3,cricket,Home & Interior,2026-11-13
+Odisha,home tour,1,3,cricket,Home & Interior,2026-11-13
+Puducherry,home tour,8,3,cricket,Home & Interior,2026-11-13
+Punjab,home tour,3,3,cricket,Home & Interior,2026-11-13
+Rajasthan,home tour,2,3,cricket,Home & Interior,2026-11-13
+Sikkim,home tour,4,3,cricket,Home & Interior,2026-11-13
+Tamil Nadu,home tour,7,3,cricket,Home & Interior,2026-11-13
+Telangana,home tour,8,3,cricket,Home & Interior,2026-11-13
+Tripura,home tour,3,3,cricket,Home & Interior,2026-11-13
+Uttar Pradesh,home tour,1,3,cricket,Home & Interior,2026-11-13
+Uttarakhand,home tour,3,3,cricket,Home & Interior,2026-11-13
+West Bengal,home tour,2,3,cricket,Home & Interior,2026-11-13
+Andaman and Nicobar Islands,cricket,74,3,cricket,Anchor,2026-11-13
+Andhra Pradesh,cricket,75,3,cricket,Anchor,2026-11-13
+Arunachal Pradesh,cricket,70,3,cricket,Anchor,2026-11-13
+Assam,cricket,78,3,cricket,Anchor,2026-11-13
+Bihar,cricket,89,3,cricket,Anchor,2026-11-13
+Chandigarh,cricket,81,3,cricket,Anchor,2026-11-13
+Chhattisgarh,cricket,82,3,cricket,Anchor,2026-11-13
+Dadra and Nagar Haveli,cricket,83,3,cricket,Anchor,2026-11-13
+Daman and Diu,cricket,85,3,cricket,Anchor,2026-11-13
+Delhi,cricket,80,3,cricket,Anchor,2026-11-13
+Goa,cricket,82,3,cricket,Anchor,2026-11-13
+Gujarat,cricket,83,3,cricket,Anchor,2026-11-13
+Haryana,cricket,83,3,cricket,Anchor,2026-11-13
+Himachal Pradesh,cricket,83,3,cricket,Anchor,2026-11-13
+Jammu & Kashmir,cricket,91,3,cricket,Anchor,2026-11-13
+Jharkhand,cricket,83,3,cricket,Anchor,2026-11-13
+Karnataka,cricket,76,3,cricket,Anchor,2026-11-13
+Kerala,cricket,59,3,cricket,Anchor,2026-11-13
+Lakshadweep,cricket,0,3,cricket,Anchor,2026-11-13
+Madhya Pradesh,cricket,86,3,cricket,Anchor,2026-11-13
+Maharashtra,cricket,79,3,cricket,Anchor,2026-11-13
+Manipur,cricket,72,3,cricket,Anchor,2026-11-13
+Meghalaya,cricket,75,3,cricket,Anchor,2026-11-13
+Mizoram,cricket,52,3,cricket,Anchor,2026-11-13
+Nagaland,cricket,72,3,cricket,Anchor,2026-11-13
+Odisha,cricket,88,3,cricket,Anchor,2026-11-13
+Puducherry,cricket,60,3,cricket,Anchor,2026-11-13
+Punjab,cricket,82,3,cricket,Anchor,2026-11-13
+Rajasthan,cricket,87,3,cricket,Anchor,2026-11-13
+Sikkim,cricket,73,3,cricket,Anchor,2026-11-13
+Tamil Nadu,cricket,62,3,cricket,Anchor,2026-11-13
+Telangana,cricket,75,3,cricket,Anchor,2026-11-13
+Tripura,cricket,81,3,cricket,Anchor,2026-11-13
+Uttar Pradesh,cricket,85,3,cricket,Anchor,2026-11-13
+Uttarakhand,cricket,81,3,cricket,Anchor,2026-11-13
+West Bengal,cricket,84,3,cricket,Anchor,2026-11-13
+Andaman and Nicobar Islands,சமையல்,1,4,Excel,Food,2026-11-13
+Andhra Pradesh,சமையல்,0,4,Excel,Food,2026-11-13
+Arunachal Pradesh,சமையல்,0,4,Excel,Food,2026-11-13
+Assam,சமையல்,0,4,Excel,Food,2026-11-13
+Bihar,சமையல்,0,4,Excel,Food,2026-11-13
+Chandigarh,சமையல்,0,4,Excel,Food,2026-11-13
+Chhattisgarh,சமையல்,0,4,Excel,Food,2026-11-13
+Dadra and Nagar Haveli,சமையல்,0,4,Excel,Food,2026-11-13
+Daman and Diu,சமையல்,0,4,Excel,Food,2026-11-13
+Delhi,சமையல்,0,4,Excel,Food,2026-11-13
+Goa,சமையல்,0,4,Excel,Food,2026-11-13
+Gujarat,சமையல்,0,4,Excel,Food,2026-11-13
+Haryana,சமையல்,0,4,Excel,Food,2026-11-13
+Himachal Pradesh,சமையல்,0,4,Excel,Food,2026-11-13
+Jammu & Kashmir,சமையல்,0,4,Excel,Food,2026-11-13
+Jharkhand,சமையல்,0,4,Excel,Food,2026-11-13
+Karnataka,சமையல்,0,4,Excel,Food,2026-11-13
+Kerala,சமையல்,0,4,Excel,Food,2026-11-13
+Lakshadweep,சமையல்,0,4,Excel,Food,2026-11-13
+Madhya Pradesh,சமையல்,0,4,Excel,Food,2026-11-13
+Maharashtra,சமையல்,0,4,Excel,Food,2026-11-13
+Manipur,சமையல்,0,4,Excel,Food,2026-11-13
+Meghalaya,சமையல்,0,4,Excel,Food,2026-11-13
+Mizoram,சமையல்,0,4,Excel,Food,2026-11-13
+Nagaland,சமையல்,0,4,Excel,Food,2026-11-13
+Odisha,சமையல்,0,4,Excel,Food,2026-11-13
+Puducherry,சமையல்,8,4,Excel,Food,2026-11-13
+Punjab,சமையல்,0,4,Excel,Food,2026-11-13
+Rajasthan,சமையல்,0,4,Excel,Food,2026-11-13
+Sikkim,சமையல்,0,4,Excel,Food,2026-11-13
+Tamil Nadu,சமையல்,12,4,Excel,Food,2026-11-13
+Telangana,சமையல்,0,4,Excel,Food,2026-11-13
+Tripura,சமையல்,0,4,Excel,Food,2026-11-13
+Uttar Pradesh,சமையல்,0,4,Excel,Food,2026-11-13
+Uttarakhand,சமையல்,0,4,Excel,Food,2026-11-13
+West Bengal,சமையல்,0,4,Excel,Food,2026-11-13
+Andaman and Nicobar Islands,breaking news,21,4,Excel,News,2026-11-13
+Andhra Pradesh,breaking news,14,4,Excel,News,2026-11-13
+Arunachal Pradesh,breaking news,11,4,Excel,News,2026-11-13
+Assam,breaking news,24,4,Excel,News,2026-11-13
+Bihar,breaking news,19,4,Excel,News,2026-11-13
+Chandigarh,breaking news,22,4,Excel,News,2026-11-13
+Chhattisgarh,breaking news,11,4,Excel,News,2026-11-13
+Dadra and Nagar Haveli,breaking news,4,4,Excel,News,2026-11-13
+Daman and Diu,breaking news,7,4,Excel,News,2026-11-13
+Delhi,breaking news,13,4,Excel,News,2026-11-13
+Goa,breaking news,13,4,Excel,News,2026-11-13
+Gujarat,breaking news,10,4,Excel,News,2026-11-13
+Haryana,breaking news,34,4,Excel,News,2026-11-13
+Himachal Pradesh,breaking news,13,4,Excel,News,2026-11-13
+Jammu & Kashmir,breaking news,23,4,Excel,News,2026-11-13
+Jharkhand,breaking news,12,4,Excel,News,2026-11-13
+Karnataka,breaking news,10,4,Excel,News,2026-11-13
+Kerala,breaking news,15,4,Excel,News,2026-11-13
+Lakshadweep,breaking news,0,4,Excel,News,2026-11-13
+Madhya Pradesh,breaking news,10,4,Excel,News,2026-11-13
+Maharashtra,breaking news,11,4,Excel,News,2026-11-13
+Manipur,breaking news,23,4,Excel,News,2026-11-13
+Meghalaya,breaking news,16,4,Excel,News,2026-11-13
+Mizoram,breaking news,14,4,Excel,News,2026-11-13
+Nagaland,breaking news,22,4,Excel,News,2026-11-13
+Odisha,breaking news,15,4,Excel,News,2026-11-13
+Puducherry,breaking news,11,4,Excel,News,2026-11-13
+Punjab,breaking news,21,4,Excel,News,2026-11-13
+Rajasthan,breaking news,13,4,Excel,News,2026-11-13
+Sikkim,breaking news,12,4,Excel,News,2026-11-13
+Tamil Nadu,breaking news,14,4,Excel,News,2026-11-13
+Telangana,breaking news,18,4,Excel,News,2026-11-13
+Tripura,breaking news,21,4,Excel,News,2026-11-13
+Uttar Pradesh,breaking news,19,4,Excel,News,2026-11-13
+Uttarakhand,breaking news,11,4,Excel,News,2026-11-13
+West Bengal,breaking news,12,4,Excel,News,2026-11-13
+Andaman and Nicobar Islands,skincare,16,4,Excel,Beauty & Lifestyle,2026-11-13
+Andhra Pradesh,skincare,8,4,Excel,Beauty & Lifestyle,2026-11-13
+Arunachal Pradesh,skincare,22,4,Excel,Beauty & Lifestyle,2026-11-13
+Assam,skincare,13,4,Excel,Beauty & Lifestyle,2026-11-13
+Bihar,skincare,7,4,Excel,Beauty & Lifestyle,2026-11-13
+Chandigarh,skincare,9,4,Excel,Beauty & Lifestyle,2026-11-13
+Chhattisgarh,skincare,7,4,Excel,Beauty & Lifestyle,2026-11-13
+Dadra and Nagar Haveli,skincare,6,4,Excel,Beauty & Lifestyle,2026-11-13
+Daman and Diu,skincare,10,4,Excel,Beauty & Lifestyle,2026-11-13
+Delhi,skincare,7,4,Excel,Beauty & Lifestyle,2026-11-13
+Goa,skincare,12,4,Excel,Beauty & Lifestyle,2026-11-13
+Gujarat,skincare,7,4,Excel,Beauty & Lifestyle,2026-11-13
+Haryana,skincare,6,4,Excel,Beauty & Lifestyle,2026-11-13
+Himachal Pradesh,skincare,9,4,Excel,Beauty & Lifestyle,2026-11-13
+Jammu & Kashmir,skincare,11,4,Excel,Beauty & Lifestyle,2026-11-13
+Jharkhand,skincare,9,4,Excel,Beauty & Lifestyle,2026-11-13
+Karnataka,skincare,9,4,Excel,Beauty & Lifestyle,2026-11-13
+Kerala,skincare,22,4,Excel,Beauty & Lifestyle,2026-11-13
+Lakshadweep,skincare,0,4,Excel,Beauty & Lifestyle,2026-11-13
+Madhya Pradesh,skincare,7,4,Excel,Beauty & Lifestyle,2026-11-13
+Maharashtra,skincare,9,4,Excel,Beauty & Lifestyle,2026-11-13
+Manipur,skincare,22,4,Excel,Beauty & Lifestyle,2026-11-13
+Meghalaya,skincare,21,4,Excel,Beauty & Lifestyle,2026-11-13
+Mizoram,skincare,48,4,Excel,Beauty & Lifestyle,2026-11-13
+Nagaland,skincare,29,4,Excel,Beauty & Lifestyle,2026-11-13
+Odisha,skincare,7,4,Excel,Beauty & Lifestyle,2026-11-13
+Puducherry,skincare,11,4,Excel,Beauty & Lifestyle,2026-11-13
+Punjab,skincare,10,4,Excel,Beauty & Lifestyle,2026-11-13
+Rajasthan,skincare,9,4,Excel,Beauty & Lifestyle,2026-11-13
+Sikkim,skincare,16,4,Excel,Beauty & Lifestyle,2026-11-13
+Tamil Nadu,skincare,8,4,Excel,Beauty & Lifestyle,2026-11-13
+Telangana,skincare,7,4,Excel,Beauty & Lifestyle,2026-11-13
+Tripura,skincare,22,4,Excel,Beauty & Lifestyle,2026-11-13
+Uttar Pradesh,skincare,7,4,Excel,Beauty & Lifestyle,2026-11-13
+Uttarakhand,skincare,11,4,Excel,Beauty & Lifestyle,2026-11-13
+West Bengal,skincare,11,4,Excel,Beauty & Lifestyle,2026-11-13
+Andaman and Nicobar Islands,govt jobs,1,4,Excel,Government jobs,2026-11-13
+Andhra Pradesh,govt jobs,7,4,Excel,Government jobs,2026-11-13
+Arunachal Pradesh,govt jobs,0,4,Excel,Government jobs,2026-11-13
+Assam,govt jobs,3,4,Excel,Government jobs,2026-11-13
+Bihar,govt jobs,1,4,Excel,Government jobs,2026-11-13
+Chandigarh,govt jobs,5,4,Excel,Government jobs,2026-11-13
+Chhattisgarh,govt jobs,1,4,Excel,Government jobs,2026-11-13
+Dadra and Nagar Haveli,govt jobs,0,4,Excel,Government jobs,2026-11-13
+Daman and Diu,govt jobs,0,4,Excel,Government jobs,2026-11-13
+Delhi,govt jobs,1,4,Excel,Government jobs,2026-11-13
+Goa,govt jobs,1,4,Excel,Government jobs,2026-11-13
+Gujarat,govt jobs,1,4,Excel,Government jobs,2026-11-13
+Haryana,govt jobs,2,4,Excel,Government jobs,2026-11-13
+Himachal Pradesh,govt jobs,7,4,Excel,Government jobs,2026-11-13
+Jammu & Kashmir,govt jobs,2,4,Excel,Government jobs,2026-11-13
+Jharkhand,govt jobs,2,4,Excel,Government jobs,2026-11-13
+Karnataka,govt jobs,2,4,Excel,Government jobs,2026-11-13
+Kerala,govt jobs,1,4,Excel,Government jobs,2026-11-13
+Lakshadweep,govt jobs,0,4,Excel,Government jobs,2026-11-13
+Madhya Pradesh,govt jobs,2,4,Excel,Government jobs,2026-11-13
+Maharashtra,govt jobs,1,4,Excel,Government jobs,2026-11-13
+Manipur,govt jobs,2,4,Excel,Government jobs,2026-11-13
+Meghalaya,govt jobs,1,4,Excel,Government jobs,2026-11-13
+Mizoram,govt jobs,0,4,Excel,Government jobs,2026-11-13
+Nagaland,govt jobs,1,4,Excel,Government jobs,2026-11-13
+Odisha,govt jobs,4,4,Excel,Government jobs,2026-11-13
+Puducherry,govt jobs,3,4,Excel,Government jobs,2026-11-13
+Punjab,govt jobs,5,4,Excel,Government jobs,2026-11-13
+Rajasthan,govt jobs,3,4,Excel,Government jobs,2026-11-13
+Sikkim,govt jobs,0,4,Excel,Government jobs,2026-11-13
+Tamil Nadu,govt jobs,3,4,Excel,Government jobs,2026-11-13
+Telangana,govt jobs,6,4,Excel,Government jobs,2026-11-13
+Tripura,govt jobs,2,4,Excel,Government jobs,2026-11-13
+Uttar Pradesh,govt jobs,1,4,Excel,Government jobs,2026-11-13
+Uttarakhand,govt jobs,2,4,Excel,Government jobs,2026-11-13
+West Bengal,govt jobs,3,4,Excel,Government jobs,2026-11-13
+Andaman and Nicobar Islands,Excel,61,4,Excel,Education,2026-11-13
+Andhra Pradesh,Excel,71,4,Excel,Education,2026-11-13
+Arunachal Pradesh,Excel,67,4,Excel,Education,2026-11-13
+Assam,Excel,60,4,Excel,Education,2026-11-13
+Bihar,Excel,73,4,Excel,Education,2026-11-13
+Chandigarh,Excel,64,4,Excel,Education,2026-11-13
+Chhattisgarh,Excel,81,4,Excel,Education,2026-11-13
+Dadra and Nagar Haveli,Excel,90,4,Excel,Education,2026-11-13
+Daman and Diu,Excel,83,4,Excel,Education,2026-11-13
+Delhi,Excel,79,4,Excel,Education,2026-11-13
+Goa,Excel,74,4,Excel,Education,2026-11-13
+Gujarat,Excel,82,4,Excel,Education,2026-11-13
+Haryana,Excel,58,4,Excel,Education,2026-11-13
+Himachal Pradesh,Excel,71,4,Excel,Education,2026-11-13
+Jammu & Kashmir,Excel,64,4,Excel,Education,2026-11-13
+Jharkhand,Excel,77,4,Excel,Education,2026-11-13
+Karnataka,Excel,79,4,Excel,Education,2026-11-13
+Kerala,Excel,62,4,Excel,Education,2026-11-13
+Lakshadweep,Excel,0,4,Excel,Education,2026-11-13
+Madhya Pradesh,Excel,81,4,Excel,Education,2026-11-13
+Maharashtra,Excel,79,4,Excel,Education,2026-11-13
+Manipur,Excel,53,4,Excel,Education,2026-11-13
+Meghalaya,Excel,62,4,Excel,Education,2026-11-13
+Mizoram,Excel,38,4,Excel,Education,2026-11-13
+Nagaland,Excel,48,4,Excel,Education,2026-11-13
+Odisha,Excel,74,4,Excel,Education,2026-11-13
+Puducherry,Excel,67,4,Excel,Education,2026-11-13
+Punjab,Excel,64,4,Excel,Education,2026-11-13
+Rajasthan,Excel,75,4,Excel,Education,2026-11-13
+Sikkim,Excel,72,4,Excel,Education,2026-11-13
+Tamil Nadu,Excel,63,4,Excel,Education,2026-11-13
+Telangana,Excel,69,4,Excel,Education,2026-11-13
+Tripura,Excel,55,4,Excel,Education,2026-11-13
+Uttar Pradesh,Excel,73,4,Excel,Education,2026-11-13
+Uttarakhand,Excel,76,4,Excel,Education,2026-11-13
+West Bengal,Excel,74,4,Excel,Education,2026-11-13
+Andaman and Nicobar Islands,share market Tamil,21,5,bike review,Finance,2026-11-13
+Andhra Pradesh,share market Tamil,0,5,bike review,Finance,2026-11-13
+Arunachal Pradesh,share market Tamil,0,5,bike review,Finance,2026-11-13
+Assam,share market Tamil,2,5,bike review,Finance,2026-11-13
+Bihar,share market Tamil,1,5,bike review,Finance,2026-11-13
+Chandigarh,share market Tamil,5,5,bike review,Finance,2026-11-13
+Chhattisgarh,share market Tamil,1,5,bike review,Finance,2026-11-13
+Dadra and Nagar Haveli,share market Tamil,0,5,bike review,Finance,2026-11-13
+Daman and Diu,share market Tamil,0,5,bike review,Finance,2026-11-13
+Delhi,share market Tamil,2,5,bike review,Finance,2026-11-13
+Goa,share market Tamil,0,5,bike review,Finance,2026-11-13
+Gujarat,share market Tamil,3,5,bike review,Finance,2026-11-13
+Haryana,share market Tamil,2,5,bike review,Finance,2026-11-13
+Himachal Pradesh,share market Tamil,1,5,bike review,Finance,2026-11-13
+Jammu & Kashmir,share market Tamil,10,5,bike review,Finance,2026-11-13
+Jharkhand,share market Tamil,1,5,bike review,Finance,2026-11-13
+Karnataka,share market Tamil,8,5,bike review,Finance,2026-11-13
+Kerala,share market Tamil,2,5,bike review,Finance,2026-11-13
+Lakshadweep,share market Tamil,0,5,bike review,Finance,2026-11-13
+Madhya Pradesh,share market Tamil,2,5,bike review,Finance,2026-11-13
+Maharashtra,share market Tamil,3,5,bike review,Finance,2026-11-13
+Manipur,share market Tamil,0,5,bike review,Finance,2026-11-13
+Meghalaya,share market Tamil,0,5,bike review,Finance,2026-11-13
+Mizoram,share market Tamil,0,5,bike review,Finance,2026-11-13
+Nagaland,share market Tamil,0,5,bike review,Finance,2026-11-13
+Odisha,share market Tamil,1,5,bike review,Finance,2026-11-13
+Puducherry,share market Tamil,43,5,bike review,Finance,2026-11-13
+Punjab,share market Tamil,3,5,bike review,Finance,2026-11-13
+Rajasthan,share market Tamil,2,5,bike review,Finance,2026-11-13
+Sikkim,share market Tamil,0,5,bike review,Finance,2026-11-13
+Tamil Nadu,share market Tamil,45,5,bike review,Finance,2026-11-13
+Telangana,share market Tamil,0,5,bike review,Finance,2026-11-13
+Tripura,share market Tamil,2,5,bike review,Finance,2026-11-13
+Uttar Pradesh,share market Tamil,1,5,bike review,Finance,2026-11-13
+Uttarakhand,share market Tamil,0,5,bike review,Finance,2026-11-13
+West Bengal,share market Tamil,1,5,bike review,Finance,2026-11-13
+Andaman and Nicobar Islands,UPSC Telugu,0,5,bike review,Education,2026-11-13
+Andhra Pradesh,UPSC Telugu,54,5,bike review,Education,2026-11-13
+Arunachal Pradesh,UPSC Telugu,0,5,bike review,Education,2026-11-13
+Assam,UPSC Telugu,1,5,bike review,Education,2026-11-13
+Bihar,UPSC Telugu,2,5,bike review,Education,2026-11-13
+Chandigarh,UPSC Telugu,2,5,bike review,Education,2026-11-13
+Chhattisgarh,UPSC Telugu,4,5,bike review,Education,2026-11-13
+Dadra and Nagar Haveli,UPSC Telugu,0,5,bike review,Education,2026-11-13
+Daman and Diu,UPSC Telugu,0,5,bike review,Education,2026-11-13
+Delhi,UPSC Telugu,7,5,bike review,Education,2026-11-13
+Goa,UPSC Telugu,0,5,bike review,Education,2026-11-13
+Gujarat,UPSC Telugu,1,5,bike review,Education,2026-11-13
+Haryana,UPSC Telugu,2,5,bike review,Education,2026-11-13
+Himachal Pradesh,UPSC Telugu,1,5,bike review,Education,2026-11-13
+Jammu & Kashmir,UPSC Telugu,5,5,bike review,Education,2026-11-13
+Jharkhand,UPSC Telugu,2,5,bike review,Education,2026-11-13
+Karnataka,UPSC Telugu,8,5,bike review,Education,2026-11-13
+Kerala,UPSC Telugu,0,5,bike review,Education,2026-11-13
+Lakshadweep,UPSC Telugu,0,5,bike review,Education,2026-11-13
+Madhya Pradesh,UPSC Telugu,1,5,bike review,Education,2026-11-13
+Maharashtra,UPSC Telugu,2,5,bike review,Education,2026-11-13
+Manipur,UPSC Telugu,3,5,bike review,Education,2026-11-13
+Meghalaya,UPSC Telugu,0,5,bike review,Education,2026-11-13
+Mizoram,UPSC Telugu,0,5,bike review,Education,2026-11-13
+Nagaland,UPSC Telugu,0,5,bike review,Education,2026-11-13
+Odisha,UPSC Telugu,4,5,bike review,Education,2026-11-13
+Puducherry,UPSC Telugu,9,5,bike review,Education,2026-11-13
+Punjab,UPSC Telugu,2,5,bike review,Education,2026-11-13
+Rajasthan,UPSC Telugu,2,5,bike review,Education,2026-11-13
+Sikkim,UPSC Telugu,0,5,bike review,Education,2026-11-13
+Tamil Nadu,UPSC Telugu,1,5,bike review,Education,2026-11-13
+Telangana,UPSC Telugu,50,5,bike review,Education,2026-11-13
+Tripura,UPSC Telugu,0,5,bike review,Education,2026-11-13
+Uttar Pradesh,UPSC Telugu,3,5,bike review,Education,2026-11-13
+Uttarakhand,UPSC Telugu,3,5,bike review,Education,2026-11-13
+West Bengal,UPSC Telugu,0,5,bike review,Education,2026-11-13
+Andaman and Nicobar Islands,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Andhra Pradesh,health tips Telugu,14,5,bike review,Health & Fitness,2026-11-13
+Arunachal Pradesh,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Assam,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Bihar,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Chandigarh,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Chhattisgarh,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Dadra and Nagar Haveli,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Daman and Diu,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Delhi,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Goa,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Gujarat,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Haryana,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Himachal Pradesh,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Jammu & Kashmir,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Jharkhand,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Karnataka,health tips Telugu,3,5,bike review,Health & Fitness,2026-11-13
+Kerala,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Lakshadweep,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Madhya Pradesh,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Maharashtra,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Manipur,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Meghalaya,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Mizoram,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Nagaland,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Odisha,health tips Telugu,1,5,bike review,Health & Fitness,2026-11-13
+Puducherry,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Punjab,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Rajasthan,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Sikkim,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Tamil Nadu,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Telangana,health tips Telugu,20,5,bike review,Health & Fitness,2026-11-13
+Tripura,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Uttar Pradesh,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Uttarakhand,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+West Bengal,health tips Telugu,0,5,bike review,Health & Fitness,2026-11-13
+Andaman and Nicobar Islands,bike review,79,5,bike review,Automobiles,2026-11-13
+Andhra Pradesh,bike review,32,5,bike review,Automobiles,2026-11-13
+Arunachal Pradesh,bike review,100,5,bike review,Automobiles,2026-11-13
+Assam,bike review,97,5,bike review,Automobiles,2026-11-13
+Bihar,bike review,97,5,bike review,Automobiles,2026-11-13
+Chandigarh,bike review,93,5,bike review,Automobiles,2026-11-13
+Chhattisgarh,bike review,95,5,bike review,Automobiles,2026-11-13
+Dadra and Nagar Haveli,bike review,100,5,bike review,Automobiles,2026-11-13
+Daman and Diu,bike review,100,5,bike review,Automobiles,2026-11-13
+Delhi,bike review,91,5,bike review,Automobiles,2026-11-13
+Goa,bike review,100,5,bike review,Automobiles,2026-11-13
+Gujarat,bike review,96,5,bike review,Automobiles,2026-11-13
+Haryana,bike review,96,5,bike review,Automobiles,2026-11-13
+Himachal Pradesh,bike review,98,5,bike review,Automobiles,2026-11-13
+Jammu & Kashmir,bike review,85,5,bike review,Automobiles,2026-11-13
+Jharkhand,bike review,97,5,bike review,Automobiles,2026-11-13
+Karnataka,bike review,81,5,bike review,Automobiles,2026-11-13
+Kerala,bike review,98,5,bike review,Automobiles,2026-11-13
+Lakshadweep,bike review,0,5,bike review,Automobiles,2026-11-13
+Madhya Pradesh,bike review,97,5,bike review,Automobiles,2026-11-13
+Maharashtra,bike review,95,5,bike review,Automobiles,2026-11-13
+Manipur,bike review,97,5,bike review,Automobiles,2026-11-13
+Meghalaya,bike review,100,5,bike review,Automobiles,2026-11-13
+Mizoram,bike review,100,5,bike review,Automobiles,2026-11-13
+Nagaland,bike review,100,5,bike review,Automobiles,2026-11-13
+Odisha,bike review,94,5,bike review,Automobiles,2026-11-13
+Puducherry,bike review,48,5,bike review,Automobiles,2026-11-13
+Punjab,bike review,95,5,bike review,Automobiles,2026-11-13
+Rajasthan,bike review,96,5,bike review,Automobiles,2026-11-13
+Sikkim,bike review,100,5,bike review,Automobiles,2026-11-13
+Tamil Nadu,bike review,54,5,bike review,Automobiles,2026-11-13
+Telangana,bike review,30,5,bike review,Automobiles,2026-11-13
+Tripura,bike review,98,5,bike review,Automobiles,2026-11-13
+Uttar Pradesh,bike review,96,5,bike review,Automobiles,2026-11-13
+Uttarakhand,bike review,97,5,bike review,Automobiles,2026-11-13
+West Bengal,bike review,99,5,bike review,Automobiles,2026-11-13

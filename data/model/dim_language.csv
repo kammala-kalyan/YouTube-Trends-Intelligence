@@ -28,6 +28,7 @@ iw,IW,False
 ja,JA,False
 kn,Kannada,True
 ko,KO,False
+kok,KOK,False
 ks,KS,False
 mai,MAI,False
 ml,Malayalam,True
@@ -35,6 +36,7 @@ mr,Marathi,True
 ms,MS,False
 mt,MT,False
 ne,Nepali,True
+nl,NL,False
 or,Odia,True
 pa,Punjabi,True
 pl,PL,False

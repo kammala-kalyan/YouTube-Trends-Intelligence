@@ -12,8 +12,8 @@ bh,Bhojpuri,True
 bm,BM,False
 bn,Bengali,True
 br,BR,False
-da,DA,False
 de,DE,False
+el,EL,False
 en,English,False
 es,ES,False
 eu,EU,False
@@ -21,6 +21,7 @@ fa,FA,False
 fi,FI,False
 fr,FR,False
 gu,Gujarati,True
+ha,HA,False
 hi,Hindi,True
 hr,HR,False
 id,ID,False

@@ -36,6 +36,7 @@ ks,KS,False
 lt,LT,False
 mai,MAI,False
 ml,Malayalam,True
+mni,MNI,False
 mr,Marathi,True
 ms,MS,False
 mt,MT,False
@@ -50,6 +51,7 @@ ru,RU,False
 sa,SA,False
 sat,SAT,False
 si,SI,False
+sk,SK,False
 su,SU,False
 sv,SV,False
 ta,Tamil,True
